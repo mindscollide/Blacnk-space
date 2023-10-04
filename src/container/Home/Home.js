@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const { actionReducer } = useSelector((state) => state);
 
