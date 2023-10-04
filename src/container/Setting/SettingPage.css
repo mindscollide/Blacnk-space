@@ -1,0 +1,19 @@
+.Setting-page {
+  margin-top: 170px;
+}
+
+.back-to-top-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  border: none;
+  border-radius: 13%;
+  padding: 0;
+  cursor: pointer;
+  outline: none !important;
+}
+
+.back-to-top-button.visible {
+  display: block;
+}

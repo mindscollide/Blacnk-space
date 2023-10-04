@@ -1,0 +1,77 @@
+.Categories-header {
+  position: fixed !important;
+  top: 0 !important;
+  z-index: 3;
+  background-color: #000000;
+  width: 100%;
+}
+
+.Category-margintop {
+  margin-top: 150px;
+}
+
+.category-bottom {
+  border-bottom: 1px solid #2e2e2e;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 0;
+}
+
+.switch-color {
+  width: 4em;
+  height: 1.8rem;
+  background-size: contain;
+  margin-top: 0.25em;
+  vertical-align: top;
+  border: 1px solid #dee2e6;
+}
+
+:where(.css-dev-only-do-not-override-fpg3f5).ant-switch.ant-switch-checked {
+  background-color: #d00510;
+  border: 1px solid #d00510;
+}
+
+button.ant-switch.switch-color.css-dev-only-do-not-override-fpg3f5.ant-switch-checked {
+  background-color: #d00510;
+  border: 1px solid #d00510;
+}
+
+:where(.css-dev-only-do-not-override-fpg3f5).ant-switch .ant-switch-handle {
+  position: absolute;
+  top: 3px;
+  inset-inline-start: 2px;
+  width: 19px;
+  height: 19px;
+  transition: all 0.2s ease-in-out;
+}
+
+:where(.css-dev-only-do-not-override-fpg3f5).ant-switch.ant-switch-checked
+  .ant-switch-handle {
+  inset-inline-start: calc(100% - 23px);
+}
+
+.Btm-Line-category {
+  border-bottom: 1px solid #2e2e2e;
+  padding-bottom: 15px;
+  padding-left: 0;
+}
+
+.message-item-category {
+  position: fixed;
+  top: 15px;
+  width: auto;
+  padding: 12px 30px;
+  background: #d00510;
+  color: #ffffff;
+  margin: 0 auto;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: "Bahnschrift", sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  z-index: 10;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  border-radius: 6px;
+  white-space: nowrap;
+}

@@ -1,0 +1,21 @@
+.Swiper-Loading-Slide {
+  width: 77px;
+  height: 77px;
+  border-radius: 20px;
+  background: #6b6969;
+  animation: fadeinout 4s infinite; /* Adjust the duration and timing function as needed */
+  margin: 0 auto;
+  margin-bottom: 10px;
+  border: 1px solid #ffb4b4;
+  cursor: pointer;
+}
+
+@keyframes fadeinout {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}

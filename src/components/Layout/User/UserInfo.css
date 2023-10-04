@@ -1,0 +1,17 @@
+.setting-icon-size {
+  font-size: 40px !important;
+  color: #ffffff;
+  align-items: flex-end !important;
+  cursor: pointer;
+}
+
+@media (max-width: 650px) {
+  .setting-icon-size {
+    padding: 0px 10px;
+    margin-top: -20px;
+    font-size: 30px !important;
+    color: #ffffff;
+    align-items: flex-end !important;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,38 @@
+.Sub-CategoryHeader-home-icon-color {
+  display: inline-block;
+  vertical-align: middle;
+  color: #ffffff !important;
+  font-size: 30px !important;
+  cursor: pointer;
+}
+
+.Sub-Category-Header-nav {
+  display: flex;
+  justify-content: end !important;
+  gap: 0px;
+  margin: 10px;
+  align-items: center !important;
+}
+
+.Sub-Category_navlink_text {
+  font-family: "Bebas Neue", sans-serif;
+  margin: 10px;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.Sub-Category-icon-search-color {
+  color: #d00510 !important;
+  font-size: 28px !important;
+}
+
+@media (max-width: 650px) {
+  .Sub-Category_navlink_text {
+    font-family: "Bebas Neue", sans-serif;
+    margin: 10px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #ffffff;
+  }
+}

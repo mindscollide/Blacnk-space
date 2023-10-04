@@ -1,0 +1,284 @@
+/*normalize bootstrap and other primary style*/
+@font-face {
+  font-family: "Bahnschrift";
+  src: url("./assets/Font-family/Bahnschrift.woff") format("woff"),
+    url("./assets/Font-family/Bahnschrift.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bebas Neue";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./assets/Font-family/JTUSjIg69CK48gW7PXoo9Wdhyzbi.woff2")
+    format("woff2");
+  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
+    U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: "Bebas Neue";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./assets/Font-family/JTUSjIg69CK48gW7PXoo9Wlhyw.woff2")
+    format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+body {
+  background-color: #000 !important;
+  overflow-x: hidden;
+}
+
+.header {
+  position: fixed !important;
+  top: 0 !important;
+  z-index: 3;
+  background-color: #000000;
+  width: 100%;
+}
+
+.swiper-category-slider {
+  position: fixed !important;
+  top: 0 !important;
+  z-index: 3;
+  background-color: #000000;
+  width: 100%;
+}
+
+.home_Container {
+  margin-top: 150px !important;
+}
+
+/* TITLES FONT SIZES FOR USER AND USER INFO'S START */
+
+.heading-title-h1 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem;
+  color: #fff500;
+}
+
+.User-heading {
+  font-size: 1.8rem;
+  color: #ffffff;
+  font-family: "Bebas Neue", sans-serif;
+}
+
+.User-heading-setting {
+  font-size: 3rem;
+  color: #ffffff;
+  font-family: "Bebas Neue", sans-serif;
+}
+
+.User-Sub-Heading {
+  font-size: 1.3rem;
+  color: #d00510;
+  font-weight: 200 !important;
+  line-height: 15px !important;
+  font-family: "Bebas Neue", sans-serif;
+}
+
+.Category-User-Sub-Heading {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem;
+  color: #fff500;
+  text-transform: uppercase !important;
+}
+
+/* TITLES FONT SIZES FOR USER AND USER INFO'S END */
+
+/* BUTTON SIZES FOR DIFFERENT SCREENS START */
+
+.Explore-Home-Button {
+  border-radius: 2rem !important;
+  border: 1px solid #d00510 !important;
+  background-color: transparent !important;
+  color: #ffffff;
+  font-size: 1rem;
+  font-family: "Bahnschrift", sans-serif;
+}
+
+.Explore-Home-Button:hover {
+  background-color: #d00510 !important;
+}
+
+.Go-Back-Button {
+  border: 1px solid #d00510 !important;
+  border-radius: 2rem;
+  background-color: #d00510 !important;
+  color: #ffffff !important;
+  font-weight: 500;
+  font-family: "Bahnschrift", sans-serif;
+}
+
+.Go-Back-Button:hover {
+  background-color: transparent !important;
+  border: 1px solid #d00510 !important;
+}
+
+/* BUTTON SIZES FOR DIFFERENT SCREENS END */
+
+/* CATEGORIES SWITCHES HEADING  BY SWITCH ON TOGGLE START*/
+
+.Switch-Category-Title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.SitchOn-Category-Title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem !important;
+  font-weight: 600;
+  color: #2e2e2e !important;
+  pointer-events: none;
+}
+
+.Sub-Category-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem;
+  color: #ffffff;
+}
+
+.Sub-Categories-Switch-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem;
+  color: #fff500;
+  text-transform: uppercase !important;
+}
+
+.Sub-categories-title-sitchOn {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem !important;
+  font-weight: 600;
+  color: #2e2e2e !important;
+}
+
+.sub-category-BlockAll-switch {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem !important;
+  color: #fff500;
+}
+
+/* CATEGORIES SWITCHES HEADING BY SWITCH ON TOGGLE END*/
+
+@media (max-width: 650px) {
+  .home_Container {
+    padding: 0px 25px;
+    margin-top: 100px !important;
+  }
+
+  .heading-title-h1 {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem;
+    color: #fff500;
+  }
+
+  .User-heading {
+    padding: 0px 10px;
+    font-size: 1.1rem;
+    color: #ffffff;
+    font-family: "Bebas Neue", sans-serif;
+  }
+
+  .User-heading-setting {
+    padding: 0px 10px;
+    font-size: 2rem;
+    color: #ffffff;
+    font-family: "Bebas Neue", sans-serif;
+  }
+
+  .User-Sub-Heading {
+    padding: 0px 10px;
+    font-size: 1.1rem;
+    color: #d00510;
+    margin-top: -5px;
+    font-weight: 200 !important;
+    line-height: 0px !important;
+    font-family: "Bebas Neue", sans-serif;
+  }
+
+  .Category-User-Sub-Heading {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem;
+    color: #fff500;
+    text-transform: uppercase !important;
+  }
+
+  .Explore-Home-Button {
+    border-radius: 2rem !important;
+    border: 1px solid #d00510 !important;
+    background-color: transparent !important;
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-family: "Bahnschrift", sans-serif;
+  }
+
+  .Explore-Home-Button:hover {
+    background-color: #d00510 !important;
+  }
+
+  .Go-Back-Button {
+    font-size: 0.7rem;
+    border: 1px solid #d00510 !important;
+    border-radius: 2rem;
+    background-color: #d00510 !important;
+    color: #ffffff !important;
+    font-weight: 500;
+    font-family: "Bahnschrift", sans-serif;
+  }
+
+  .Go-Back-Button:hover {
+    background-color: transparent !important;
+    border: 1px solid #d00510 !important;
+  }
+
+  .Switch-Category-Title {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .SitchOn-Category-Title {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem !important;
+    font-weight: 600;
+    color: #2e2e2e !important;
+    pointer-events: none;
+  }
+
+  .Sub-Categories-Switch-title {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem;
+    color: #fff500;
+    text-transform: uppercase !important;
+  }
+
+  .sub-category-BlockAll-switch {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem !important;
+    color: #fff500;
+  }
+
+  .Sub-Category-title {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem;
+    color: #ffffff;
+  }
+
+  .Sub-categories-title-sitchOn {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem !important;
+    font-weight: 600;
+    color: #2e2e2e !important;
+  }
+}

@@ -1,0 +1,98 @@
+.Explore-Title-heading {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem;
+  color: #fff500;
+}
+
+.Explore-Swipper-slide-box {
+  width: 77px;
+  height: 77px;
+  border-radius: 20px;
+  background: #ffffff !important;
+  animation: none !important;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  border: 1px solid #d00510;
+  cursor: pointer;
+}
+
+.Explore-para-color {
+  width: 77px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  text-align: center !important;
+  /* white-space: nowrap !important; */
+  font-family: "Bahnschrift", sans-serif;
+  font-size: 0.8rem;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.1 !important;
+  margin: 0 auto;
+}
+
+.Explore-header {
+  position: fixed !important;
+  top: 0 !important;
+  z-index: 3;
+  background-color: #000000;
+  width: 100%;
+}
+
+.Explore-margintop {
+  margin-top: 150px;
+}
+
+.Explore-category-flex-col {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+.fade-in-text {
+  font-size: 20px !important;
+  color: #fff500 !important;
+  text-align: center;
+  animation: fadeIn 5s !important;
+  /* -webkit-animation: fadeIn 5s !important; */
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* 
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+} */
+
+@media (max-width: 650px) {
+  .Explore-Swipper-slide-box {
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    background: #ffffff;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    border: 1px solid #d00510;
+    cursor: pointer;
+  }
+
+  .Explore-margintop {
+    margin-top: 130px;
+  }
+
+  .Explore-Title-heading {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem;
+    color: #fff500;
+  }
+}

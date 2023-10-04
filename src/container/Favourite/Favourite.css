@@ -1,0 +1,105 @@
+.Favourite-Title-heading {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem;
+  color: #fff500;
+}
+
+.Favourite-Swipper-slide-box {
+  width: 77px;
+  height: 77px;
+  border-radius: 20px;
+  background: #ffffff;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  border: 1px solid #d00510;
+  cursor: pointer;
+}
+
+.Favourite-para-color {
+  width: 77px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  text-align: center !important;
+  /* white-space: nowrap !important; */
+  font-family: "Bahnschrift", sans-serif;
+  font-size: 0.8rem;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.1 !important;
+  margin: 0 auto;
+}
+
+.Favourite-header {
+  position: fixed !important;
+  top: 0 !important;
+  z-index: 3;
+  background-color: #000000;
+  width: 100%;
+}
+
+.Favourite-margintop {
+  margin-top: 150px;
+}
+
+.scroll-horizontally {
+  border: 1px solid #dddddd;
+  margin: 1px;
+  padding: 10px;
+  min-width: auto;
+  height: auto;
+}
+
+/* CSS for the lazy loading preloader */
+.swiper-lazy-preloader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: 0 !important;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0px;
+  margin-top: 25px !important;
+}
+
+/* Optionally, you can add animations or other styles */
+.swiper-lazy-preloader:after {
+  content: "\f1f8"; /* Font Awesome spinner icon */
+  font-family: "Font Awesome 5 Free";
+  animation: spin 1s linear infinite;
+}
+
+.image-category {
+  object-fit: cover !important;
+  align-items: center !important;
+  display: flex;
+  justify-content: center !important;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 650px) {
+  .Favourite-margintop {
+    margin-top: 130px;
+  }
+
+  .Favourite-Title-heading {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem;
+    color: #fff500;
+  }
+}

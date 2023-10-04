@@ -1,0 +1,135 @@
+:where(.css-dev-only-do-not-override-fpg3f5).ant-input-affix-wrapper
+  > input.ant-input {
+  padding: 5px;
+  font-size: 12px;
+  font-family: "Bahnschrift", sans-serif;
+  font-weight: 500 !important;
+  border-color: #5b5a5a;
+  background-color: #5b5a5a !important;
+  color: #ffffff;
+  border-radius: 0;
+  outline: none;
+}
+
+:where(.css-dev-only-do-not-override-fpg3f5).ant-input-affix-wrapper:not(
+    .ant-input-affix-wrapper-disabled
+  ) {
+  border-radius: 6px;
+  border-color: #5b5a5a;
+  border-inline-end-width: 1px;
+  z-index: 1;
+  color: #ffffff;
+  font-weight: 500 !important;
+  background-color: #5b5a5a !important;
+}
+
+:where(.css-dev-only-do-not-override-fpg3f5).ant-input-affix-wrapper:not(
+    .ant-input-affix-wrapper-disabled
+  ):hover {
+  border-radius: 6px;
+  border-color: #5b5a5a;
+  border-inline-end-width: 1px;
+  z-index: 1;
+  color: #ffffff;
+  font-weight: 500 !important;
+  background-color: #5b5a5a !important;
+}
+
+.seacrh-icon-size {
+  font-size: 25px !important;
+}
+
+.dropdown-icon {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+}
+
+.top-result-heading {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem;
+  color: #fff500;
+}
+
+.sortby-heading {
+  user-select: none;
+  cursor: pointer;
+  color: #fff500;
+  font-size: 12px;
+  font-family: "Bahnschrift", sans-serif;
+}
+
+.dropdown-main-div {
+  position: absolute;
+  /* inset: 0px auto auto 0px; */
+  margin: 10px 0px;
+  transform: translate(0px, 15px);
+  background-color: #d00510;
+  border: 1px solid #5b5a5a;
+  border-radius: 8px;
+}
+
+.dropdown-list-item {
+  padding: 1px 18px;
+}
+
+.dropdown-menu-text {
+  height: 35px;
+  margin: 4px 5px;
+  width: 110px !important;
+  font-size: 12px !important;
+  padding-top: 5px !important;
+  padding-left: 0px !important;
+  text-transform: uppercase;
+  font-family: "Bahnschrift", sans-serif !important;
+  text-align: left !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid #ffffff;
+  user-select: none !important;
+}
+
+.dropdown-menu-text:hover {
+  color: #d8cbcb !important;
+  border-bottom: 1px solid #d8cbcb;
+  cursor: pointer;
+  user-select: none !important;
+}
+
+.dropdown-menu-text-2 {
+  /* height: 15px; */
+  margin: 12px 5px;
+  width: 110px !important;
+  font-size: 12px !important;
+  padding-left: 0px !important;
+  text-transform: uppercase;
+  font-family: "Bahnschrift", sans-serif;
+  text-align: left !important;
+  color: #ffffff !important;
+  user-select: none !important;
+}
+
+.dropdown-menu-text-2:hover {
+  color: #d8cbcb !important;
+  cursor: pointer;
+  user-select: none !important;
+}
+
+@media (max-width: 650px) {
+  .top-result-heading {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem;
+    color: #fff500;
+  }
+
+  .sortby-heading {
+    color: #fff500;
+    font-size: 12px;
+    margin-top: 2px !important;
+    font-family: "Bahnschrift", sans-serif;
+  }
+}
