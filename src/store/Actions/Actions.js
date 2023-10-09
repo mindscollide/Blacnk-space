@@ -1119,7 +1119,7 @@ const filterData = (response) => {
 const longitudeData = (response) => {
   return {
     type: actions.LONGITUTDE_LOCATION_DATA,
-    payload: response.target.value,
+    payload: response,
   };
 };
 
@@ -1127,7 +1127,7 @@ const longitudeData = (response) => {
 const latitudeData = (response) => {
   return {
     type: actions.LATITUDE_LOCATION_DATA,
-    payload: response.target.value,
+    payload: response,
   };
 };
 
