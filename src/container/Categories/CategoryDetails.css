@@ -137,6 +137,9 @@ img {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  color: #ffffff;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem;
 }
 
 .what-we-offer-subtitles {
@@ -151,6 +154,19 @@ img {
 }
 .line-height {
   line-height: 3rem;
+}
+
+.show-inline-display {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+.Reviews-after-star {
+  color: #ffffff;
+  font-family: "Bahnschrift", sans-serif;
+  margin-top: 5px;
+  margin-left: 10px;
+  font-size: 16px !important;
 }
 
 .package-row-class {

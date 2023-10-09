@@ -23,7 +23,7 @@ const CategoryDetails = () => {
 
   //state for businessDetails
   const [businessDetails, setBusinessDetails] = useState("");
-  console.log(businessDetails, "businessDetailsbusinessDetails");
+  console.log({ businessDetails }, "businessDetailsbusinessDetails");
 
   // STATE FOR LOADER
   const [showLoader, setShowLoader] = useState(false);
@@ -31,7 +31,7 @@ const CategoryDetails = () => {
   // state for businessDetail page
   const [stateBusinessDetail, setStateBusinessDetails] = useState({
     BusinessListingID: {
-      value: "BUL_0x3e5e687cb03c786f:0x274efccd6d482c69",
+      value: "",
       errorMessage: "",
       errorStatus: false,
     },
@@ -39,12 +39,12 @@ const CategoryDetails = () => {
 
   // const rating = 2.5;
 
-  useEffect(() => {
-    let newBusinessData = {
-      BusinessListingID: stateBusinessDetail.BusinessListingID.value,
-    };
-    dispatch(businessDetailsMainApi(newBusinessData));
-  }, []);
+  // useEffect(() => {
+  //   let newBusinessData = {
+  //     BusinessListingID: stateBusinessDetail.BusinessListingID.value,
+  //   };
+  //   dispatch(businessDetailsMainApi(newBusinessData));
+  // }, []);
 
   useEffect(() => {
     if (
@@ -91,22 +91,8 @@ const CategoryDetails = () => {
               >
                 <SwiperSlide>
                   <img
-                    src={categoryImg}
-                    alt="category 1"
-                    className="slide-Image"
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img
-                    src={categoryImg2}
-                    alt="category 2"
-                    className="slide-Image"
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img
-                    src={categoryImg3}
-                    alt="category 3"
+                    src={`data:image/jpeg;base64,${businessDetails.listOfBase64Images}`}
+                    alt="Slider"
                     className="slide-Image"
                   />
                 </SwiperSlide>
@@ -124,10 +110,10 @@ const CategoryDetails = () => {
             <Row className="mb-3">
               <Col lg={6} md={6} sm={12} xs={12}>
                 {/* <span>{businessDetails.rating}</span> */}
-                <span>
+                <span className="show-inline-display">
                   {/* <StarRating rating={rating} /> */}
                   <StarRating rating={businessDetails.rating} />
-                  {businessDetails.reviews}
+                  <span className="Reviews-after-star">(20 Reviews)</span>
                 </span>
               </Col>
             </Row>
@@ -204,7 +190,7 @@ const CategoryDetails = () => {
 
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
-            <div className="what-we-offer-bullets ">
+            <div className="what-we-offer-bullets">
               {businessDetails.offering}
               {/* <span className="what-we-offer-subtitles">
                 1. montmartre Neighoborhood had a charming, behemian feel with
@@ -237,28 +223,7 @@ const CategoryDetails = () => {
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <div className="what-we-offer-bullets ">
               <span className="what-we-offer-subtitles">
-                1. The montmartre Neighoborhood had a charming, behemian feel
-                with lots of quaint shops and cafes.
-              </span>
-              <span className="what-we-offer-subtitles">
-                2. The montmartre Neighoborhood had a charming, behemian feel
-                with lots of quaint shops and cafes.
-              </span>
-              <span className="what-we-offer-subtitles">
-                3. The montmartre Neighoborhood had a charming, behemian feel
-                with lots of quaint shops and cafes.
-              </span>
-              <span className="what-we-offer-subtitles">
-                4. The montmartre Neighoborhood had a charming, behemian feel
-                with lots of quaint shops and cafes.
-              </span>
-              <span className="what-we-offer-subtitles">
-                5. The montmartre Neighoborhood had a charming, behemian feel
-                with lots of quaint shops and cafes.
-              </span>
-              <span className="what-we-offer-subtitles">
-                6. The montmartre Neighoborhood had a charming, behemian feel
-                with lots of quaint shops and cafes.
+                {businessDetails.reviews}
               </span>
             </div>
           </Col>
@@ -267,7 +232,7 @@ const CategoryDetails = () => {
 
       <Row className="mt-5">
         <Col lg={12} md={12} sm={12}>
-          <Footer categoryListing={businessDetails} />
+          <Footer businessDetails={businessDetails} />
         </Col>
       </Row>
 

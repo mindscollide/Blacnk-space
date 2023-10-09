@@ -8,6 +8,7 @@ import { StarFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import {
   updateFavoriteApi,
   likeUnlikeApi,
+  businessDetailsMainApi,
 } from "../../../store/Actions/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
@@ -179,10 +180,18 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
     dispatch(likeUnlikeApi(newLike));
   };
 
-  const onClick = () => {
+  const onClick = (exploreData) => {
     console.log("click is triggered");
     setClickCount(clickCount + 1);
-    navigate("/Category");
+    if (exploreData && exploreData.subCategoryListingId) {
+      let newBusinessIdData = {
+        BusinessListingID: exploreData.subCategoryListingId,
+      };
+      console.log(newBusinessIdData, "newBusinessIdDatanewBusinessIdData");
+      dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
+    } else {
+      console.error("exploreDatabusinessListingId");
+    }
   };
   useEffect(() => {
     if (
@@ -270,23 +279,30 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
                   return (
                     <>
                       <SwiperSlide key={newData.subCategoryListingId}>
-                        <img
+                        <button
                           src={`data:image/jpeg;base64,${newData.subCategoryListingId}`}
                           alt="Icon"
                           id={`swiper-section ${newData.subCategoryListingId}`}
-                          className={`Swipper-slide-box ${
+                          className={`Swipper-slide-box-Explore-category ${
                             activeCategory === newData.subCategoryListingId
                               ? "active"
                               : ""
                           }`}
                           onClick={() => {
+                            onClick(newData);
                             setTimeout(() => {
                               setActiveCategory(null);
                             }, 2000);
                             setActiveCategory(newData.subCategoryListingId);
                           }}
                           {...longPressEvent}
-                        ></img>
+                        >
+                          <img
+                            src={`data:image/jpeg;base64,${newData.subCategoryListingId}`}
+                            alt="Icon"
+                            className="Swipper-slide-box-Explore-category-image"
+                          />
+                        </button>
                         {isLongPress &&
                         activeCategory === newData.subCategoryListingId ? (
                           <>
@@ -339,7 +355,14 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
                                 <span className="icn-display-block">
                                   {newData.subCategoryLocation ? (
                                     <>
-                                      <i className="icon-location icon-class"></i>
+                                      <a
+                                        href={newData.subCategoryLocation}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="underLine_Text"
+                                      >
+                                        <i className="icon-location icon-class"></i>
+                                      </a>
                                       <span className="main-options">
                                         Direction
                                       </span>

@@ -73,9 +73,9 @@ const Header = () => {
       dispatch(latitudeData(latitudeValue));
 
       // Now, you can use latitudeValue as the value of the input
-      console.log("Latitude Value:", latitudeValue);
+      // console.log("Latitude Value:", latitudeValue);
     } else {
-      console.log("Element with ID 'latitude' not found.");
+      // console.log("Element with ID 'latitude' not found.");
     }
     if (longitudeInput && longitudeInput.value !== longitude) {
       // Access the value of the input element
@@ -84,9 +84,9 @@ const Header = () => {
       dispatch(longitudeData(longitudeValue));
 
       // Now, you can use latitudeValue as the value of the input
-      console.log("longitude Value:", longitudeValue);
+      // console.log("longitude Value:", longitudeValue);
     } else {
-      console.log("Element with ID 'longitude' not found.");
+      // console.log("Element with ID 'longitude' not found.");
     }
   }
   const intervalId = setInterval(myFunction, 10000);
@@ -94,10 +94,13 @@ const Header = () => {
     <>
       <input
         id="latitude"
+        style={{ display: "none" }}
         // value={latitude}
       />
       <input
         id="longitude"
+        style={{ display: "none" }}
+
         // value={longitude}
       />
       <Navbar>

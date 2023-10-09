@@ -27,6 +27,8 @@ const ExploreCategory = () => {
   console.log(actionReducer, "jsdvdjsvhjdvjshdv");
   const [isHeadingFood, setIsHeadingFood] = useState(false);
 
+  let businessID = localStorage.getItem("BusinessExploreID");
+
   const [isHome, setIsHome] = useState(false);
 
   //state for active longPress event
@@ -112,8 +114,8 @@ const ExploreCategory = () => {
       pageNumber: 1,
       isAutomatic: false,
       ParentCategoryID: "CDL_1",
-      UserLatitude: "",
-      UserLongitude: "",
+      UserLatitude: "24.502",
+      UserLongitude: "54.388",
       // Update this dynamically
     };
 

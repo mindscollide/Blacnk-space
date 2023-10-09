@@ -21,7 +21,8 @@
 .Days-bullets {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 15px;
+  letter-spacing: 0.2rem !important;
 }
 
 .hours-bullets {
