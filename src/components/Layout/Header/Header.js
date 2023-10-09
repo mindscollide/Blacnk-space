@@ -3,7 +3,7 @@ import "./Header.css";
 import BlancLogo from "./../../../assets/Images/logo-header.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { longitudeData } from "../../../store/Actions/Actions";
 import { latitudeData } from "../../../store/Actions/Actions";
 // import { Hidden } from "@material-ui/core";
@@ -13,23 +13,10 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { actionReducer } = useSelector((state) => state);
-  console.log(actionReducer, "locaatioonnnnn");
-
-  const [lat, setLat] = useState([]);
-  const [long, setLong] = useState([]);
-  console.log({ lat, long }, "latlatlat");
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      setLat(position.coords.latitude);
-      setLong(position.coords.longitude);
-    });
-
-    console.log("Latitude is location:", lat);
-    console.log("Longitude is: location", long);
-  }, [lat, long]);
   // For Explore Page
   const [showExploreIcon, setShowExploreIcon] = useState(false);
-
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
   // For Favorite Page
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -71,47 +58,48 @@ const Header = () => {
   const onCickSearchIcon = () => {
     navigate("/SearchPage");
   };
-  const inputElementLatitude = document.getElementById("latitude");
 
-  try {
-    inputElementLatitude.addEventListener("input", function () {
-      const updatedValueLatitude = inputElementLatitude.value;
+  // Function to handle changes in the "longitude" input field
 
-      // Call dispatch(api(value)) with the updated value
+  function myFunction() {
+    const latitudeInput = document.getElementById("latitude");
+    const longitudeInput = document.getElementById("longitude");
 
-      if (updatedValueLatitude !== null) {
-        dispatch(latitudeData(updatedValueLatitude));
-      }
-    });
-  } catch {}
-  const inputElementLongitude = document.getElementById("longitude");
-  try {
-    inputElementLongitude.addEventListener("input", function () {
-      const updatedLongitude = inputElementLongitude.value;
+    // Check if the element exists
+    if (latitudeInput && latitude !== latitudeInput.value) {
+      // Access the value of the input element
+      const latitudeValue = latitudeInput.value;
+      setLatitude(latitudeValue);
+      dispatch(latitudeData(latitudeValue));
 
-      // Call dispatch(api(value)) with the updated value
-      if (updatedLongitude !== null) {
-        dispatch(longitudeData(updatedLongitude));
-      }
-    });
-  } catch {}
+      // Now, you can use latitudeValue as the value of the input
+      console.log("Latitude Value:", latitudeValue);
+    } else {
+      console.log("Element with ID 'latitude' not found.");
+    }
+    if (longitudeInput && longitudeInput.value !== longitude) {
+      // Access the value of the input element
+      const longitudeValue = longitudeInput.value;
+      setLongitude(longitudeValue);
+      dispatch(longitudeData(longitudeValue));
 
+      // Now, you can use latitudeValue as the value of the input
+      console.log("longitude Value:", longitudeValue);
+    } else {
+      console.log("Element with ID 'longitude' not found.");
+    }
+  }
+  const intervalId = setInterval(myFunction, 10000);
   return (
     <>
       <input
-        // style={{ display: "none" }}
         id="latitude"
-        onChange={(e) => dispatch(latitudeData(e))}
-        // this is our reducer state reducer name location
-        value={actionReducer.locationLatitude}
-      ></input>
+        // value={latitude}
+      />
       <input
-        // style={{ display: "none" }}
         id="longitude"
-        onChange={(e) => dispatch(longitudeData(e))}
-        // this is our reducer state reducer name location
-        value={actionReducer.locationLongitude}
-      ></input>
+        // value={longitude}
+      />
       <Navbar>
         <Navbar.Brand to="Home">
           {showExploreIcon && (
