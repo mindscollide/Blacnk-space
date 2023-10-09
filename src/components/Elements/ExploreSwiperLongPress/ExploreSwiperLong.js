@@ -270,11 +270,11 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
                   return (
                     <>
                       <SwiperSlide key={newData.subCategoryListingId}>
-                        <img
+                        <button
                           src={`data:image/jpeg;base64,${newData.subCategoryListingId}`}
                           alt="Icon"
                           id={`swiper-section ${newData.subCategoryListingId}`}
-                          className={`Swipper-slide-box ${
+                          className={`Swipper-slide-box-Explore-category ${
                             activeCategory === newData.subCategoryListingId
                               ? "active"
                               : ""
@@ -286,7 +286,13 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
                             setActiveCategory(newData.subCategoryListingId);
                           }}
                           {...longPressEvent}
-                        ></img>
+                        >
+                          <img
+                            src={`data:image/jpeg;base64,${newData.subCategoryListingId}`}
+                            alt="Icon"
+                            className="Swipper-slide-box-Explore-category-image"
+                          />
+                        </button>
                         {isLongPress &&
                         activeCategory === newData.subCategoryListingId ? (
                           <>
@@ -339,7 +345,14 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
                                 <span className="icn-display-block">
                                   {newData.subCategoryLocation ? (
                                     <>
-                                      <i className="icon-location icon-class"></i>
+                                      <a
+                                        href={newData.subCategoryLocation}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="underLine_Text"
+                                      >
+                                        <i className="icon-location icon-class"></i>
+                                      </a>
                                       <span className="main-options">
                                         Direction
                                       </span>

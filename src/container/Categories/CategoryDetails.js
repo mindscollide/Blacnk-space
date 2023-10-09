@@ -23,7 +23,7 @@ const CategoryDetails = () => {
 
   //state for businessDetails
   const [businessDetails, setBusinessDetails] = useState("");
-  console.log(businessDetails, "businessDetailsbusinessDetails");
+  console.log({ businessDetails }, "businessDetailsbusinessDetails");
 
   // STATE FOR LOADER
   const [showLoader, setShowLoader] = useState(false);
@@ -31,7 +31,7 @@ const CategoryDetails = () => {
   // state for businessDetail page
   const [stateBusinessDetail, setStateBusinessDetails] = useState({
     BusinessListingID: {
-      value: "BUL_0x3e5e687cb03c786f:0x274efccd6d482c69",
+      value: "BUL_0x3e5e66548a59d1b7:0xe0a04808a11316b6",
       errorMessage: "",
       errorStatus: false,
     },
@@ -91,22 +91,8 @@ const CategoryDetails = () => {
               >
                 <SwiperSlide>
                   <img
-                    src={categoryImg}
-                    alt="category 1"
-                    className="slide-Image"
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img
-                    src={categoryImg2}
-                    alt="category 2"
-                    className="slide-Image"
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img
-                    src={categoryImg3}
-                    alt="category 3"
+                    src={`data:image/jpeg;base64,${businessDetails.listOfBase64Images}`}
+                    alt="Slider"
                     className="slide-Image"
                   />
                 </SwiperSlide>
@@ -267,7 +253,7 @@ const CategoryDetails = () => {
 
       <Row className="mt-5">
         <Col lg={12} md={12} sm={12}>
-          <Footer categoryListing={businessDetails} />
+          <Footer businessDetails={businessDetails} />
         </Col>
       </Row>
 

@@ -267,25 +267,12 @@ const SwiperLongpress = ({ listingData }) => {
                   <>
                     <SwiperSlide>
                       <button
-                        // pdfIcon={
-                        //   <>
-                        //     <img
-                        //       src={`data:image/jpeg;base64,${
-                        //         newData.businessListingIcon
-                        //       } ${"classNameImage"}`}
-                        //       alt="Icon"
-                        //     />
-                        //   </>
-                        // }
-                        // src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
-                        // alt="Icon"
                         id={`swiper-section ${newData.businessListingId}`}
                         className={`Swipper-slide-box ${
                           activeCategory === newData.businessListingId
                             ? "active"
                             : ""
                         }`}
-                        // onClick={() => navigate("/Category")}
                         onClick={() => {
                           console.log();
                           setTimeout(() => {
@@ -294,7 +281,13 @@ const SwiperLongpress = ({ listingData }) => {
                           setActiveCategory(newData.businessListingId);
                         }}
                         {...longPressEvent}
-                      ></button>
+                      >
+                        <img
+                          src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
+                          alt="Icon"
+                          className="Swipper-slide-box-image"
+                        />
+                      </button>
                       {isLongPress &&
                       activeCategory === newData.businessListingId ? (
                         <>
@@ -346,7 +339,14 @@ const SwiperLongpress = ({ listingData }) => {
                               <span className="icn-display-block">
                                 {newData.businessLocation ? (
                                   <>
-                                    <i className="icon-location icon-class"></i>
+                                    <a
+                                      href={newData.businessLocation}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="underLine_Text"
+                                    >
+                                      <i className="icon-location icon-class"></i>
+                                    </a>
                                     <span className="main-options">
                                       Direction
                                     </span>

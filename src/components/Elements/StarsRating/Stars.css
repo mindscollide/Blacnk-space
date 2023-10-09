@@ -1,12 +1,12 @@
 .star-icon {
-  color: #ddd;
-  font-size: 2em;
+  color: #d00510;
+  font-size: 1.2em;
   position: relative;
 }
 
 .star-icon.full:before {
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
-  color: #fac800;
+  color: #d00510;
   content: "\2605"; /* Full star in UTF-8 */
   position: absolute;
   left: 0;
@@ -15,7 +15,7 @@
 
 .star-icon.half:before {
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
-  color: #fac800;
+  color: #d00510;
   content: "\2605"; /* Full star in UTF-8 */
   position: absolute;
   left: 0;

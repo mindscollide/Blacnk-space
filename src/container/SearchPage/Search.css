@@ -4,6 +4,7 @@
   z-index: 3;
   background-color: #000000;
   width: 100%;
+  margin: 0px 95px;
 }
 
 .Search-slide-box {
@@ -23,6 +24,10 @@
   font-family: "Bebas Neue", sans-serif;
   font-size: 1.3rem;
   text-transform: uppercase;
+}
+
+.Search-Highlighted-text {
+  background-color: #d00510 !important;
 }
 
 .Container {
@@ -76,12 +81,14 @@
 
 .rating-icons {
   color: #d00510 !important;
-  font-size: 18px !important;
+  display: flex !important;
 }
 
 .listing-Review {
+  font-family: "Bahnschrift", sans-serif !important;
   color: #ffffff !important;
-  margin-left: 5px !important;
+  margin-left: 10px !important;
+  margin-top: 5px;
 }
 
 .Review-Text {
@@ -124,5 +131,14 @@
     font-size: 16px;
     text-transform: uppercase;
     font-family: "Bahnschrift", sans-serif;
+  }
+
+  .Search-header {
+    position: fixed !important;
+    top: 0 !important;
+    z-index: 3;
+    background-color: #000000;
+    width: 100% !important;
+    margin: 0px 0px;
   }
 }

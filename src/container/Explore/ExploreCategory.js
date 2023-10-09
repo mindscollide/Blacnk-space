@@ -112,8 +112,8 @@ const ExploreCategory = () => {
       pageNumber: 1,
       isAutomatic: false,
       ParentCategoryID: "CDL_1",
-      UserLatitude: "",
-      UserLongitude: "",
+      UserLatitude: "24.502",
+      UserLongitude: "54.388",
       // Update this dynamically
     };
 

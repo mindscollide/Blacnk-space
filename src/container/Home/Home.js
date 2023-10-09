@@ -97,8 +97,8 @@ const Home = () => {
       UserID: dashboardData.userID.value,
       pageNumber: dashboardData.pageNumber.value,
       isAutomatic: dashboardData.isAutomatic.value,
-      UserLatitude: "24.9066669",
-      UserLongitude: "67.066448",
+      UserLatitude: "24.502",
+      UserLongitude: "54.388",
     };
     setAutoCheck(false);
     dispatch(getdashboardApi(Data, false));

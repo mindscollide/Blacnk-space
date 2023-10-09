@@ -101,14 +101,14 @@ const Header = () => {
       <input
         // style={{ display: "none" }}
         id="latitude"
-        // onChange={(e) => dispatch(latitudeData(e))}
+        onChange={(e) => dispatch(latitudeData(e))}
         // this is our reducer state reducer name location
         value={actionReducer.locationLatitude}
       ></input>
       <input
         // style={{ display: "none" }}
         id="longitude"
-        // onChange={(e) => dispatch(longitudeData(e))}
+        onChange={(e) => dispatch(longitudeData(e))}
         // this is our reducer state reducer name location
         value={actionReducer.locationLongitude}
       ></input>
