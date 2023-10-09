@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {
   updateFavoriteApi,
   likeUnlikeApi,
+  businessDetailsMainApi,
 } from "../../../store/Actions/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -114,10 +115,19 @@ const SwiperLongpress = ({ listingData }) => {
     setTimeout(() => setIsLongPress(false), 8000);
   };
 
-  const onClick = () => {
+  const detailBusiness = (businessData) => {
     console.log("click is triggered");
     setClickCount(clickCount + 1);
-    navigate("/Category");
+
+    if (businessData && businessData.businessListingId) {
+      let newBusinessIdData = {
+        BusinessListingID: businessData.businessListingId,
+      };
+      console.log(newBusinessIdData, "newBusinessIdDatanewBusinessIdData");
+      dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
+    } else {
+      console.error("businessData or businessListingId is undefined.");
+    }
   };
 
   //for Favorite icon toggle onclick
@@ -200,7 +210,7 @@ const SwiperLongpress = ({ listingData }) => {
   };
   const longPressEvent = useLongPressClick(
     onLongPress,
-    onClick,
+    detailBusiness,
     defaultOptions
   );
 
@@ -273,12 +283,16 @@ const SwiperLongpress = ({ listingData }) => {
                             ? "active"
                             : ""
                         }`}
-                        onClick={() => {
-                          console.log();
-                          setTimeout(() => {
-                            setActiveCategory(null);
-                          }, 80000);
-                          setActiveCategory(newData.businessListingId);
+                        onClick={(e) => {
+                          if (!isLongPress) {
+                            detailBusiness(newData);
+                          } else if (isLongPress) {
+                            setTimeout(() => {
+                              setActiveCategory(null);
+                            }, 3000);
+                            setActiveCategory(newData.businessListingId);
+                            e.preventDefault();
+                          }
                         }}
                         {...longPressEvent}
                       >

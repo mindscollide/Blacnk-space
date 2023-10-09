@@ -27,6 +27,8 @@ const ExploreCategory = () => {
   console.log(actionReducer, "jsdvdjsvhjdvjshdv");
   const [isHeadingFood, setIsHeadingFood] = useState(false);
 
+  let businessID = localStorage.getItem("BusinessExploreID");
+
   const [isHome, setIsHome] = useState(false);
 
   //state for active longPress event

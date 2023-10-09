@@ -1156,13 +1156,13 @@ const businessDetailsFail = (message) => {
 };
 
 //FOR businessDeatils Main API
-const businessDetailsMainApi = (newBusinessData) => {
+const businessDetailsMainApi = (navigate, newBusinessIdData) => {
   let Token = JSON.parse(localStorage.getItem("token"));
   return (dispatch) => {
     dispatch(businessDetailsInit());
     let form = new FormData();
     form.append("RequestMethod", businessDetailApi.RequestMethod);
-    form.append("RequestData", JSON.stringify(newBusinessData));
+    form.append("RequestData", JSON.stringify(newBusinessIdData));
     axios({
       method: "POST",
       url: authenticationAPI,
@@ -1175,7 +1175,7 @@ const businessDetailsMainApi = (newBusinessData) => {
         console.log("explore Category Api", response);
         if (response.data.responseCode === 417) {
           await dispatch(refreshTokenApi());
-          dispatch(businessDetailsMainApi(newBusinessData));
+          dispatch(businessDetailsMainApi(newBusinessIdData));
         } else if (response.data.responseCode === 200) {
           if (response.data.responseResult.isExecuted === true) {
             if (
@@ -1192,6 +1192,7 @@ const businessDetailsMainApi = (newBusinessData) => {
                   "Updated successfully"
                 )
               );
+              navigate("/Category");
               console.log(businessDetailsSuccess, "SearchSuccessssss");
             } else if (
               response.data.responseResult.responseMessage

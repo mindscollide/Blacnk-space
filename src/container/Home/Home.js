@@ -56,6 +56,7 @@ const Home = () => {
       errorStatus: false,
     },
   });
+
   const [autoCheck, setAutoCheck] = useState(false);
   // state for dashboard Title, swiper, swiperLabel
   const [dashboardInformation, setDashboardInformation] = useState([]);
@@ -88,7 +89,7 @@ const Home = () => {
     defaultOptionsFood
   );
 
-  const onClickExploreCategory = () => {
+  const onClickExploreCategory = (exploreId) => {
     navigate("/ExploreCategory");
   };
 
@@ -97,15 +98,17 @@ const Home = () => {
       UserID: dashboardData.userID.value,
       pageNumber: dashboardData.pageNumber.value,
       isAutomatic: dashboardData.isAutomatic.value,
-      UserLatitude: "24.502",
-      UserLongitude: "54.388",
+      UserLatitude: "24.9066669",
+      UserLongitude: "67.066448",
     };
     setAutoCheck(false);
     dispatch(getdashboardApi(Data, false));
   }, []);
 
   useEffect(() => {
+    console.log("actionReducer call on location change");
     if (actionReducer.locationLatitude && actionReducer.locationLongitude) {
+      console.log("actionReducer call on location change");
       let Data = {
         UserID: dashboardData.userID.value,
         pageNumber: dashboardData.pageNumber.value,
@@ -117,7 +120,7 @@ const Home = () => {
           ? actionReducer.locationLongitude.toString()
           : "",
       };
-      // alert("actionReducer call on location change", Data);
+      console.log("actionReducer call on location change", Data);
       dispatch(getdashboardApi(Data));
       setAutoCheck(true);
       setDashboardData({
@@ -179,7 +182,7 @@ const Home = () => {
                   className="d-flex justify-content-between"
                 >
                   <label
-                    id={`food-label ${index}`}
+                    id={`food-label ${listing.categoryID}`}
                     className={`heading-title-h1 mouse-cursor-heading ${
                       activeCategory === index ? "active" : ""
                     }`}
@@ -222,7 +225,10 @@ const Home = () => {
           );
         })}
 
-        {actionReducer.Loading ? <Loader /> : null}
+        {actionReducer.Loading ? (
+          // ||(actionReducer.locationLongitude&&actionReducer.locationLatitude)
+          <Loader />
+        ) : null}
       </Fragment>
     </Container>
   );

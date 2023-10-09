@@ -8,6 +8,7 @@ import { StarFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import {
   updateFavoriteApi,
   likeUnlikeApi,
+  businessDetailsMainApi,
 } from "../../../store/Actions/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
@@ -179,10 +180,18 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
     dispatch(likeUnlikeApi(newLike));
   };
 
-  const onClick = () => {
+  const onClick = (exploreData) => {
     console.log("click is triggered");
     setClickCount(clickCount + 1);
-    navigate("/Category");
+    if (exploreData && exploreData.subCategoryListingId) {
+      let newBusinessIdData = {
+        BusinessListingID: exploreData.subCategoryListingId,
+      };
+      console.log(newBusinessIdData, "newBusinessIdDatanewBusinessIdData");
+      dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
+    } else {
+      console.error("exploreDatabusinessListingId");
+    }
   };
   useEffect(() => {
     if (
@@ -280,6 +289,7 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
                               : ""
                           }`}
                           onClick={() => {
+                            onClick(newData);
                             setTimeout(() => {
                               setActiveCategory(null);
                             }, 2000);

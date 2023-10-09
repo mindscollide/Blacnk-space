@@ -8,6 +8,7 @@ import { StarFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import {
   updateFavoriteApi,
   likeUnlikeApi,
+  businessDetailsMainApi,
 } from "../../../store/Actions/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
@@ -175,10 +176,18 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
     setTimeout(() => setIsLongPress(false), 3000);
   };
 
-  const onClick = () => {
+  const onClick = (favoriteData) => {
     console.log("click is triggered");
     setClickCount(clickCount + 1);
-    navigate("/Category");
+    if (favoriteData && favoriteData.businessListingId) {
+      let newBusinessIdData = {
+        BusinessListingID: favoriteData.businessListingId,
+      };
+      console.log(newBusinessIdData, "newBusinessIdDatanewBusinessIdData");
+      dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
+    } else {
+      console.error("businessData or businessListingId is undefined.");
+    }
   };
 
   useEffect(() => {
@@ -263,23 +272,30 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
                 return (
                   <>
                     <SwiperSlide key={newData.businessListingId}>
-                      <img
+                      <button
                         src={`data:image/jpeg;base64,${newData.businessListingId}`}
                         alt="Icon"
                         id={`swiper-section ${newData.businessListingId}`}
-                        className={`Swipper-slide-box ${
+                        className={`Swipper-slide-box-fav ${
                           activeCategory === newData.businessListingId
                             ? "active"
                             : ""
                         }`}
                         onClick={() => {
+                          onClick(newData);
                           setTimeout(() => {
                             setActiveCategory(null);
                           }, 2000);
                           setActiveCategory(newData.businessListingId);
                         }}
                         {...longPressEvent}
-                      ></img>
+                      >
+                        <img
+                          src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
+                          alt="Icon"
+                          className="Swipper-slide-box-Fav-category-image"
+                        />
+                      </button>
                       {isLongPress &&
                       activeCategory === newData.businessListingId ? (
                         <>
