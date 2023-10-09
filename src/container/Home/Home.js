@@ -105,9 +105,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    console.log("actionReducer call on location change");
     if (actionReducer.locationLatitude && actionReducer.locationLongitude) {
-      console.log("actionReducer call on location change");
       let Data = {
         UserID: dashboardData.userID.value,
         pageNumber: dashboardData.pageNumber.value,
@@ -119,7 +117,7 @@ const Home = () => {
           ? actionReducer.locationLongitude.toString()
           : "",
       };
-      console.log("actionReducer call on location change", Data);
+      // alert("actionReducer call on location change", Data);
       dispatch(getdashboardApi(Data));
       setAutoCheck(true);
       setDashboardData({
