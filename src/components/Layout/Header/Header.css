@@ -41,6 +41,14 @@
   cursor: pointer;
 }
 
+.home-icon-color {
+  display: inline-block;
+  vertical-align: middle;
+  color: #ffffff !important;
+  font-size: 30px !important;
+  cursor: pointer;
+}
+
 @media (max-width: 650px) {
   .navlink_text {
     font-family: "Bebas Neue", sans-serif;

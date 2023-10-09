@@ -55,3 +55,22 @@ export const GET_ALL_SUB_CATEGORY_PARENT_FAIL =
 export const LIKE_UNLIKE_BUSINESS_INIT = "LIKE_UNLIKE_BUSINESS_INIT";
 export const LIKE_UNLIKE_BUSINESS_SUCCESS = "LIKE_UNLIKE_BUSINESS_SUCCESS";
 export const LIKE_UNLIKE_BUSINESS_FAIL = "LIKE_UNLIKE_BUSINESS_FAIL";
+
+//For seacrhApi Blancspace
+export const SEARCH_BLANCSPACE_INIT = "SEARCH_BLANCSPACE_INIT";
+export const SEARCH_BLANCSPACE_SUCCESS = "SEARCH_BLANCSPACE_SUCCESS";
+export const SEARCH_BLANCSPACE_FAIL = "SEARCH_BLANCSPACE_FAIL";
+
+// for category filtering data in search
+export const FILTER_DATA = "FILTER_DATA";
+
+// for business details
+export const BUSINESS_DETAIL_INIT = "BUSINESS_DETAIL_INIT";
+export const BUSINESS_DETAIL_SUCCESS = "BUSINESS_DETAIL_SUCCESS";
+export const BUSINESS_DETAIL_FAIL = "BUSINESS_DETAIL_FAIL";
+
+// for hidden Inputs for latitude and Longitude
+export const LONGITUTDE_LOCATION_DATA = "LONGITUTDE_LOCATION_DATA";
+
+// for hidden Inputs for latitude and Latitude
+export const LATITUDE_LOCATION_DATA = "LATITUDE_LOCATION_DATA";

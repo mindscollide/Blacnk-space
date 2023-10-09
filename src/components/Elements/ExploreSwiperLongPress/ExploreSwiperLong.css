@@ -53,6 +53,26 @@
   color: #ffffff;
 }
 
+.IconExplore-disabled-Call,
+.IconExplore-disabled-Direction {
+  font-size: 18px !important;
+  color: #ffffff !important;
+  opacity: 0.3 !important;
+  pointer-events: none !important;
+  cursor: none !important;
+}
+
+.disable-Exploremain-options {
+  display: block;
+  justify-content: center !important;
+  color: #ffffff !important;
+  opacity: 0.3 !important;
+  font-size: 10px !important;
+  font-family: "Bahnschrift", sans-serif;
+  font-weight: 600;
+  pointer-events: none !important;
+}
+
 .icn-display-block-share {
   padding: 4px 10px;
   text-align: center;

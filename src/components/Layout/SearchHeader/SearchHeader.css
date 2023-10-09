@@ -67,8 +67,16 @@
 .dropdown-main-div {
   position: absolute;
   /* inset: 0px auto auto 0px; */
-  margin: 10px 0px;
-  transform: translate(0px, 15px);
+  transform: translate(-80px, 20px);
+  background-color: #d00510;
+  border: 1px solid #5b5a5a;
+  border-radius: 8px;
+}
+
+.dropdown-main-div-category {
+  position: absolute;
+  /* inset: 0px auto auto 0px; */
+  transform: translate(0px, 20px);
   background-color: #d00510;
   border: 1px solid #5b5a5a;
   border-radius: 8px;
@@ -122,13 +130,13 @@
 @media (max-width: 650px) {
   .top-result-heading {
     font-family: "Bebas Neue", sans-serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #fff500;
   }
 
   .sortby-heading {
     color: #fff500;
-    font-size: 12px;
+    font-size: 10px;
     margin-top: 2px !important;
     font-family: "Bahnschrift", sans-serif;
   }

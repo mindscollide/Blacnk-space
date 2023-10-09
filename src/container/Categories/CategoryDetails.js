@@ -1,9 +1,11 @@
 import { Fragment, useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { Button, Loader } from "./../../components/Elements";
+import { Button, Loader, StarRating } from "./../../components/Elements";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
+import { businessDetailsMainApi } from "../../store/Actions/Actions";
+import { useDispatch, useSelector } from "react-redux";
 import { Footer } from "../../components/Layout";
 import categoryImg from "./../../assets/Images/cat-detail-slide.jpg";
 import categoryImg2 from "./../../assets/Images/cat-detail-slide2.jpg";
@@ -15,9 +17,45 @@ import "./CategoryDetails.css";
 
 const CategoryDetails = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { actionReducer } = useSelector((state) => state);
+  console.log(actionReducer, "actionNation");
+
+  //state for businessDetails
+  const [businessDetails, setBusinessDetails] = useState("");
+  console.log(businessDetails, "businessDetailsbusinessDetails");
 
   // STATE FOR LOADER
   const [showLoader, setShowLoader] = useState(false);
+
+  // state for businessDetail page
+  const [stateBusinessDetail, setStateBusinessDetails] = useState({
+    BusinessListingID: {
+      value: "BUL_0x3e5e687cb03c786f:0x274efccd6d482c69",
+      errorMessage: "",
+      errorStatus: false,
+    },
+  });
+
+  // const rating = 2.5;
+
+  useEffect(() => {
+    let newBusinessData = {
+      BusinessListingID: stateBusinessDetail.BusinessListingID.value,
+    };
+    dispatch(businessDetailsMainApi(newBusinessData));
+  }, []);
+
+  useEffect(() => {
+    if (
+      actionReducer.businessListing !== null &&
+      actionReducer.businessListing !== undefined
+    ) {
+      setBusinessDetails(actionReducer.businessListing);
+    }
+  }, []);
+
+  console.log(actionReducer.businessListing, "actionReducerhashshsh");
 
   const clickHomeHandler = () => {
     navigate("/");
@@ -81,15 +119,15 @@ const CategoryDetails = () => {
         <Row className="mb-4 margin-top-403">
           <Col lg={6} md={6} sm={6} xs={6} className="mt-2">
             <span className="title-emirates-heading">
-              Emirates Tours & Safari LLC
+              {businessDetails.name}
             </span>
             <Row className="mb-3">
               <Col lg={6} md={6} sm={12} xs={12}>
+                {/* <span>{businessDetails.rating}</span> */}
                 <span>
-                  <i className="icon-star-fill review-start-color"></i>
-                  <i className="icon-star-fill review-start-color"></i>
-                  <i className="icon-star-fill review-start-color"></i>
-                  <i className="icon-star-fill review-text">(20 REVIEWS)</i>
+                  {/* <StarRating rating={rating} /> */}
+                  <StarRating rating={businessDetails.rating} />
+                  {businessDetails.reviews}
                 </span>
               </Col>
             </Row>
@@ -110,7 +148,10 @@ const CategoryDetails = () => {
             <div className="line-height">
               <div className="package-start-heading">PACKAGES STARTS</div>
               <div className="package-start-heading">
-                From <span className="five-dollar-title">5$</span>
+                From{" "}
+                <span className="five-dollar-title">
+                  ${businessDetails.packageStarts}
+                </span>
               </div>
               {/* <div className="five-dollar-title">5$</div> */}
             </div>
@@ -121,12 +162,7 @@ const CategoryDetails = () => {
 
         <Row>
           <Col lg={12} md={12} sm={12}>
-            <p className="para-text">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-            </p>
+            <p className="para-text">{businessDetails.aboutUs}</p>
           </Col>
         </Row>
         <Row>
@@ -134,13 +170,20 @@ const CategoryDetails = () => {
             <Button
               icon={<i className="icon-call call-etc-icons-sizes"></i>}
               className="buttons-call-etc"
-            />
+              onClick={() =>
+                window.open(businessDetails.contactNumber, "_blank")
+              }
+            ></Button>
             <Button
               icon={<i className="icon-location  call-etc-icons-sizes"></i>}
               className="buttons-call-etc"
-            />
+              onClick={() => window.open(businessDetails.location, "_blank")}
+            >
+              {/* {businessDetails.location} */}
+            </Button>
             <Button
               icon={<i className="icon-web call-etc-icons-sizes"></i>}
+              onClick={() => window.open(businessDetails.website, "_blank")}
               className="buttons-call-etc"
             />{" "}
             <Button
@@ -162,7 +205,8 @@ const CategoryDetails = () => {
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <div className="what-we-offer-bullets ">
-              <span className="what-we-offer-subtitles">
+              {businessDetails.offering}
+              {/* <span className="what-we-offer-subtitles">
                 1. montmartre Neighoborhood had a charming, behemian feel with
                 lots of quaint shops and cafes.
               </span>
@@ -174,7 +218,7 @@ const CategoryDetails = () => {
               <span className="what-we-offer-subtitles">
                 5. Accommodation booking.
               </span>
-              <span className="what-we-offer-subtitles">6. Local guides.</span>
+              <span className="what-we-offer-subtitles">6. Local guides.</span> */}
             </div>
           </Col>
         </Row>
@@ -223,7 +267,7 @@ const CategoryDetails = () => {
 
       <Row className="mt-5">
         <Col lg={12} md={12} sm={12}>
-          <Footer />
+          <Footer categoryListing={businessDetails} />
         </Col>
       </Row>
 

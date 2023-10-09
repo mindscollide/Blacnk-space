@@ -54,6 +54,16 @@ const likeUnlikeBusinessApi = {
   RequestMethod: "ServiceManager.LikeUnLikeBusinessListings",
 };
 
+//For blancspace search Api
+const searchBlancspace = {
+  RequestMethod: "ServiceManager.Search",
+};
+
+// FOR Blancspace business Details page API
+const businessDetailApi = {
+  RequestMethod: "ServiceManager.BusinessListingByBusinessListingID",
+};
+
 export {
   getDashboardDataApi,
   authRefreshToken,
@@ -65,4 +75,6 @@ export {
   blockUnblockApi,
   getAllSubCategoryParent,
   likeUnlikeBusinessApi,
+  searchBlancspace,
+  businessDetailApi,
 };

@@ -86,7 +86,7 @@ const SubCategories = () => {
   });
 
   // state for loader
-  const [showLoader, setShowLoader] = useState(false);
+  // const [showLoader, setShowLoader] = useState(false);
   let CategoryId = localStorage.getItem("CGID");
   const [showMessage, setShowMessage] = useState(false);
   const [entertainmentMessage, setEntertainmentMessage] = useState(false);
@@ -294,13 +294,13 @@ const SubCategories = () => {
     }
   }, [actionReducer.getParentCategory]);
 
-  useEffect(() => {
-    setShowLoader(true);
+  // useEffect(() => {
+  //   setShowLoader(true);
 
-    setTimeout(() => {
-      setShowLoader(false);
-    }, 3000);
-  }, []);
+  //   setTimeout(() => {
+  //     setShowLoader(false);
+  //   }, 3000);
+  // }, []);
 
   //   const onClickExplore = () => {
   //     navigate("/");
@@ -311,21 +311,14 @@ const SubCategories = () => {
     <Fragment>
       <Row>
         <Col>
-          {isHome ? (
-            <>
-              <Header />
-              <UserInfo />
-            </>
-          ) : (
-            <>
-              <div className="Sub-Categories-header">
-                <Container>
-                  <SubCategoryHeader />
-                  <SubCategoryUser />
-                </Container>
-              </div>
-            </>
-          )}
+          <>
+            <div className="Sub-Categories-header">
+              <Container>
+                <Header />
+                <UserInfo />
+              </Container>
+            </div>
+          </>
         </Col>
       </Row>
       <Container>
@@ -433,11 +426,12 @@ const SubCategories = () => {
               : null}
           </Col>
         </Row>
-        {showLoader && (
+        {/* {showLoader && (
           <div className="loader-overlay">
             <Loader />
           </div>
-        )}
+        )} */}
+        {actionReducer.Loading ? <Loader /> : null}
       </Container>
     </Fragment>
   );

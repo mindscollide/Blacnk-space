@@ -13,6 +13,8 @@ import SwiperLoading from "./SwiperLoading/SwiperLoading";
 import UseLazyLoad from "./UseLazyLoad/UseLazyLoad";
 import ExploreSwiperLong from "./ExploreSwiperLongPress/ExploreSwiperLong";
 import FavoriteSwiperLong from "./FavoriteSwiperLongPress/FavoriteSwiperLong";
+import HighlightedText from "./SearchHighlight/HighlightSearch";
+import StarRating from "./StarsRating/Stars";
 
 export {
   Button,
@@ -30,4 +32,6 @@ export {
   UseLazyLoad,
   ExploreSwiperLong,
   FavoriteSwiperLong,
+  HighlightedText,
+  StarRating,
 };

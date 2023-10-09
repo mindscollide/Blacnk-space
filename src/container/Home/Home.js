@@ -40,13 +40,23 @@ const Home = () => {
       errorMessage: "",
       errorStatus: false,
     },
+    UserLatitude: {
+      value: "",
+      errorMessage: "",
+      errorStatus: false,
+    },
+    UserLongitude: {
+      value: "",
+      errorMessage: "",
+      errorStatus: false,
+    },
     isAutomatic: {
       value: false,
       errorMessage: "",
       errorStatus: false,
     },
   });
-
+  const [autoCheck, setAutoCheck] = useState(false);
   // state for dashboard Title, swiper, swiperLabel
   const [dashboardInformation, setDashboardInformation] = useState([]);
 
@@ -83,32 +93,74 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setShowLoader(true);
-
-    setTimeout(() => {
-      setShowLoader(false);
-    }, 3000);
-  }, []);
-
-  useEffect(() => {
     let Data = {
       UserID: dashboardData.userID.value,
       pageNumber: dashboardData.pageNumber.value,
       isAutomatic: dashboardData.isAutomatic.value,
+      UserLatitude: "24.9066669",
+      UserLongitude: "67.066448",
     };
-    dispatch(getdashboardApi(Data));
+    setAutoCheck(false);
+    dispatch(getdashboardApi(Data, false));
   }, []);
 
-  console.log("actionReducer", actionReducer);
+  useEffect(() => {
+    console.log("actionReducer call on location change");
+    if (actionReducer.locationLatitude && actionReducer.locationLongitude) {
+      console.log("actionReducer call on location change");
+      let Data = {
+        UserID: dashboardData.userID.value,
+        pageNumber: dashboardData.pageNumber.value,
+        isAutomatic: dashboardData.isAutomatic.value,
+        UserLatitude: actionReducer.locationLatitude
+          ? actionReducer.locationLatitude.toString()
+          : "",
+        UserLongitude: actionReducer.locationLongitude
+          ? actionReducer.locationLongitude.toString()
+          : "",
+      };
+      console.log("actionReducer call on location change", Data);
+      dispatch(getdashboardApi(Data));
+      setAutoCheck(true);
+      setDashboardData({
+        ...dashboardData,
+        UserLatitude: {
+          value: actionReducer.locationLatitude.toString(),
+        },
+        UserLongitude: {
+          value: actionReducer.locationLongitude.toString(),
+        },
+      });
+    }
+  }, [actionReducer.locationLatitude, actionReducer.locationLongitude]);
 
   // this is how I set data from reducer
   useEffect(() => {
-    if (
-      actionReducer.dashBoardListings !== null &&
-      actionReducer.dashBoardListings !== undefined &&
-      actionReducer.dashBoardListings.length !== 0
-    ) {
-      setDashboardInformation(actionReducer.dashBoardListings);
+    try {
+      if (actionReducer.dashBoardListings) {
+        console.log(
+          "actionReducer call on location autoCheck",
+          actionReducer.dashBoardListings
+        );
+        if (autoCheck) {
+          console.log(
+            "actionReducer call on location autoCheck",
+            actionReducer.dashBoardListings
+          );
+          setDashboardInformation(actionReducer.dashBoardListings);
+        } else {
+          // for lazy loading
+          console.log(
+            "actionReducer call on location autoCheck",
+            actionReducer.dashBoardListings
+          );
+          let newDAta = [...dashboardInformation];
+          newDAta.push(actionReducer.dashBoardListings);
+          setDashboardInformation(newDAta);
+        }
+      }
+    } catch {
+      console.log("error");
     }
   }, [actionReducer.dashBoardListings]);
 
@@ -121,7 +173,7 @@ const Home = () => {
           return (
             <>
               {/* Food Section */}
-              <Row className="mt-4">
+              <Row className="mt-5">
                 <Col
                   lg={12}
                   md={12}
@@ -159,20 +211,20 @@ const Home = () => {
               </Row>
               <Row>
                 <Col lg={12} md={12} sm={12}>
-                  {listing.dashBoardListings.length > 0 && (
-                    <SwiperLongpress listingData={listing.dashBoardListings} />
-                  )}
+                  {listing.dashBoardListings !== null &&
+                    listing.dashBoardListings !== undefined &&
+                    listing.dashBoardListings.length > 0 && (
+                      <SwiperLongpress
+                        listingData={listing.dashBoardListings}
+                      />
+                    )}
                 </Col>
               </Row>
             </>
           );
         })}
 
-        {showLoader && (
-          <div className="loader-overlay">
-            <Loader />
-          </div>
-        )}
+        {actionReducer.Loading ? <Loader /> : null}
       </Fragment>
     </Container>
   );

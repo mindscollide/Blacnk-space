@@ -35,7 +35,7 @@ const Favourite = () => {
   const [favoriteInformation, setFavoriteInformation] = useState([]);
 
   // state for Loader
-  const [showLoader, setShowLoader] = useState(false);
+  // const [showLoader, setShowLoader] = useState(false);
 
   //this state is for Favourite
   const [favoriteData, setFavoriteData] = useState({
@@ -92,33 +92,26 @@ const Favourite = () => {
 
   console.log("explore Data Information", favoriteData);
 
-  useEffect(() => {
-    setShowLoader(true);
+  // useEffect(() => {
+  //   setShowLoader(true);
 
-    setTimeout(() => {
-      setShowLoader(false);
-    }, 3000);
-  }, []);
+  //   setTimeout(() => {
+  //     setShowLoader(false);
+  //   }, 3000);
+  // }, []);
 
   return (
     <Fragment>
       <Row>
         <Col>
-          {isHome ? (
-            <>
-              <Header />
-              <UserInfo />
-            </>
-          ) : (
-            <>
-              <div className="Explore-header">
-                <Container>
-                  <ExploreHeader />
-                  <ExploreUser />
-                </Container>
-              </div>
-            </>
-          )}
+          <>
+            <div className="Explore-header">
+              <Container>
+                <Header />
+                <UserInfo />
+              </Container>
+            </div>
+          </>
         </Col>
       </Row>
       <Container>
@@ -175,11 +168,12 @@ const Favourite = () => {
                 );
               })}
 
-              {showLoader && (
+              {/* {showLoader && (
                 <div className="loader-overlay">
                   <Loader />
                 </div>
-              )}
+              )} */}
+              {actionReducer.Loading ? <Loader /> : null}
             </Col>
           </Row>
         </Fragment>
