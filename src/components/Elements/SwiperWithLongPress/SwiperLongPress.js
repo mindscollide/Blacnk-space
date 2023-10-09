@@ -8,7 +8,11 @@ import {
   likeUnlikeApi,
 } from "../../../store/Actions/Actions";
 import { useDispatch, useSelector } from "react-redux";
-import { StarFill, HandThumbsUpFill } from "react-bootstrap-icons";
+import {
+  StarFill,
+  HandThumbsUpFill,
+  TelephoneXFill,
+} from "react-bootstrap-icons";
 import "swiper/css";
 import "./SwiperLongPress.css";
 
@@ -100,6 +104,7 @@ const SwiperLongpress = ({ listingData }) => {
 
   const [longData, setLongData] = useState(listingData);
   const [activeCategory, setActiveCategory] = useState(0);
+  console.log(activeCategory, "categoryyyyyiisss");
 
   const [clickCount, setClickCount] = useState(0);
 
@@ -116,9 +121,9 @@ const SwiperLongpress = ({ listingData }) => {
   };
 
   //for Favorite icon toggle onclick
-  const toggleIcon = (checked, CardData) => {
+  const toggleIcon = (checked, CardData, favIndex) => {
     console.log(checked, "checkedcheckedchecked");
-    setStarIconVisible(!starIconVisible);
+    // setStarIconVisible(!starIconVisible);
     let favoriteItem = CardData.businessListingId;
     let otherIdss = [];
     longData
@@ -128,6 +133,19 @@ const SwiperLongpress = ({ listingData }) => {
       .map((newData, index) => {
         otherIdss.push(newData.businessListingId);
       });
+
+    let copyCategoryInformation = [...longData];
+    let getFavSubCategoryIndex = copyCategoryInformation.findIndex(
+      (data, index) => index === favIndex
+    );
+    // this will update the each subCategory
+    let updatedCategory = {
+      ...copyCategoryInformation[getFavSubCategoryIndex],
+    };
+    console.log(updatedCategory, "updatedCategoryupdatedCategory");
+    updatedCategory.isFavorite = checked;
+    copyCategoryInformation[getFavSubCategoryIndex] = updatedCategory;
+    setLongData(copyCategoryInformation);
     let newUpdateFavorite = {
       AddRemoveFavoriteBusinessEnum: checked === true ? 1 : 2,
       UserID: updateFavorite.UserID.value,
@@ -249,13 +267,27 @@ const SwiperLongpress = ({ listingData }) => {
                   <>
                     <SwiperSlide>
                       <button
+                        // pdfIcon={
+                        //   <>
+                        //     <img
+                        //       src={`data:image/jpeg;base64,${
+                        //         newData.businessListingIcon
+                        //       } ${"classNameImage"}`}
+                        //       alt="Icon"
+                        //     />
+                        //   </>
+                        // }
+                        // src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
+                        // alt="Icon"
                         id={`swiper-section ${newData.businessListingId}`}
                         className={`Swipper-slide-box ${
                           activeCategory === newData.businessListingId
                             ? "active"
                             : ""
                         }`}
+                        // onClick={() => navigate("/Category")}
                         onClick={() => {
+                          console.log();
                           setTimeout(() => {
                             setActiveCategory(null);
                           }, 80000);
@@ -296,23 +328,48 @@ const SwiperLongpress = ({ listingData }) => {
                                 <span className="main-options">Like</span> */}
                               </span>
                               <span className="icn-display-block">
-                                <i className="icon-call icon-class"></i>
-                                <span className="main-options">Call</span>
+                                {newData.businessContactNumber ? (
+                                  <>
+                                    <i className="icon-call icon-class"></i>
+                                    <span className="main-options">Call</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <i className="icon-call Icon-disabled-Call"></i>
+                                    <span className="disable-main-options">
+                                      {" "}
+                                      Call
+                                    </span>
+                                  </>
+                                )}
                               </span>
                               <span className="icn-display-block">
-                                <i className="icon-location icon-class"></i>
-                                <span className="main-options">Direction</span>
+                                {newData.businessLocation ? (
+                                  <>
+                                    <i className="icon-location icon-class"></i>
+                                    <span className="main-options">
+                                      Direction
+                                    </span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <i className="icon-location Icon-disabled-Direction"></i>
+                                    <span className="disable-main-options">
+                                      Direction
+                                    </span>
+                                  </>
+                                )}
                               </span>
                               <span className="icn-display-block">
                                 <i className="icon-share icon-class"></i>
                                 <span className="main-options">Share</span>
                               </span>
                               <span className="icn-display-block-share">
-                                {starIconVisible ? (
+                                {newData.isFavorite ? (
                                   <>
                                     <span
                                       onClick={(checked) =>
-                                        toggleIcon(false, newData)
+                                        toggleIcon(false, newData, index)
                                       }
                                     >
                                       <StarFill className="icon-class" />
@@ -326,7 +383,7 @@ const SwiperLongpress = ({ listingData }) => {
                                     {" "}
                                     <span
                                       onClick={(checked) =>
-                                        toggleIcon(true, newData)
+                                        toggleIcon(true, newData, index)
                                       }
                                     >
                                       <i className="icon-star icon-Favorite"></i>

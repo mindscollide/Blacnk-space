@@ -12,6 +12,12 @@ const initialState = {
   blockUnBlockCategory: "",
   getParentCategory: [],
   likeUnlikeBusiness: "",
+  searchListing: [],
+  searchListingCategory: [],
+  filterData: null,
+  businessListing: "",
+  locationLongitude: "",
+  locationLatitude: "",
 };
 
 const actionReducer = (state = initialState, action) => {
@@ -232,6 +238,73 @@ const actionReducer = (state = initialState, action) => {
         Loading: false,
         likeUnlikeBusiness: "",
         ResponseMessage: action.message,
+      };
+    }
+
+    case actions.SEARCH_BLANCSPACE_INIT: {
+      return {
+        Loading: true,
+      };
+    }
+
+    case actions.SEARCH_BLANCSPACE_SUCCESS: {
+      return {
+        Loading: false,
+        searchListing: action.response,
+        searchListingCategory: action.response2,
+        ResponseMessage: action.message,
+      };
+    }
+
+    case actions.SEARCH_BLANCSPACE_FAIL: {
+      return {
+        Loading: false,
+        searchListing: [],
+        searchListingCategory: [],
+        ResponseMessage: action.message,
+      };
+    }
+
+    case actions.BUSINESS_DETAIL_INIT: {
+      return {
+        Loading: true,
+      };
+    }
+
+    case actions.BUSINESS_DETAIL_SUCCESS: {
+      return {
+        Loading: false,
+        businessListing: action.response,
+        ResponseMessage: action.message,
+      };
+    }
+
+    case actions.BUSINESS_DETAIL_FAIL: {
+      return {
+        Loading: false,
+        businessListing: "",
+        ResponseMessage: action.message,
+      };
+    }
+
+    case actions.FILTER_DATA: {
+      return {
+        ...state,
+        filterData: action.payload,
+      };
+    }
+
+    case actions.LONGITUTDE_LOCATION_DATA: {
+      return {
+        ...state,
+        locationLongitude: action.payload,
+      };
+    }
+
+    case actions.LATITUDE_LOCATION_DATA: {
+      return {
+        ...state,
+        locationLatitude: action.payload,
       };
     }
 

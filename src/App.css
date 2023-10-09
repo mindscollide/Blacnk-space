@@ -137,8 +137,9 @@ body {
 .SitchOn-Category-Title {
   font-family: "Bebas Neue", sans-serif;
   font-size: 1.3rem !important;
-  font-weight: 600;
-  color: #2e2e2e !important;
+  font-weight: 500;
+  opacity: 0.3 !important;
+  color: #ffffff !important;
   pointer-events: none;
 }
 
@@ -166,6 +167,22 @@ body {
   font-family: "Bebas Neue", sans-serif;
   font-size: 1.3rem !important;
   color: #fff500;
+}
+
+:where(.css-dev-only-do-not-override-fpg3f5).ant-switch
+  .ant-switch-handle::before {
+  position: absolute;
+  top: 2px !important;
+  left: 2px !important;
+  bottom: 1px !important;
+  inset-inline-end: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  background-color: #fff;
+  border-radius: 9px;
+  box-shadow: 0 2px 4px 0 rgba(0, 35, 11, 0.2);
+  transition: all 0.2s ease-in-out;
+  content: "";
 }
 
 /* CATEGORIES SWITCHES HEADING BY SWITCH ON TOGGLE END*/
@@ -250,9 +267,9 @@ body {
 
   .SitchOn-Category-Title {
     font-family: "Bebas Neue", sans-serif;
-    font-size: 1.1rem !important;
-    font-weight: 600;
-    color: #2e2e2e !important;
+    opacity: 0.3 !important;
+    color: #ffffff !important;
+    font-weight: 500;
     pointer-events: none;
   }
 
@@ -281,4 +298,27 @@ body {
     font-weight: 600;
     color: #2e2e2e !important;
   }
+}
+.swiper-backface-hidden .swiper-slide {
+  transform: none !important;
+}
+
+/* For Button hover background color none  */
+/* .btn:hover {
+  color: var(--bs-btn-hover-color);
+  background-color: white !important;
+  border-color: #d00510 !important;
+} */
+
+.classNameImage {
+  object-fit: contain !important;
+  max-width: 77px;
+  max-height: 77px;
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid #d00510;
+  cursor: pointer;
+  display: flex;
+  /* max-width: 60px !important;
+  max-height: 77px !important; */
 }

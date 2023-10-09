@@ -10,7 +10,7 @@ const CustomButton = ({
   disableBtn,
   variant,
   size,
-  color,  
+  color,
   align,
   type,
   onChange,
@@ -18,6 +18,8 @@ const CustomButton = ({
   pdfIcon,
   pdfIconClass,
   iconClass,
+  imgIcon,
+  id,
 }) => {
   return (
     <>
@@ -32,10 +34,12 @@ const CustomButton = ({
         onChange={onChange}
         align={align}
         style={style}
+        id={id}
       >
         <span className={iconClass}>{icon}</span>
         {text}
         {icon2}
+        {imgIcon && <img src={imgIcon} alt="Icon" />}
         <img className={pdfIconClass} src={pdfIcon} />
       </Button>
     </>

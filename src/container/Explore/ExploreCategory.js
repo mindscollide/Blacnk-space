@@ -24,6 +24,7 @@ const ExploreCategory = () => {
   // const navigate = useNavigate();
   const dispatch = useDispatch();
   const { actionReducer } = useSelector((state) => state);
+  console.log(actionReducer, "jsdvdjsvhjdvjshdv");
   const [isHeadingFood, setIsHeadingFood] = useState(false);
 
   const [isHome, setIsHome] = useState(false);
@@ -35,7 +36,7 @@ const ExploreCategory = () => {
   const [exploreInformation, setExploreInformation] = useState([]);
 
   // state for Loader
-  const [showLoader, setShowLoader] = useState(false);
+  // const [showLoader, setShowLoader] = useState(false);
 
   //this state is for Explore Category
   const [exploreData, setExploreData] = useState({
@@ -45,7 +46,7 @@ const ExploreCategory = () => {
       errorStatus: false,
     },
     pageNumber: {
-      value: 1,
+      value: 0,
       errorMessage: "",
       errorStatus: false,
     },
@@ -55,7 +56,17 @@ const ExploreCategory = () => {
       errorStatus: false,
     },
     ParentCategoryID: {
-      value: "CDL_1",
+      value: "",
+      errorMessage: "",
+      errorStatus: false,
+    },
+    UserLatitude: {
+      value: "",
+      errorMessage: "",
+      errorStatus: false,
+    },
+    UserLongitude: {
+      value: "",
       errorMessage: "",
       errorStatus: false,
     },
@@ -85,17 +96,82 @@ const ExploreCategory = () => {
   );
 
   // this is how I set data in Explore Api by using explore state
+  // useEffect(() => {
+  //   let exploreNewData = {
+  //     UserID: exploreData.UserID.value,
+  //     pageNumber: exploreData.pageNumber.value,
+  //     isAutomatic: exploreData.isAutomatic.value,
+  //     ParentCategoryID: exploreData.ParentCategoryID.value,
+  //   };
+  //   dispatch(exploreCategory(exploreNewData));
+  // }, []);
+
   useEffect(() => {
     let exploreNewData = {
-      UserID: exploreData.UserID.value,
-      pageNumber: exploreData.pageNumber.value,
-      isAutomatic: exploreData.isAutomatic.value,
-      ParentCategoryID: exploreData.ParentCategoryID.value,
+      UserID: "PLU_1",
+      pageNumber: 1,
+      isAutomatic: false,
+      ParentCategoryID: "CDL_1",
+      UserLatitude: "",
+      UserLongitude: "",
+      // Update this dynamically
     };
+
+    setExploreData((prevState) => ({
+      ...prevState,
+      ParentCategoryID: {
+        value: exploreNewData.ParentCategoryID,
+        errorMessage: "",
+        errorStatus: false,
+      },
+      UserID: {
+        value: exploreNewData.UserID,
+        errorMessage: "",
+        errorStatus: false,
+      },
+      pageNumber: {
+        value: exploreNewData.pageNumber,
+        errorMessage: "",
+        errorStatus: false,
+      },
+      isAutomatic: {
+        value: exploreNewData.isAutomatic,
+        errorMessage: "",
+        errorStatus: false,
+      },
+      UserLatitude: {
+        value: exploreNewData.UserLatitude,
+      },
+      UserLongitude: {
+        value: exploreNewData.UserLongitude,
+      },
+    }));
+
+    // Make the API call using exploreData
     dispatch(exploreCategory(exploreNewData));
   }, []);
 
+  // ...
+
   console.log("actionReducer", actionReducer);
+
+  useEffect(() => {
+    if (
+      actionReducer.locationLatitude !== null &&
+      actionReducer.locationLongitude !== null
+    ) {
+      setExploreData({
+        ...exploreData,
+        UserLatitude: {
+          value: actionReducer.locationLatitude,
+        },
+        UserLongitude: {
+          value: actionReducer.locationLongitude,
+        },
+      });
+    }
+  }, [actionReducer.locationLatitude, actionReducer.locationLongitude]);
+  console.log(exploreData, "dashboardDatadashboardDatadashboardData");
 
   // this is how I get data from Reducer
   useEffect(() => {
@@ -110,33 +186,26 @@ const ExploreCategory = () => {
 
   console.log("explore Data Information", exploreData);
 
-  useEffect(() => {
-    setShowLoader(true);
+  // useEffect(() => {
+  //   setShowLoader(true);
 
-    setTimeout(() => {
-      setShowLoader(false);
-    }, 3000);
-  }, []);
+  //   setTimeout(() => {
+  //     setShowLoader(false);
+  //   }, 3000);
+  // }, []);
 
   return (
     <Fragment>
       <Row>
         <Col>
-          {isHome ? (
-            <>
-              <Header />
-              <UserInfo />
-            </>
-          ) : (
-            <>
-              <div className="Explore-header">
-                <Container>
-                  <ExploreHeader />
-                  <ExploreUser />
-                </Container>
-              </div>
-            </>
-          )}
+          <>
+            <div className="Explore-header">
+              <Container>
+                <Header />
+                <UserInfo />
+              </Container>
+            </div>
+          </>
         </Col>
       </Row>
       <Container>
@@ -196,11 +265,7 @@ const ExploreCategory = () => {
                   })
                 : null}
 
-              {showLoader && (
-                <div className="loader-overlay">
-                  <Loader />
-                </div>
-              )}
+              {actionReducer.Loading ? <Loader /> : null}
             </Col>
           </Row>
         </Fragment>

@@ -25,40 +25,12 @@ const Loader = () => {
             <div className="blancspacelogo-gif">
               <img
                 src={BlancspaceLogo}
-                width={200}
-                height={250}
+                className={styles["Loader-width-class"]}
+                // width={200}
+                // height={250}
                 alt="Blancspace Logo"
               />
             </div>
-            {/* <span className={styles["loader-circle"]}></span> */}
-            {/* <h2 className={styles["loading-text"]}>Loading ...</h2> */}
-            {/* <div
-              style={{
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                backgroundImage:
-                  "linear-gradient(to right, #d00510, #ca1f1f, #c32d2c, #bb3836, #b34140, #b54747, #b84e4d, #ba5454, #c95a5a, #d95f5f, #e96565, #f96b6b)", // Gradient colors
-                color: "transparent",
-                fontSize: "30px",
-                fontWeight: "bold",
-                opacity: isVisible ? 1 : 0,
-                transition: "opacity 0.5s",
-              }}
-            >
-              {isVisible && (
-                <Typed
-                  strings={["Blancspace Loading . . ."]}
-                  loop={true}
-                  typeSpeed={30}
-                  showCursor={true}
-                  cursorChar="|"
-                />
-              )}
-            </div> */}
-            {/* <div className={styles["content"]}>
-              <h2>Blancspace</h2>
-              <h2>Blancspace</h2>
-            </div> */}
           </Col>
         </Col>
       </Row>

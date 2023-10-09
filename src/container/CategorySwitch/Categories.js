@@ -97,7 +97,7 @@ const Categories = () => {
   });
 
   // state for loader
-  const [showLoader, setShowLoader] = useState(false);
+  // const [showLoader, setShowLoader] = useState(false);
 
   const [showMessage, setShowMessage] = useState(false);
 
@@ -173,10 +173,11 @@ const Categories = () => {
   };
 
   //onClick handler in Title
-  const clickTitleHandler = () => {
+  const clickTitleHandler = (categoryData) => {
+    console.log("categoryData", { categoryData });
     let newHandlerClick = {
       UserID: parentCategory.UserID.value,
-      CategoryID: parentCategory.CategoryID.value,
+      CategoryID: categoryData.categoryID,
     };
     dispatch(subCategoryParentApi(navigate, newHandlerClick));
   };
@@ -201,13 +202,13 @@ const Categories = () => {
     }
   }, [actionReducer.getAllCategoriesUser]);
 
-  useEffect(() => {
-    setShowLoader(true);
+  // useEffect(() => {
+  //   setShowLoader(true);
 
-    setTimeout(() => {
-      setShowLoader(false);
-    }, 3000);
-  }, []);
+  //   setTimeout(() => {
+  //     setShowLoader(false);
+  //   }, 3000);
+  // }, []);
 
   console.log("Main Category Data", mainCategory);
 
@@ -215,21 +216,14 @@ const Categories = () => {
     <Fragment>
       <Row>
         <Col>
-          {isHome ? (
-            <>
-              <Header />
-              <UserInfo />
-            </>
-          ) : (
-            <>
-              <div className="Categories-header">
-                <Container>
-                  <CategoryHeader />
-                  <CategoryUser />
-                </Container>
-              </div>
-            </>
-          )}
+          <>
+            <div className="Categories-header">
+              <Container>
+                <Header />
+                <UserInfo />
+              </Container>
+            </div>
+          </>
         </Col>
       </Row>
       <Container>
@@ -256,8 +250,9 @@ const Categories = () => {
                                 ? "SitchOn-Category-Title"
                                 : "Switch-Category-Title"
                             }
-                            onClick={
-                              !categoriesListing.isBlocked && clickTitleHandler
+                            onClick={() =>
+                              !categoriesListing.isBlocked &&
+                              clickTitleHandler(categoriesListing)
                             }
                           >
                             {categoriesListing.categoryName}
@@ -294,11 +289,12 @@ const Categories = () => {
                   );
                 })
               : null}
-            {showLoader && (
+            {/* {showLoader && (
               <div className="loader-overlay">
                 <Loader />
               </div>
-            )}
+            )} */}
+            {actionReducer.Loading ? <Loader /> : null}
           </Col>
         </Row>
       </Container>

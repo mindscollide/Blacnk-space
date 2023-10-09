@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import "./Footer.css";
 
-const Footer = () => {
+const Footer = ({ categoryListing }) => {
   return (
     <Fragment>
       {/* section for Footer */}
@@ -19,6 +19,13 @@ const Footer = () => {
             className="d-flex justify-content-start"
           >
             <div className="Days-bullets">
+              {/* {categoryListing.operationHours.Friday}
+              {categoryListing.operationHours.Monday}
+              {categoryListing.operationHours.Monday}
+              {categoryListing.operationHours.Monday}
+              {categoryListing.operationHours.Monday}
+              {categoryListing.operationHours.Monday} */}
+
               <span className="Weekdays-subtitles">Monday.</span>
               <span className="Weekdays-subtitles">Tuesday.</span>
               <span className="Weekdays-subtitles">Wednesday.</span>

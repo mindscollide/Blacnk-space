@@ -9,6 +9,7 @@
   cursor: pointer;
   position: relative;
   display: flex;
+  z-index: 2 !important;
 }
 
 .longpress-box {
@@ -52,6 +53,26 @@
 .icon-class {
   font-size: 18px !important;
   color: #ffffff;
+}
+
+.Icon-disabled-Call,
+.Icon-disabled-Direction {
+  font-size: 18px !important;
+  color: #ffffff;
+  opacity: 0.5 !important;
+  pointer-events: none !important;
+  cursor: none !important;
+}
+
+.disable-main-options {
+  display: block;
+  justify-content: center !important;
+  color: #ffffff;
+  opacity: 0.5 !important;
+  font-size: 10px !important;
+  font-family: "Bahnschrift", sans-serif;
+  font-weight: 500;
+  pointer-events: none !important;
 }
 
 .icon-Favorite {
@@ -98,5 +119,14 @@
     margin-bottom: 10px;
     border: 1px solid #d00510;
     cursor: pointer;
+    z-index: 2;
   }
+}
+.foodImage {
+  position: absolute;
+  top: 0 !important;
+  width: 20px;
+  height: 20px;
+  left: 50px;
+  z-index: 4 !important;
 }

@@ -11,6 +11,8 @@ import {
   blockUnblockApi,
   getAllSubCategoryParent,
   likeUnlikeBusinessApi,
+  searchBlancspace,
+  businessDetailApi,
 } from "../../common/Apis/Api_Config";
 import { authenticationAPI } from "../../common/Apis/Api_End_Points";
 
@@ -937,7 +939,6 @@ const likeUnlikeFail = (message) => {
 };
 
 // Like un like business Main API
-
 const likeUnlikeApi = (newLike) => {
   let Token = JSON.parse(localStorage.getItem("token"));
   return (dispatch) => {
@@ -1008,10 +1009,221 @@ const likeUnlikeApi = (newLike) => {
   };
 };
 
+// For blancspace Search Init
+const searchInit = () => {
+  return {
+    type: actions.SEARCH_BLANCSPACE_INIT,
+  };
+};
+
+// For blancspace Search Success
+const searchSuccess = (response, response2, message) => {
+  return {
+    type: actions.SEARCH_BLANCSPACE_SUCCESS,
+    response: response,
+    response2: response2,
+    message: message,
+  };
+};
+
+// For blancspace Search Fail
+const searchFail = (message) => {
+  return {
+    type: actions.SEARCH_BLANCSPACE_FAIL,
+    message: message,
+  };
+};
+
+// For blancspace Search Main API
+const searchBlancApi = (searchUser, newSearchData) => {
+  let Token = JSON.parse(localStorage.getItem("token"));
+  return (dispatch) => {
+    dispatch(searchInit());
+    let form = new FormData();
+    form.append("RequestMethod", searchBlancspace.RequestMethod);
+    form.append("RequestData", JSON.stringify(searchUser, newSearchData));
+    axios({
+      method: "POST",
+      url: authenticationAPI,
+      data: form,
+      headers: {
+        _token: Token,
+      },
+    })
+      .then(async (response) => {
+        console.log("explore Category Api", response);
+        if (response.data.responseCode === 417) {
+          await dispatch(refreshTokenApi());
+          dispatch(searchBlancApi(searchUser, newSearchData));
+        } else if (response.data.responseCode === 200) {
+          if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage.toLowerCase() ===
+              "BlancSpace_AUTH_AuthManager_Search_01".toLowerCase()
+            ) {
+              console.log(
+                "Explore Category Api",
+                response.data.responseResult.responseMessage
+              );
+              dispatch(
+                searchSuccess(
+                  response.data.responseResult.listing,
+                  response.data.responseResult.listCategories,
+                  "Updated successfully"
+                )
+              );
+              console.log(searchSuccess, "SearchSuccessssss");
+            } else if (
+              response.data.responseResult.responseMessage
+                .toLowerCase()
+                .includes("BlancSpace_AUTH_AuthManager_Search_02".toLowerCase())
+            ) {
+              dispatch(searchFail("Provided userid was either null or empty"));
+            } else if (
+              response.data.responseResult.responseMessage
+                .toLowerCase()
+                .includes("BlancSpace_AUTH_AuthManager_Search_03".toLowerCase())
+            ) {
+              dispatch(searchFail("Exception Something went wrong"));
+            }
+          } else {
+            dispatch(searchFail("Something went wrong"));
+            console.log("Exception Something went wrong");
+          }
+        } else {
+          dispatch(searchFail("Something went wrong"));
+          console.log("Exception Something went wrong");
+        }
+      })
+      .catch((response) => {
+        dispatch(searchFail("something went wrong"));
+      });
+  };
+};
+
 const LoaderFunc = (payload) => {
   return {
     type: actions.LOADER,
     response: payload,
+  };
+};
+
+const filterData = (response) => {
+  return {
+    type: actions.FILTER_DATA,
+    payload: response,
+  };
+};
+
+//Location data for longitude
+const longitudeData = (response) => {
+  return {
+    type: actions.LONGITUTDE_LOCATION_DATA,
+    payload: response.target.value,
+  };
+};
+
+//Location data for latitude
+const latitudeData = (response) => {
+  return {
+    type: actions.LATITUDE_LOCATION_DATA,
+    payload: response.target.value,
+  };
+};
+
+// FOR businessDetails Init
+const businessDetailsInit = () => {
+  return {
+    type: actions.BUSINESS_DETAIL_INIT,
+  };
+};
+
+// FOR businessDetails Success
+const businessDetailsSuccess = (response, message) => {
+  return {
+    type: actions.BUSINESS_DETAIL_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+// FOR businessDetails Success
+const businessDetailsFail = (message) => {
+  return {
+    type: actions.BUSINESS_DETAIL_FAIL,
+    message: message,
+  };
+};
+
+//FOR businessDeatils Main API
+const businessDetailsMainApi = (newBusinessData) => {
+  let Token = JSON.parse(localStorage.getItem("token"));
+  return (dispatch) => {
+    dispatch(businessDetailsInit());
+    let form = new FormData();
+    form.append("RequestMethod", businessDetailApi.RequestMethod);
+    form.append("RequestData", JSON.stringify(newBusinessData));
+    axios({
+      method: "POST",
+      url: authenticationAPI,
+      data: form,
+      headers: {
+        _token: Token,
+      },
+    })
+      .then(async (response) => {
+        console.log("explore Category Api", response);
+        if (response.data.responseCode === 417) {
+          await dispatch(refreshTokenApi());
+          dispatch(businessDetailsMainApi(newBusinessData));
+        } else if (response.data.responseCode === 200) {
+          if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage.toLowerCase() ===
+              "BlancSpace_AUTH_AuthManager_BusinessListingByBusinessListingID_01".toLowerCase()
+            ) {
+              console.log(
+                "Explore Category Api",
+                response.data.responseResult.responseMessage
+              );
+              dispatch(
+                businessDetailsSuccess(
+                  response.data.responseResult.businessListing,
+                  "Updated successfully"
+                )
+              );
+              console.log(businessDetailsSuccess, "SearchSuccessssss");
+            } else if (
+              response.data.responseResult.responseMessage
+                .toLowerCase()
+                .includes(
+                  "BlancSpace_AUTH_AuthManager_BusinessListingByBusinessListingID_02".toLowerCase()
+                )
+            ) {
+              dispatch(
+                businessDetailsFail("Provided userid was either null or empty")
+              );
+            } else if (
+              response.data.responseResult.responseMessage
+                .toLowerCase()
+                .includes(
+                  "BlancSpace_AUTH_AuthManager_BusinessListingByBusinessListingID_03".toLowerCase()
+                )
+            ) {
+              dispatch(businessDetailsFail("Exception Something went wrong"));
+            }
+          } else {
+            dispatch(businessDetailsFail("Something went wrong"));
+            console.log("Exception Something went wrong");
+          }
+        } else {
+          dispatch(businessDetailsFail("Something went wrong"));
+          console.log("Exception Something went wrong");
+        }
+      })
+      .catch((response) => {
+        dispatch(businessDetailsFail("something went wrong"));
+      });
   };
 };
 
@@ -1026,4 +1238,9 @@ export {
   blockUnBlockCategoryApi,
   subCategoryParentApi,
   likeUnlikeApi,
+  searchBlancApi,
+  filterData,
+  businessDetailsMainApi,
+  longitudeData,
+  latitudeData,
 };

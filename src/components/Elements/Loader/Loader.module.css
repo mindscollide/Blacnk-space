@@ -27,160 +27,24 @@
   text-align: center;
 }
 
-.loader-circle {
-  width: 120px;
-  height: 120px;
-  border: 3px solid transparent;
-  border-top: 4px solid #d00510; /* Color of the loader */
-  border-bottom: 4px solid #ee7575 !important;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.loading-text {
-  font-size: 40px;
-  letter-spacing: 3px;
-  background: linear-gradient(to right, #d00510, #ee7575, #ebc9c9);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  animation: animateText 1s linear infinite alternate;
-}
-
-@keyframes animateText {
-  25% {
-    color: #ee7575;
-  }
-  50% {
-    color: #d00510; /* Starting color of the text */
-  }
-  100% {
-    color: #fa5b5b; /* Ending color of the text */
-  }
-}
-
 .overlay-content img {
   max-width: 500px;
-}
-
-.loader-line:before {
-  content: "";
-  position: absolute;
-  left: -50%;
-  height: 3px;
-  width: 40%;
-  background: linear-gradient(to right, #d00510, #ee7575, #ebc9c9);
-  -webkit-animation: lineAnim 1s linear infinite;
-  -moz-animation: lineAnim 1s linear infinite;
-  animation: lineAnim 1s linear infinite;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius: 20px;
-}
-
-@keyframes lineAnim {
-  0% {
-    left: -40%;
-  }
-
-  50% {
-    left: 20%;
-    width: 80%;
-  }
-
-  100% {
-    left: 100%;
-    width: 100%;
-  }
-}
-
-/* .type-library {
-  font-size: 20px !important;
-  font-weight: bold !important;
-  letter-spacing: 2px !important;
-  color: linear-gradient(to right, #d00510, #ee7575, #ebc9c9) !important;
-} */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Bebas Neue", sans-serif;
-}
-
-.content {
-  position: relative;
-  margin: 45px 0px;
-}
-
-.content h2 {
-  color: #fff;
-  font-size: 8em;
-  position: absolute;
-  transform: translate(-50%, -50%);
-}
-
-.content h2:nth-child(1) {
-  color: transparent;
-  -webkit-text-stroke: 2px #924145;
-  letter-spacing: 8px;
-}
-
-.content h2:nth-child(2) {
-  -webkit-text-stroke: 2px transparent; /* Set initial stroke to transparent */
-  background-image: linear-gradient(
-    45deg,
-    #d00510,
-    #c74c4c,
-    #b46363
-  ); /* Gradient colors */
-  -webkit-background-clip: text; /* Clip the background to the text */
-  color: transparent;
-  letter-spacing: 8px;
-  animation: animate 4s ease-in-out infinite;
-}
-
-@keyframes animate {
-  0%,
-  100% {
-    clip-path: polygon(
-      0% 10%,
-      25% 30%,
-      35% 45%,
-      45% 55%,
-      55% 65%,
-      90% 69%,
-      100% 52%,
-      100% 100%,
-      0% 100%
-    );
-  }
-
-  50% {
-    clip-path: polygon(
-      0% 10%,
-      15% 35%,
-      34% 45%,
-      51% 35%,
-      62% 40%,
-      84% 35%,
-      100% 16%,
-      100% 100%,
-      0% 100%
-    );
-  }
 }
 
 .blancspacelogo-gif {
   background: transparent !important;
   background-color: transparent !important;
+}
+
+.Loader-width-class {
+  width: 200px !important;
+  height: 250px !important;
+}
+
+@media (max-width: 650px) {
+  .Loader-width-class {
+    margin: 180px 0px !important;
+    width: 130px !important;
+    height: 170px !important;
+  }
 }
