@@ -18,8 +18,8 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { actionReducers } = useSelector((state) => state);
-  console.log(actionReducers, "actioonnnReducceer");
+  const { actionReducer } = useSelector((state) => state);
+  console.log(actionReducer, "actioonnnReducceer");
   const [isLongPress, setIsLongPress] = useState(false);
 
   // state for update Favorite
@@ -35,12 +35,12 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
       errorStatus: false,
     },
     Latitude: {
-      value: "24.152",
+      value: actionReducer.locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
     Longitude: {
-      value: "24.152",
+      value: actionReducer.locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -69,12 +69,12 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
       errorStatus: false,
     },
     Latitude: {
-      value: "24.152",
+      value: actionReducer.locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
     Longitude: {
-      value: "24.152",
+      value: actionReducer.locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -135,8 +135,8 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
     let newUpdateFavorite = {
       AddRemoveFavoriteBusinessEnum: checked === true ? 1 : 2,
       UserID: updateFavorite.UserID.value,
-      Latitude: updateFavorite.Latitude.value,
-      Longitude: updateFavorite.Longitude.value,
+      Latitude: actionReducer.locationLatitude,
+      Longitude: actionReducer.locationLongitude,
       BusinessListingId: favoriteItem,
       OtherAvailableListings: otherIdss,
     };
@@ -172,8 +172,8 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
     let newLike = {
       LikeUnLikeBusinessListingsEnum: checked === true ? 1 : 2,
       UserID: likeState.UserID.value,
-      Latitude: likeState.Latitude.value,
-      Longitude: likeState.Longitude.value,
+      Latitude: actionReducer.locationLatitude,
+      Longitude: actionReducer.locationLongitude,
       BusinessListingId: likeItem,
       OtherAvailableListings: otherLikeIds,
     };
@@ -274,7 +274,11 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
             >
               {longData.length > 0 &&
                 longData.map((newData, index) => {
+                  let firstLetter = newData.subCategoryListingName
+                    .charAt(0)
+                    .toUpperCase();
                   console.log({ newData }, "newDatanewData");
+                  console.log({ firstLetter }, "newDatanewData");
                   console.log(index, "longDatalongDatalongData");
                   return (
                     <>
@@ -297,11 +301,15 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
                           }}
                           {...longPressEvent}
                         >
-                          <img
-                            src={`data:image/jpeg;base64,${newData.subCategoryListingId}`}
-                            alt="Icon"
-                            className="Swipper-slide-box-Explore-category-image"
-                          />
+                          {newData.subCategoryListingIcon !== "" ? (
+                            <img
+                              src={`data:image/jpeg;base64,${newData.subCategoryListingIcon}`}
+                              alt="Icon"
+                              className="Swipper-slide-box-Explore-category-image"
+                            />
+                          ) : (
+                            <span>{firstLetter}</span>
+                          )}
                         </button>
                         {isLongPress &&
                         activeCategory === newData.subCategoryListingId ? (

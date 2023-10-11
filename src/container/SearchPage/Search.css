@@ -8,13 +8,22 @@
 }
 
 .Search-slide-box {
+  
   width: 77px;
   height: 77px;
   border-radius: 20px;
-  background: #ffffff;
+  background-color: rgb(204, 204, 212) !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-size: 3rem !important;
+  color: rgb(255, 255, 255)!important;
+  /* margin: 50px auto; */
   margin-bottom: 10px;
   border: 1px solid #d00510;
   cursor: pointer;
+  position: relative !important;
+  display: flex;
+  z-index: 2 !important;
 }
 
 .User-name-highlighted {
@@ -141,4 +150,21 @@
     width: 100% !important;
     margin: 0px 0px;
   }
+}
+
+.Swipper-slide-box-image {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0;
+  width: 75px !important;
+  height: 75px !important;
+  border-radius: 20px;
+  background: #ffffff;
+  margin: 0px auto;
+  border: 1px solid #d00510;
+  cursor: pointer;
+  pointer-events: none !important;
+  object-fit: cover !important;
+  display: flex;
+  z-index: 0 !important;
 }

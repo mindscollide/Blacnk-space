@@ -19,6 +19,7 @@ import {
 import "swiper/css";
 import "./ExploreCategory.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const ExploreCategory = () => {
   // const navigate = useNavigate();
@@ -26,9 +27,10 @@ const ExploreCategory = () => {
   const { actionReducer } = useSelector((state) => state);
   console.log(actionReducer, "jsdvdjsvhjdvjshdv");
   const [isHeadingFood, setIsHeadingFood] = useState(false);
-
   let businessID = localStorage.getItem("BusinessExploreID");
+  let categoryID = localStorage.getItem("categoryID");
 
+  console.log("categoryID", categoryID);
   const [isHome, setIsHome] = useState(false);
 
   //state for active longPress event
@@ -113,10 +115,9 @@ const ExploreCategory = () => {
       UserID: "PLU_1",
       pageNumber: 1,
       isAutomatic: false,
-      ParentCategoryID: "",
-      UserLatitude: "24.502",
-      UserLongitude: "54.388",
-      // Update this dynamically
+      ParentCategoryID: categoryID,
+      UserLatitude: actionReducer.locationLatitude,
+      UserLongitude: actionReducer.locationLongitude,
     };
 
     setExploreData((prevState) => ({
@@ -148,9 +149,10 @@ const ExploreCategory = () => {
         value: exploreNewData.UserLongitude,
       },
     }));
-
+    if (categoryID) {
+      dispatch(exploreCategory(exploreNewData));
+    }
     // Make the API call using exploreData
-    dispatch(exploreCategory(exploreNewData));
   }, []);
 
   // ...

@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { Spin } from "antd";
 import { Spinner } from "react-bootstrap";
+import { async } from "q";
 // import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
@@ -92,7 +93,8 @@ const Home = () => {
     defaultOptionsFood
   );
 
-  const onClickExploreCategory = () => {
+  const onClickExploreCategory =async (categoryID) => {
+  await  localStorage.setItem("categoryID", categoryID);
     navigate("/ExploreCategory");
   };
 
@@ -214,7 +216,9 @@ const Home = () => {
                         id={listing.categoryID}
                         text="Explore Category"
                         className="Explore-Home-Button"
-                        onClick={() => onClickExploreCategory()}
+                        onClick={() =>
+                          onClickExploreCategory(listing.categoryID)
+                        }
                       />
                     </>
                   )}
