@@ -12,7 +12,8 @@ import "swiper/css";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+// import { Spin } from "antd";
+import { Spinner } from "react-bootstrap";
 // import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
@@ -27,6 +28,7 @@ const Home = () => {
 
   // const dispatch = useDispatch();
   const [data, setData] = useState([1, 2, 3, 4, 5]);
+  const [loadingAuto, seLoadingAuto] = useState(false);
 
   // dashboard state
   const [dashboardData, setDashboardData] = useState({
@@ -63,6 +65,7 @@ const Home = () => {
 
   //state for active longPress event
   const [activeCategory, setActiveCategory] = useState(null);
+  console.log(activeCategory, "activeCategoryactiveCategory");
 
   // state for Loader
   const [showLoader, setShowLoader] = useState(false);
@@ -89,7 +92,7 @@ const Home = () => {
     defaultOptionsFood
   );
 
-  const onClickExploreCategory = (exploreId) => {
+  const onClickExploreCategory = () => {
     navigate("/ExploreCategory");
   };
 
@@ -98,31 +101,32 @@ const Home = () => {
       UserID: dashboardData.userID.value,
       pageNumber: dashboardData.pageNumber.value,
       isAutomatic: dashboardData.isAutomatic.value,
-      UserLatitude: "24.9066669",
-      UserLongitude: "67.066448",
+      UserLatitude: actionReducer.locationLatitude,
+      UserLongitude: actionReducer.locationLongitude,
     };
     setAutoCheck(false);
-    dispatch(getdashboardApi(Data, false));
+    dispatch(getdashboardApi(Data, seLoadingAuto));
   }, []);
 
   useEffect(() => {
     console.log("actionReducer call on location change");
     if (actionReducer.locationLatitude && actionReducer.locationLongitude) {
-      console.log("actionReducer call on location change");
+      console.log(
+        "chanegegegegegegeggeerrrr",
+        actionReducer.locationLatitude,
+        actionReducer.locationLongitude
+      );
       let Data = {
         UserID: dashboardData.userID.value,
         pageNumber: dashboardData.pageNumber.value,
         isAutomatic: dashboardData.isAutomatic.value,
-        UserLatitude: actionReducer.locationLatitude
-          ? actionReducer.locationLatitude.toString()
-          : "",
-        UserLongitude: actionReducer.locationLongitude
-          ? actionReducer.locationLongitude.toString()
-          : "",
+        UserLatitude: actionReducer.locationLatitude,
+        UserLongitude: actionReducer.locationLongitude,
       };
       console.log("actionReducer call on location change", Data);
-      dispatch(getdashboardApi(Data));
+      dispatch(getdashboardApi(Data, seLoadingAuto));
       setAutoCheck(true);
+      seLoadingAuto(true);
       setDashboardData({
         ...dashboardData,
         UserLatitude: {
@@ -171,6 +175,7 @@ const Home = () => {
     <Container>
       <Fragment>
         {dashboardInformation.map((listing, index) => {
+          console.log(listing, "nanannanan");
           return (
             <>
               {/* Food Section */}
@@ -203,11 +208,16 @@ const Home = () => {
                     </>
                   ) : null}
 
-                  <Button
-                    text="Explore Category"
-                    className="Explore-Home-Button"
-                    onClick={() => onClickExploreCategory()}
-                  />
+                  {listing.categoryID && (
+                    <>
+                      <Button
+                        id={listing.categoryID}
+                        text="Explore Category"
+                        className="Explore-Home-Button"
+                        onClick={() => onClickExploreCategory()}
+                      />
+                    </>
+                  )}
                 </Col>
               </Row>
               <Row>
@@ -225,8 +235,17 @@ const Home = () => {
           );
         })}
 
-        {actionReducer.Loading ? (
-          // ||(actionReducer.locationLongitude&&actionReducer.locationLatitude)
+        {loadingAuto ? (
+          <>
+            <Row>
+              <Col className="d-flex justify-content-center align-Item-center">
+                <Spinner className="spinner-instead-Loader" />
+              </Col>
+            </Row>
+          </>
+        ) : actionReducer.Loading ||
+          actionReducer.locationLongitude === "" ||
+          actionReducer.locationLatitude === "" ? (
           <Loader />
         ) : null}
       </Fragment>

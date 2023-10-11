@@ -232,7 +232,7 @@ const CategoryDetails = () => {
 
       <Row className="mt-5">
         <Col lg={12} md={12} sm={12}>
-          <Footer businessDetails={businessDetails} />
+          <Footer operationHours={businessDetails.operationHours} />
         </Col>
       </Row>
 

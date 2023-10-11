@@ -89,17 +89,17 @@ const Header = () => {
       // console.log("Element with ID 'longitude' not found.");
     }
   }
-  const intervalId = setInterval(myFunction, 10000);
+  const intervalId = setInterval(myFunction, 30000);
   return (
     <>
       <input
         id="latitude"
-        style={{ display: "none" }}
+        // style={{ display: "none" }}
         // value={latitude}
       />
       <input
         id="longitude"
-        style={{ display: "none" }}
+        // style={{ display: "none" }}
 
         // value={longitude}
       />

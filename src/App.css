@@ -322,3 +322,10 @@ body {
   /* max-width: 60px !important;
   max-height: 77px !important; */
 }
+
+.spinner-instead-Loader {
+  color: blue !important;
+  font-size: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+}
