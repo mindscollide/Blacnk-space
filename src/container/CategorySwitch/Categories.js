@@ -63,15 +63,14 @@ const Categories = () => {
       errorMessage: "",
       errorStatus: false,
     },
-
     Latitude: {
-      value: "24.152",
+      value: actionReducer.locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
 
     Longitude: {
-      value: "24.152",
+      value: actionReducer.locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -153,8 +152,8 @@ const Categories = () => {
     // this will send data to Api where we give the OtherAvailable array which is not selected
     let categoryUnblock = {
       UserID: categoryBlockUnblock.UserID.value,
-      Latitude: categoryBlockUnblock.Latitude.value,
-      Longitude: categoryBlockUnblock.Longitude.value,
+      Latitude: actionReducer.locationLatitude,
+      Longitude: actionReducer.locationLongitude,
       CategoryWithStatuses: newIds, // in this newIds we have selected categoryId and categoryName
       OtherAvailableListings: newArrOtherAvailableList, // this will send the other array in this list
     };

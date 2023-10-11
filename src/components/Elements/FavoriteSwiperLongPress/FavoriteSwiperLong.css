@@ -2,7 +2,11 @@
   width: 77px;
   height: 77px;
   border-radius: 20px;
-  background: #ffffff;
+  background-color: rgb(204, 204, 212) !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-size: 3rem !important;
+  color: rgb(255, 255, 255)!important;
   margin: 50px auto;
   margin-bottom: 10px;
   border: 1px solid #d00510;

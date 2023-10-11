@@ -48,12 +48,12 @@ const SearchPage = () => {
       errorStatus: false,
     },
     UserLatitude: {
-      value: "24.455071999999998",
+      value: actionReducer.locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
     UserLongitude: {
-      value: "54.394693999999994",
+      value: actionReducer.locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -78,8 +78,8 @@ const SearchPage = () => {
       let searchUser = {
         UserID: searchState.UserID.value,
         SearchText: searchState.SearchText.value,
-        UserLatitude: searchState.UserLatitude.value,
-        UserLongitude: searchState.UserLongitude.value,
+        UserLatitude: actionReducer.locationLatitude,
+        UserLongitude: actionReducer.locationLongitude,
         SearchBy: searchState.SearchBy.value,
       };
       dispatch(searchBlancApi(navigate, searchUser));
@@ -87,12 +87,12 @@ const SearchPage = () => {
       let newSearch = {
         UserID: "",
         SearchText: "",
-        UserLatitude: "",
-        UserLongitude: "",
+        UserLatitude: actionReducer.locationLatitude,
+        UserLongitude: actionReducer.locationLongitude,
         SearchBy: 0,
       };
 
-      dispatch(searchBlancApi(navigate, newSearch));
+      // dispatch(searchBlancApi(navigate, newSearch));
     } else {
       console.log("Nothing To Show");
     }
@@ -337,6 +337,9 @@ const SearchPage = () => {
       <Col></Col>
       <Container>
         {searchData.map((newData, index) => {
+          let firstLetter = newData.businessListingName
+          .charAt(0)
+          .toUpperCase();
           console.log(newData, "newDatagagagagaga");
           return (
             <>
@@ -348,7 +351,17 @@ const SearchPage = () => {
                   xs={2}
                   className="d-flex justify-content-start"
                 >
-                  <div className="Search-slide-box"></div>
+                  <div className="Search-slide-box">
+                  {newData.businessListingIcon !== "" ? (
+                          <img
+                            src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
+                            alt="Icon"
+                            className="Swipper-slide-box-image"
+                          />
+                        ) : (
+                          <span>{firstLetter}</span>
+                        )}
+                  </div>
                 </Col>
                 <Col
                   lg={9}

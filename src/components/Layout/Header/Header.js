@@ -94,13 +94,13 @@ const Header = () => {
     <>
       <input
         id="latitude"
-        // style={{ display: "none" }}
+        style={{ display: "none" }}
         // value={latitude}
       />
       <input
         id="longitude"
-        // style={{ display: "none" }}
-
+        style={{ display: "none" }}
+// 
         // value={longitude}
       />
       <Navbar>

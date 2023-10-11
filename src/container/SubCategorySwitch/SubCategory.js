@@ -45,13 +45,13 @@ const SubCategories = () => {
     },
 
     Latitude: {
-      value: "24.152",
+      value: actionReducer.locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
 
     Longitude: {
-      value: "24.152",
+      value: actionReducer.locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -104,43 +104,6 @@ const SubCategories = () => {
       console.info("This page is not reloaded");
     }
   }, []);
-  // Function to toggle the switch
-  // const handleBlockAllChange = (checked) => {
-  //   console.log(checked, "checkedcheckedchecked");
-  //   setSwitchBlockAll(!switchBlockAll);
-  //   if (checked) {
-  //     let newIds = [];
-  //     if (subCategoryInformation.length > 0) {
-  //       subCategoryInformation.map((data, index) => {
-  //         newIds.push(data.categoryID);
-  //       });
-  //     }
-  //     console.log(newIds, "newIdsnewIds");
-  //   } else {
-  //     let newIds = [];
-  //     console.log(newIds, "newIdsnewIds");
-  //   }
-  //   let subCategoryUnblock = {
-  //     UserID: blockUnblock.UserID.value,
-  //     Latitude: blockUnblock.Latitude.value,
-  //     Longitude: blockUnblock.Longitude.value,
-  //     CategoryWithStatuses: [
-  //       {
-  //         CategoryID: newIds,
-  //         BlockUnBlockCategoryEnum: 1,
-  //       },
-  //     ],
-  //     OtherAvailableListings: [],
-  //   };
-  //   dispatch(blockUnBlockCategoryApi(subCategoryUnblock));
-
-  //   // setSwitchBlockAll(checked);
-  //   // setSwitchEntertainment(checked);
-  //   // setShowMessage(true);
-  //   // setTimeout(() => {
-  //   //   setShowMessage(false);
-  //   // }, 1000);
-  // };
 
   const handleBlockAllChange = async (checked) => {
     console.log(checked, "checkedcheckedchecked");
@@ -157,8 +120,8 @@ const SubCategories = () => {
         });
         let subCategoryUnblock = {
           UserID: blockUnblock.UserID.value,
-          Latitude: blockUnblock.Latitude.value,
-          Longitude: blockUnblock.Longitude.value,
+          Latitude: actionReducer.locationLatitude,
+          Longitude: actionReducer.locationLongitude,
           CategoryWithStatuses: newIds,
           OtherAvailableListings: [],
         };
@@ -180,8 +143,8 @@ const SubCategories = () => {
         });
         let subCategoryUnblock = {
           UserID: blockUnblock.UserID.value,
-          Latitude: blockUnblock.Latitude.value,
-          Longitude: blockUnblock.Longitude.value,
+          Latitude: actionReducer.locationLatitude,
+          Longitude: actionReducer.locationLongitude,
           CategoryWithStatuses: newIds,
           OtherAvailableListings: [],
         };
@@ -239,8 +202,8 @@ const SubCategories = () => {
     // this will send data to Api where we give the OtherAvailable array which is not selected
     let subCategoryUnblock = {
       UserID: blockUnblock.UserID.value,
-      Latitude: blockUnblock.Latitude.value,
-      Longitude: blockUnblock.Longitude.value,
+      Latitude: actionReducer.locationLatitude,
+      Longitude: actionReducer.locationLongitude,
       CategoryWithStatuses: newIds, // in this newIds we have selected categoryId and categoryName
       OtherAvailableListings: newArrOtherAvailableList, // this will send the other array in this list
     };
@@ -257,31 +220,6 @@ const SubCategories = () => {
       setEntertainmentMessage(false);
     }, 1000);
   };
-
-  // useEffect In which I can set the requestData for block and unBlock subCategory
-  // useEffect(() => {
-  //   let subCategoryUnblock = {
-  //     UserID: blockUnblock.UserID.value,
-  //     Latitude: blockUnblock.Latitude.value,
-  //     Longitude: blockUnblock.Longitude.value,
-  //     CategoryWithStatuses: [
-  //       {
-  //         CategoryID: blockUnblock.CategoryID.value,
-  //         BlockUnBlockCategoryEnum: blockUnblock.BlockUnBlockCategoryEnum.value,
-  //       },
-  //     ],
-  //     OtherAvailableListings: blockUnblock.OtherAvailableListings.value,
-  //   };
-  //   dispatch(blockUnBlockCategoryApi(subCategoryUnblock));
-  // }, []);
-
-  // useEffect In which I can set the requestData for subCategroy
-  // useEffect(() => {
-  //   let subCategory = {
-  //     UserID: subCategoryState.userID.value,
-  //   };
-  //   dispatch(getAllSubCategoriesApi(subCategory));
-  // }, []);
   console.log(actionReducer, "actionReduceractionReducer");
   // useEffect for getting data from reducers
   useEffect(() => {
@@ -293,19 +231,6 @@ const SubCategories = () => {
       setSubCategoryInformation(actionReducer.getParentCategory);
     }
   }, [actionReducer.getParentCategory]);
-
-  // useEffect(() => {
-  //   setShowLoader(true);
-
-  //   setTimeout(() => {
-  //     setShowLoader(false);
-  //   }, 3000);
-  // }, []);
-
-  //   const onClickExplore = () => {
-  //     navigate("/");
-  //     setIsHome(true);
-  //   };
 
   return (
     <Fragment>

@@ -21,8 +21,8 @@ const SwiperLongpress = ({ listingData }) => {
   console.log(listingData, "listingDatalistingData");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { actionReducers } = useSelector((state) => state);
-  console.log(actionReducers, "actioonnnReducceer");
+  const { actionReducer } = useSelector((state) => state);
+  console.log(actionReducer, "actioonnnReducceer");
 
   const [isLongPress, setIsLongPress] = useState(false);
 
@@ -45,12 +45,12 @@ const SwiperLongpress = ({ listingData }) => {
       errorStatus: false,
     },
     Latitude: {
-      value: "24.152",
+      value: actionReducer.locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
     Longitude: {
-      value: "24.152",
+      value: actionReducer.locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -79,12 +79,12 @@ const SwiperLongpress = ({ listingData }) => {
       errorStatus: false,
     },
     Latitude: {
-      value: "24.152",
+      value: actionReducer.locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
     Longitude: {
-      value: "24.152",
+      value: actionReducer.locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -159,8 +159,8 @@ const SwiperLongpress = ({ listingData }) => {
     let newUpdateFavorite = {
       AddRemoveFavoriteBusinessEnum: checked === true ? 1 : 2,
       UserID: updateFavorite.UserID.value,
-      Latitude: updateFavorite.Latitude.value,
-      Longitude: updateFavorite.Longitude.value,
+      Latitude: actionReducer.locationLatitude,
+      Longitude: actionReducer.locationLongitude,
       BusinessListingId: favoriteItem,
       OtherAvailableListings: otherIdss,
     };
@@ -195,8 +195,8 @@ const SwiperLongpress = ({ listingData }) => {
     let newLike = {
       LikeUnLikeBusinessListingsEnum: checked === true ? 1 : 2,
       UserID: likeState.UserID.value,
-      Latitude: likeState.Latitude.value,
-      Longitude: likeState.Longitude.value,
+      Latitude: actionReducer.locationLatitude,
+      Longitude: actionReducer.locationLongitude,
       BusinessListingId: likeItem,
       OtherAvailableListings: otherLikeIds,
     };
@@ -272,7 +272,11 @@ const SwiperLongpress = ({ listingData }) => {
               }}
             >
               {longData.map((newData, index) => {
+                let firstLetter = newData.businessListingName
+                  .charAt(0)
+                  .toUpperCase();
                 console.log({ newData }, "newDatanewData");
+                console.log({ firstLetter }, "newDatanewData firstLetter");
                 return (
                   <>
                     <SwiperSlide>
@@ -296,11 +300,15 @@ const SwiperLongpress = ({ listingData }) => {
                         }}
                         {...longPressEvent}
                       >
-                        <img
-                          src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
-                          alt="Icon"
-                          className="Swipper-slide-box-image"
-                        />
+                        {newData.businessListingIcon !== "" ? (
+                          <img
+                            src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
+                            alt="Icon"
+                            className="Swipper-slide-box-image"
+                          />
+                        ) : (
+                          <span>{firstLetter}</span>
+                        )}
                       </button>
                       {isLongPress &&
                       activeCategory === newData.businessListingId ? (
