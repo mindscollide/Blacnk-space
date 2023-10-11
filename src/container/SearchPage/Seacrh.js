@@ -74,14 +74,28 @@ const SearchPage = () => {
 
   // dispatch api on click Search Icon
   const onClickSearchIcon = () => {
-    let searchUser = {
-      UserID: searchState.UserID.value,
-      SearchText: searchState.SearchText.value,
-      UserLatitude: searchState.UserLatitude.value,
-      UserLongitude: searchState.UserLongitude.value,
-      SearchBy: searchState.SearchBy.value,
-    };
-    dispatch(searchBlancApi(searchUser));
+    if (searchState.SearchText.value !== "") {
+      let searchUser = {
+        UserID: searchState.UserID.value,
+        SearchText: searchState.SearchText.value,
+        UserLatitude: searchState.UserLatitude.value,
+        UserLongitude: searchState.UserLongitude.value,
+        SearchBy: searchState.SearchBy.value,
+      };
+      dispatch(searchBlancApi(navigate, searchUser));
+    } else if (searchState.SearchText.value === "") {
+      let newSearch = {
+        UserID: "",
+        SearchText: "",
+        UserLatitude: "",
+        UserLongitude: "",
+        SearchBy: 0,
+      };
+
+      dispatch(searchBlancApi(navigate, newSearch));
+    } else {
+      console.log("Nothing To Show");
+    }
   };
 
   // onChange handlder for search
@@ -102,6 +116,8 @@ const SearchPage = () => {
       actionReducer.searchListingCategory.length > 0
     ) {
       setSearchListingData(actionReducer.searchListingCategory);
+    } else {
+      setSearchListingData([]);
     }
   }, [actionReducer.searchListingCategory]);
 
@@ -142,6 +158,8 @@ const SearchPage = () => {
       actionReducer.searchListing.length > 0
     ) {
       setSearchData(actionReducer.searchListing);
+    } else {
+      setSearchData([]);
     }
   }, [actionReducer.searchListing]);
 

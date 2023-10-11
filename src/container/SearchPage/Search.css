@@ -1,10 +1,10 @@
 .Search-header {
   position: fixed !important;
   top: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
   z-index: 3;
   background-color: #000000;
-  width: 100%;
-  margin: 0px 95px;
 }
 
 .Search-slide-box {

@@ -103,7 +103,7 @@ const getDashboardFail = (message) => {
 };
 
 // get Dashboard Data Api
-const getdashboardApi = (Data) => {
+const getdashboardApi = (Data, seLoadingAuto) => {
   let Token = JSON.parse(localStorage.getItem("token"));
   return (dispatch) => {
     dispatch(getDashboardInit());
@@ -139,6 +139,7 @@ const getdashboardApi = (Data) => {
                   "Data has been returned successfully."
                 )
               );
+              seLoadingAuto(false);
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -147,6 +148,7 @@ const getdashboardApi = (Data) => {
                 )
             ) {
               dispatch(getDashboardFail("Could not find the data"));
+              seLoadingAuto(false);
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -157,6 +159,7 @@ const getdashboardApi = (Data) => {
               dispatch(
                 getDashboardFail("Provided userid was either null or empty")
               );
+              seLoadingAuto(false);
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -165,18 +168,24 @@ const getdashboardApi = (Data) => {
                 )
             ) {
               dispatch(getDashboardFail("Exception Something went wrong"));
+              seLoadingAuto(false);
             }
           } else {
             dispatch(getDashboardFail("Something went wrong"));
+            seLoadingAuto(false);
+
             console.log("Exception Something went wrong");
           }
         } else {
           dispatch(getDashboardFail("Something went wrong"));
+          seLoadingAuto(false);
+
           console.log("Exception Something went wrong");
         }
       })
       .catch((response) => {
         dispatch(getDashboardFail("something went wrong"));
+        seLoadingAuto(false);
       });
   };
 };
@@ -1035,7 +1044,7 @@ const searchFail = (message) => {
 };
 
 // For blancspace Search Main API
-const searchBlancApi = (searchUser, newSearchData) => {
+const searchBlancApi = (navigate, searchUser, newSearchData, newSearch) => {
   let Token = JSON.parse(localStorage.getItem("token"));
   return (dispatch) => {
     dispatch(searchInit());
@@ -1054,7 +1063,9 @@ const searchBlancApi = (searchUser, newSearchData) => {
         console.log("explore Category Api", response);
         if (response.data.responseCode === 417) {
           await dispatch(refreshTokenApi());
-          dispatch(searchBlancApi(searchUser, newSearchData));
+          dispatch(
+            searchBlancApi(navigate, searchUser, newSearchData, newSearch)
+          );
         } else if (response.data.responseCode === 200) {
           if (response.data.responseResult.isExecuted === true) {
             if (

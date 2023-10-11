@@ -2,7 +2,12 @@ import { Fragment } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import "./Footer.css";
 
-const Footer = ({ categoryListing }) => {
+const Footer = ({ operationHours }) => {
+  console.log("operationHoursoperationHours", operationHours);
+  if (!operationHours) {
+    return null; // Handle the case where operationHours is null or undefined
+  }
+  const days = Object.keys(operationHours);
   return (
     <Fragment>
       {/* section for Footer */}
@@ -12,13 +17,20 @@ const Footer = ({ categoryListing }) => {
             <span className="Operational-hour-heading">Operational Hours</span>
           </Col>
           <Col
-            lg={2}
-            md={2}
-            sm={2}
-            xs={2}
+            lg={3}
+            md={3}
+            sm={3}
+            xs={3}
             className="d-flex justify-content-start"
           >
             <div className="Days-bullets">
+              <>
+                {days.map((day) => (
+                  <span className="Weekdays-subtitles" key={day}>
+                    {day}
+                  </span>
+                ))}
+              </>
               {/* {categoryListing.operationHours.Friday}
               {categoryListing.operationHours.Monday}
               {categoryListing.operationHours.Monday}
@@ -26,16 +38,38 @@ const Footer = ({ categoryListing }) => {
               {categoryListing.operationHours.Monday}
               {categoryListing.operationHours.Monday} */}
 
-              <span className="Weekdays-subtitles">Monday.</span>
+              {/* <span className="Weekdays-subtitles">Monday.</span>
               <span className="Weekdays-subtitles">Tuesday.</span>
               <span className="Weekdays-subtitles">Wednesday.</span>
               <span className="Weekdays-subtitles">Thursday.</span>
               <span className="Weekdays-subtitles">Friday.</span>
               <span className="Weekdays-subtitles">Saturday.</span>
-              <span className="Weekdays-subtitles">Sunday.</span>
+              <span className="Weekdays-subtitles">Sunday.</span> */}
             </div>
           </Col>
           <Col
+            lg={3}
+            md={3}
+            sm={3}
+            xs={3}
+            className="d-flex justify-content-start"
+          >
+            <div className="hours-bullets">
+              {days.map((day) => (
+                <span className="Weekdays-Time-Hours-subtitles" key={day}>
+                  {operationHours[day]}
+                </span>
+              ))}
+              {/* <span className="Weekdays-Time-Hours-subtitles">09:00</span>
+              <span className="Weekdays-Time-Hours-subtitles">09:00</span>
+              <span className="Weekdays-Time-Hours-subtitles">09:00</span>
+              <span className="Weekdays-Time-Hours-subtitles">09:00</span>
+              <span className="Weekdays-Time-Hours-subtitles">09:00</span>
+              <span className="Weekdays-Time-Hours-subtitles">09:00</span>
+              <span className="Weekdays-Time-Hours-subtitles">09:00</span> */}
+            </div>
+          </Col>
+          {/* <Col
             lg={2}
             md={2}
             sm={2}
@@ -43,23 +77,6 @@ const Footer = ({ categoryListing }) => {
             className="d-flex justify-content-start"
           >
             <div className="hours-bullets">
-              <span className="Weekdays-Time-Hours-subtitles">09:00</span>
-              <span className="Weekdays-Time-Hours-subtitles">09:00</span>
-              <span className="Weekdays-Time-Hours-subtitles">09:00</span>
-              <span className="Weekdays-Time-Hours-subtitles">09:00</span>
-              <span className="Weekdays-Time-Hours-subtitles">09:00</span>
-              <span className="Weekdays-Time-Hours-subtitles">09:00</span>
-              <span className="Weekdays-Time-Hours-subtitles">09:00</span>
-            </div>
-          </Col>
-          <Col
-            lg={2}
-            md={2}
-            sm={2}
-            xs={2}
-            className="d-flex justify-content-start"
-          >
-            <div className="hours-bullets">
               <span className="Weekdays-Time-Hours-subtitles">18:00</span>
               <span className="Weekdays-Time-Hours-subtitles">18:00</span>
               <span className="Weekdays-Time-Hours-subtitles">18:00</span>
@@ -68,7 +85,7 @@ const Footer = ({ categoryListing }) => {
               <span className="Weekdays-Time-Hours-subtitles">18:00</span>
               <span className="Weekdays-Time-Hours-subtitles">18:00</span>
             </div>
-          </Col>
+          </Col> */}
           <Col
             lg={2}
             md={2}

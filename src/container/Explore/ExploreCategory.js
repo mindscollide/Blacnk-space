@@ -113,7 +113,7 @@ const ExploreCategory = () => {
       UserID: "PLU_1",
       pageNumber: 1,
       isAutomatic: false,
-      ParentCategoryID: "CDL_1",
+      ParentCategoryID: "",
       UserLatitude: "24.502",
       UserLongitude: "54.388",
       // Update this dynamically
@@ -229,7 +229,7 @@ const ExploreCategory = () => {
                             className="d-flex justify-content-between"
                           >
                             <label
-                              id={`food-label ${index}`}
+                              id={`food-label ${exploreListing.subCategoryID}`}
                               className={`heading-title-h1 mouse-cursor-heading ${
                                 activeCategory === index ? "active" : ""
                               }`}
