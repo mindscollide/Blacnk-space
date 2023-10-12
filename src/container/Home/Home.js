@@ -93,8 +93,8 @@ const Home = () => {
     defaultOptionsFood
   );
 
-  const onClickExploreCategory =async (categoryID) => {
-  await  localStorage.setItem("categoryID", categoryID);
+  const onClickExploreCategory = async (categoryID) => {
+    await localStorage.setItem("categoryID", categoryID);
     navigate("/ExploreCategory");
   };
 

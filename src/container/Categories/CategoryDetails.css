@@ -218,7 +218,7 @@ img {
   .package-row-class {
     display: flex !important;
     justify-content: start !important;
-    gap: 6px;
+    gap: 10px;
     margin-top: 0px;
   }
 }
@@ -230,9 +230,8 @@ img {
   }
 
   .margin-top-403 {
-    /* margin-left: 27px; */
-    padding: 10px 15px;
-    margin-top: 403px;
+    padding: 20px 15px;
+    margin-top: 400px;
     width: auto !important;
   }
 
@@ -275,5 +274,13 @@ img {
     display: flex;
     flex-direction: column;
     gap: 3px;
+  }
+
+  .Reviews-after-star {
+    color: #ffffff;
+    font-family: "Bahnschrift", sans-serif;
+    margin-top: 5px;
+    margin-left: 10px;
+    font-size: 12px !important;
   }
 }

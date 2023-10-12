@@ -100,7 +100,7 @@ const Header = () => {
       <input
         id="longitude"
         style={{ display: "none" }}
-// 
+        //
         // value={longitude}
       />
       <Navbar>

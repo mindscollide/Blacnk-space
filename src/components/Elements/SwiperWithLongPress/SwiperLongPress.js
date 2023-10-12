@@ -105,34 +105,34 @@ const SwiperLongpress = ({ listingData }) => {
 
   const [longData, setLongData] = useState(listingData);
   const [activeCategory, setActiveCategory] = useState(0);
-  console.log(activeCategory, "categoryyyyyiisss");
+  // console.log(activeCategory, "categoryyyyyiisss");
 
   const [clickCount, setClickCount] = useState(0);
 
   const onLongPress = () => {
-    console.log("longpress is triggered");
+    // console.log("longpress is triggered");
     setIsLongPress(true);
     setTimeout(() => setIsLongPress(false), 8000);
   };
 
   const detailBusiness = (businessData) => {
-    console.log("click is triggered");
+    // console.log("click is triggered");
     setClickCount(clickCount + 1);
 
     if (businessData && businessData.businessListingId) {
       let newBusinessIdData = {
         BusinessListingID: businessData.businessListingId,
       };
-      console.log(newBusinessIdData, "newBusinessIdDatanewBusinessIdData");
+      // console.log(newBusinessIdData, "newBusinessIdDatanewBusinessIdData");
       dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
     } else {
-      console.error("businessData or businessListingId is undefined.");
+      // console.error("businessData or businessListingId is undefined.");
     }
   };
 
   //for Favorite icon toggle onclick
   const toggleIcon = (checked, CardData, favIndex) => {
-    console.log(checked, "checkedcheckedchecked");
+    // console.log(checked, "checkedcheckedchecked");
     // setStarIconVisible(!starIconVisible);
     let favoriteItem = CardData.businessListingId;
     let otherIdss = [];
@@ -152,7 +152,7 @@ const SwiperLongpress = ({ listingData }) => {
     let updatedCategory = {
       ...copyCategoryInformation[getFavSubCategoryIndex],
     };
-    console.log(updatedCategory, "updatedCategoryupdatedCategory");
+    // console.log(updatedCategory, "updatedCategoryupdatedCategory");
     updatedCategory.isFavorite = checked;
     copyCategoryInformation[getFavSubCategoryIndex] = updatedCategory;
     setLongData(copyCategoryInformation);
@@ -169,7 +169,7 @@ const SwiperLongpress = ({ listingData }) => {
 
   // For Like and Dislike toggle Button
   const toggleLike = (checked, LikeData, dataIndex) => {
-    console.log(checked, "checkedcheckedchecked");
+    // console.log(checked, "checkedcheckedchecked");
     // setLikeIconVisible(!likeIconVisible);
     let likeItem = LikeData.businessListingId;
     let otherLikeIds = [];
@@ -188,7 +188,7 @@ const SwiperLongpress = ({ listingData }) => {
     );
     // this will update the each subCategory
     let updatedCategory = { ...copyCategoryInformation[getSubCategoryIndex] };
-    console.log(updatedCategory, "updatedCategoryupdatedCategory");
+    // console.log(updatedCategory, "updatedCategoryupdatedCategory");
     updatedCategory.isLiked = checked;
     copyCategoryInformation[getSubCategoryIndex] = updatedCategory;
     setLongData(copyCategoryInformation);
@@ -202,7 +202,24 @@ const SwiperLongpress = ({ listingData }) => {
     };
     dispatch(likeUnlikeApi(newLike));
   };
-  console.log(longData, "longDatalongDatalongData");
+
+  // const handleTouchStart = (e, newData) => {
+  //   setActiveCategory(newData.businessListingId);
+
+  //   setTimeout(() => {
+  //     setIsLongPress(true);
+  //   }, 1000);
+  // };
+
+  // const handleTouchEnd = (newData) => {
+  //   if (!isLongPress) {
+  //     detailBusiness(newData);
+  //   }
+  //   setActiveCategory(null);
+  //   setIsLongPress(false);
+  // };
+
+  // console.log(longData, "longDatalongDatalongData");
 
   const defaultOptions = {
     shouldPreventDefault: true,
@@ -213,6 +230,10 @@ const SwiperLongpress = ({ listingData }) => {
     detailBusiness,
     defaultOptions
   );
+
+  const checkAlert = () => {
+    alert("Check agaun");
+  };
 
   return (
     <Container>
@@ -275,19 +296,23 @@ const SwiperLongpress = ({ listingData }) => {
                 let firstLetter = newData.businessListingName
                   .charAt(0)
                   .toUpperCase();
-                console.log({ newData }, "newDatanewData");
-                console.log({ firstLetter }, "newDatanewData firstLetter");
+                // console.log({ newData }, "newDatanewData");
+                // console.log({ firstLetter }, "newDatanewData firstLetter");
                 return (
                   <>
                     <SwiperSlide>
-                      <button
+                      <Button
                         id={`swiper-section ${newData.businessListingId}`}
                         className={`Swipper-slide-box ${
                           activeCategory === newData.businessListingId
                             ? "active"
                             : ""
                         }`}
+                        // onClick={checkAlert}
+                        // onTouchStart={(e) => handleTouchStart(e, newData)}
+                        // onTouchEnd={() => handleTouchEnd(newData)}
                         onClick={(e) => {
+                          e.preventDefault();
                           if (!isLongPress) {
                             detailBusiness(newData);
                           } else if (isLongPress) {
@@ -295,21 +320,21 @@ const SwiperLongpress = ({ listingData }) => {
                               setActiveCategory(null);
                             }, 3000);
                             setActiveCategory(newData.businessListingId);
-                            e.preventDefault();
                           }
                         }}
                         {...longPressEvent}
-                      >
-                        {newData.businessListingIcon !== "" ? (
-                          <img
-                            src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
-                            alt="Icon"
-                            className="Swipper-slide-box-image"
-                          />
-                        ) : (
-                          <span>{firstLetter}</span>
-                        )}
-                      </button>
+                        text={
+                          newData.businessListingIcon !== "" ? (
+                            <img
+                              src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
+                              alt="Icon"
+                              className="Swipper-slide-box-image"
+                            />
+                          ) : (
+                            <span>{firstLetter}</span>
+                          )
+                        }
+                      ></Button>
                       {isLongPress &&
                       activeCategory === newData.businessListingId ? (
                         <>
