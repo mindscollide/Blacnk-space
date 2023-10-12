@@ -3,7 +3,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
   Button,
-  useLongPressClick,
   HeadingHoldPU,
   Loader,
   FavoriteSwiperLong,
@@ -19,6 +18,7 @@ import {
 import "swiper/css";
 import "./Favourite.css";
 import { useDispatch, useSelector } from "react-redux";
+import { getRndomeNumber } from "../../common/Function/utils";
 
 const Favourite = () => {
   // const navigate = useNavigate();
@@ -59,16 +59,6 @@ const Favourite = () => {
     console.log("click is triggered");
   };
 
-  const defaultOptionsFood = {
-    shouldPreventDefault: true,
-    delay: 500,
-  };
-  const longPressEventFood = useLongPressClick(
-    onLongPressFood,
-    onClickFood,
-    defaultOptionsFood
-  );
-
   // this is how I set data in Favourite Api by using explore state
   useEffect(() => {
     let favoriteNewData = {
@@ -90,95 +80,56 @@ const Favourite = () => {
     }
   }, [actionReducer.favoriteListing]);
 
-  console.log("explore Data Information", favoriteData);
-
-  // useEffect(() => {
-  //   setShowLoader(true);
-
-  //   setTimeout(() => {
-  //     setShowLoader(false);
-  //   }, 3000);
-  // }, []);
-
   return (
-    <Fragment>
+    <Container>
       <Row>
         <Col>
-          <>
-            <div className="Explore-header">
-              <Container>
-                <Header />
-                <UserInfo />
-              </Container>
-            </div>
-          </>
+          {favoriteInformation.map((favoriteUserListing, index) => {
+            return (
+              <Fragment key={getRndomeNumber()}>
+                {/* Food Section */}
+                <Row className="mt-4">
+                  <Col
+                    lg={12}
+                    md={12}
+                    sm={12}
+                    className="d-flex justify-content-between"
+                  >
+                    <label
+                      id={`food-label ${index}`}
+                      className={`heading-title-h1 mouse-cursor-heading ${
+                        activeCategory === index ? "active" : ""
+                      }`}
+                      onClick={() => {}}
+                    >
+                      {favoriteUserListing.categoryName}
+                    </label>
+
+                    {activeCategory === index ? (
+                      <>
+                        <HeadingHoldPU />
+                      </>
+                    ) : null}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={12} md={12} sm={12}>
+                    {favoriteUserListing.favoriteByUserListings.length > 0 && (
+                      <FavoriteSwiperLong
+                        favoriteListingData={
+                          favoriteUserListing.favoriteByUserListings
+                        }
+                      />
+                    )}
+                  </Col>
+                </Row>
+              </Fragment>
+            );
+          })}
+          {actionReducer.Loading ? <Loader /> : null}
         </Col>
       </Row>
-      <Container>
-        <Fragment>
-          <Row className="home_Container">
-            <Col>
-              {favoriteInformation.map((favoriteUserListing, index) => {
-                return (
-                  <>
-                    {/* Food Section */}
-                    <Row className="mt-4" key={index}>
-                      <Col
-                        lg={12}
-                        md={12}
-                        sm={12}
-                        className="d-flex justify-content-between"
-                      >
-                        <label
-                          id={`food-label ${index}`}
-                          className={`heading-title-h1 mouse-cursor-heading ${
-                            activeCategory === index ? "active" : ""
-                          }`}
-                          onClick={() => {
-                            setTimeout(() => {
-                              setActiveCategory(null);
-                            }, 3000);
-                            setActiveCategory(index);
-                          }}
-                          {...longPressEventFood}
-                        >
-                          {favoriteUserListing.categoryName}
-                        </label>
-
-                        {activeCategory === index ? (
-                          <>
-                            <HeadingHoldPU />
-                          </>
-                        ) : null}
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col lg={12} md={12} sm={12}>
-                        {favoriteUserListing.favoriteByUserListings.length >
-                          0 && (
-                          <FavoriteSwiperLong
-                            favoriteListingData={
-                              favoriteUserListing.favoriteByUserListings
-                            }
-                          />
-                        )}
-                      </Col>
-                    </Row>
-                  </>
-                );
-              })}
-
-              {/* {showLoader && (
-                <div className="loader-overlay">
-                  <Loader />
-                </div>
-              )} */}
-              {actionReducer.Loading ? <Loader /> : null}
-            </Col>
-          </Row>
-        </Fragment>
-      </Container>
-    </Fragment>
+    </Container>
   );
 };
 

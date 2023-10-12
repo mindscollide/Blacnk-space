@@ -1,10 +1,9 @@
 import { Fragment, useState, useEffect } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Spinner } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
   ExploreSwiperLong,
   Button,
-  useLongPressClick,
   HeadingHoldPU,
   Loader,
 } from "../../components/Elements";
@@ -20,28 +19,20 @@ import "swiper/css";
 import "./ExploreCategory.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { getRndomeNumber } from "../../common/Function/utils";
 
 const ExploreCategory = () => {
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const { actionReducer } = useSelector((state) => state);
-  console.log(actionReducer, "jsdvdjsvhjdvjshdv");
   const [isHeadingFood, setIsHeadingFood] = useState(false);
-  let businessID = localStorage.getItem("BusinessExploreID");
   let categoryID = localStorage.getItem("categoryID");
-
-  console.log("categoryID", categoryID);
-  const [isHome, setIsHome] = useState(false);
+  const [loadingAuto, seLoadingAuto] = useState(true);
 
   //state for active longPress event
   const [activeCategory, setActiveCategory] = useState(null);
 
   // state for explore Category status
   const [exploreInformation, setExploreInformation] = useState([]);
-
-  // state for Loader
-  // const [showLoader, setShowLoader] = useState(false);
-
   //this state is for Explore Category
   const [exploreData, setExploreData] = useState({
     UserID: {
@@ -60,17 +51,17 @@ const ExploreCategory = () => {
       errorStatus: false,
     },
     ParentCategoryID: {
-      value: "",
+      value: categoryID ? categoryID : "",
       errorMessage: "",
       errorStatus: false,
     },
     UserLatitude: {
-      value: "",
+      value: actionReducer.locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
     UserLongitude: {
-      value: "",
+      value: actionReducer.locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -89,27 +80,6 @@ const ExploreCategory = () => {
     console.log("click is triggered");
   };
 
-  const defaultOptionsFood = {
-    shouldPreventDefault: true,
-    delay: 500,
-  };
-  const longPressEventFood = useLongPressClick(
-    onLongPressFood,
-    onClickFood,
-    defaultOptionsFood
-  );
-
-  // this is how I set data in Explore Api by using explore state
-  // useEffect(() => {
-  //   let exploreNewData = {
-  //     UserID: exploreData.UserID.value,
-  //     pageNumber: exploreData.pageNumber.value,
-  //     isAutomatic: exploreData.isAutomatic.value,
-  //     ParentCategoryID: exploreData.ParentCategoryID.value,
-  //   };
-  //   dispatch(exploreCategory(exploreNewData));
-  // }, []);
-
   useEffect(() => {
     let exploreNewData = {
       UserID: "PLU_1",
@@ -123,7 +93,7 @@ const ExploreCategory = () => {
     setExploreData((prevState) => ({
       ...prevState,
       ParentCategoryID: {
-        value: exploreNewData.ParentCategoryID,
+        value: categoryID,
         errorMessage: "",
         errorStatus: false,
       },
@@ -143,14 +113,18 @@ const ExploreCategory = () => {
         errorStatus: false,
       },
       UserLatitude: {
-        value: exploreNewData.UserLatitude,
+        value: actionReducer.locationLatitude,
+        errorMessage: "",
+        errorStatus: false,
       },
       UserLongitude: {
-        value: exploreNewData.UserLongitude,
+        value: actionReducer.locationLongitude,
+        errorMessage: "",
+        errorStatus: false,
       },
     }));
-    if (categoryID) {
-      dispatch(exploreCategory(exploreNewData));
+    if (categoryID !== undefined) {
+      dispatch(exploreCategory(exploreNewData, seLoadingAuto));
     }
     // Make the API call using exploreData
   }, []);
@@ -173,9 +147,38 @@ const ExploreCategory = () => {
           value: actionReducer.locationLongitude,
         },
       });
+      let exploreNewData = {
+        UserID: "PLU_1",
+        pageNumber: 1,
+        isAutomatic: false,
+        ParentCategoryID: categoryID,
+        UserLatitude: actionReducer.locationLatitude,
+        UserLongitude: actionReducer.locationLongitude,
+      };
+
+      dispatch(exploreCategory(exploreNewData, seLoadingAuto));
     }
   }, [actionReducer.locationLatitude, actionReducer.locationLongitude]);
   console.log(exploreData, "dashboardDatadashboardDatadashboardData");
+
+  useEffect(() => {
+    if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+      console.log("helloooooo");
+      let latitudeValueLocal = localStorage.getItem("latitudeValue");
+      let longitudeValueLocal = localStorage.getItem("longitudeValue");
+      let exploreNewData = {
+        UserID: "PLU_1",
+        pageNumber: 1,
+        isAutomatic: false,
+        ParentCategoryID: categoryID,
+        UserLatitude: latitudeValueLocal,
+        UserLongitude: longitudeValueLocal,
+      };
+
+      dispatch(exploreCategory(exploreNewData, seLoadingAuto));
+    } else {
+    }
+  }, []);
 
   // this is how I get data from Reducer
   useEffect(() => {
@@ -188,93 +191,69 @@ const ExploreCategory = () => {
     }
   }, [actionReducer.subCategoryDashboardListing]);
 
-  console.log("explore Data Information", exploreData);
-
-  // useEffect(() => {
-  //   setShowLoader(true);
-
-  //   setTimeout(() => {
-  //     setShowLoader(false);
-  //   }, 3000);
-  // }, []);
-
   return (
-    <Fragment>
+    <Container>
       <Row>
         <Col>
-          <>
-            <div className="Explore-header">
-              <Container>
-                <Header />
-                <UserInfo />
-              </Container>
-            </div>
-          </>
+          {exploreInformation !== null &&
+          exploreInformation !== undefined &&
+          exploreInformation.length > 0
+            ? exploreInformation.map((exploreListing, index) => {
+                return (
+                  <Fragment key={getRndomeNumber()}>
+                    {/* Food Section */}
+                    <Row className="mt-4">
+                      <Col
+                        lg={12}
+                        md={12}
+                        sm={12}
+                        className="d-flex justify-content-between"
+                      >
+                        <label
+                          id={`food-label ${exploreListing.subCategoryID}`}
+                          className={`heading-title-h1 mouse-cursor-heading ${
+                            activeCategory === index ? "active" : ""
+                          }`}
+                          onClick={() => {}}
+                        >
+                          {exploreListing.subCategoryName}
+                        </label>
+
+                        {activeCategory === index ? (
+                          <>
+                            <HeadingHoldPU />
+                          </>
+                        ) : null}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg={12} md={12} sm={12}>
+                        {exploreListing.subCategoryListings.length > 0 && (
+                          <ExploreSwiperLong
+                            exploreListingData={
+                              exploreListing.subCategoryListings
+                            }
+                          />
+                        )}
+                      </Col>
+                    </Row>
+                  </Fragment>
+                );
+              })
+            : null}
+
+          {loadingAuto ? (
+            <Loader />
+          ) : actionReducer.Loading ? (
+            <Row>
+              <Col className="d-flex justify-content-center align-Item-center">
+                <Spinner className="spinner-instead-Loader" />
+              </Col>
+            </Row>
+          ) : null}
         </Col>
       </Row>
-      <Container>
-        <Fragment>
-          <Row className="home_Container">
-            <Col>
-              {exploreInformation !== null &&
-              exploreInformation !== undefined &&
-              exploreInformation.length > 0
-                ? exploreInformation.map((exploreListing, index) => {
-                    return (
-                      <>
-                        {/* Food Section */}
-                        <Row className="mt-4">
-                          <Col
-                            lg={12}
-                            md={12}
-                            sm={12}
-                            className="d-flex justify-content-between"
-                          >
-                            <label
-                              id={`food-label ${exploreListing.subCategoryID}`}
-                              className={`heading-title-h1 mouse-cursor-heading ${
-                                activeCategory === index ? "active" : ""
-                              }`}
-                              onClick={() => {
-                                setTimeout(() => {
-                                  setActiveCategory(null);
-                                }, 3000);
-                                setActiveCategory(index);
-                              }}
-                              {...longPressEventFood}
-                            >
-                              {exploreListing.subCategoryName}
-                            </label>
-
-                            {activeCategory === index ? (
-                              <>
-                                <HeadingHoldPU />
-                              </>
-                            ) : null}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg={12} md={12} sm={12}>
-                            {exploreListing.subCategoryListings.length > 0 && (
-                              <ExploreSwiperLong
-                                exploreListingData={
-                                  exploreListing.subCategoryListings
-                                }
-                              />
-                            )}
-                          </Col>
-                        </Row>
-                      </>
-                    );
-                  })
-                : null}
-
-              {actionReducer.Loading ? <Loader /> : null}
-            </Col>
-          </Row>
-        </Fragment>
-      </Container>
-    </Fragment>
+    </Container>
   );
 };
 

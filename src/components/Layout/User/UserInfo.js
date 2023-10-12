@@ -17,17 +17,17 @@ const UserInfo = () => {
   // to show Explore userInfo
   useEffect(() => {
     // Check if the current location is the ExplorePage
-    setShowExploreUser(location.pathname === "/ExploreCategory");
+    setShowExploreUser(location.pathname === "/BlankSpace/ExploreCategory");
   }, [location.pathname]);
 
   //To Show Favorite UserInfo
   useEffect(() => {
-    setShowFavoriteUser(location.pathname === "/Favourite");
+    setShowFavoriteUser(location.pathname === "/BlankSpace/Favourite");
   }, [location.pathname]);
 
   //To show Switch Main Category User Info
   useEffect(() => {
-    setShowSwitchCategory(location.pathname === "/Categories");
+    setShowSwitchCategory(location.pathname === "/BlankSpace/Categories");
   }, [location.pathname]);
 
   //To show Sub category switch User Info
@@ -36,7 +36,7 @@ const UserInfo = () => {
   }, [location.pathname]);
 
   const onClickSettingIcon = () => {
-    navigate("/SettingPage");
+    navigate("/BlankSpace/SettingPage");
   };
   return (
     <Fragment>
@@ -62,7 +62,7 @@ const UserInfo = () => {
               <Button
                 text="Go Back"
                 className="Go-Back-Button"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/BlankSpace/")}
               />
             </Col>
           </Row>
@@ -89,7 +89,7 @@ const UserInfo = () => {
               <Button
                 text="Go Back"
                 className="Go-Back-Button"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/BlankSpace/")}
               />
             </Col>
           </Row>
@@ -116,7 +116,7 @@ const UserInfo = () => {
               <Button
                 text="Go Back"
                 className="Go-Back-Button"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/BlankSpace/")}
               />
             </Col>
           </Row>
@@ -143,7 +143,7 @@ const UserInfo = () => {
               <Button
                 text="Go Back"
                 className="Go-Back-Button"
-                onClick={() => navigate("/Categories")}
+                onClick={() => navigate("/BlankSpace/Categories")}
               />
             </Col>
           </Row>

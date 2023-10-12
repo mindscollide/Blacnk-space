@@ -230,7 +230,7 @@ const SearchPage = () => {
                 <Button
                   text="Go Back"
                   className="Go-Back-Button"
-                  onClick={() => navigate("/")}
+                  onClick={() => navigate("/BlankSpace/")}
                 />
               </Col>
             </Row>
@@ -334,7 +334,6 @@ const SearchPage = () => {
       </Container>
 
       <div className="Search-header-marginTop" />
-      <Col></Col>
       <Container>
         {searchData.map((newData, index) => {
           let firstLetter = newData.businessListingName

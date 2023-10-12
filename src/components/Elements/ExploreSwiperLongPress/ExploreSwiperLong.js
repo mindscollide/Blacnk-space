@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { Button, useLongPressClick } from "./../../../components/Elements";
+import { Button } from "./../../../components/Elements";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
 import { StarFill, HandThumbsUpFill } from "react-bootstrap-icons";
@@ -13,6 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import "./ExploreSwiperLong.css";
+import { getRndomeNumber } from "../../../common/Function/utils";
 
 const ExploreSwiperLong = ({ exploreListingData }) => {
   const dispatch = useDispatch();
@@ -202,15 +203,6 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
       setLongData(exploreListingData);
     }
   }, [exploreListingData]);
-  const defaultOptions = {
-    shouldPreventDefault: true,
-    delay: 500,
-  };
-  const longPressEvent = useLongPressClick(
-    onLongPress,
-    onClick,
-    defaultOptions
-  );
 
   return (
     <Container>
@@ -277,157 +269,143 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
                   let firstLetter = newData.subCategoryListingName
                     .charAt(0)
                     .toUpperCase();
-                  console.log({ newData }, "newDatanewData");
-                  console.log({ firstLetter }, "newDatanewData");
-                  console.log(index, "longDatalongDatalongData");
                   return (
-                    <>
-                      <SwiperSlide key={newData.subCategoryListingId}>
-                        <button
-                          src={`data:image/jpeg;base64,${newData.subCategoryListingId}`}
-                          alt="Icon"
-                          id={`swiper-section ${newData.subCategoryListingId}`}
-                          className={`Swipper-slide-box-Explore-category ${
-                            activeCategory === newData.subCategoryListingId
-                              ? "active"
-                              : ""
-                          }`}
-                          onClick={() => {
-                            onClick(newData);
-                            setTimeout(() => {
-                              setActiveCategory(null);
-                            }, 2000);
-                            setActiveCategory(newData.subCategoryListingId);
-                          }}
-                          {...longPressEvent}
-                        >
-                          {newData.subCategoryListingIcon !== "" ? (
-                            <img
-                              src={`data:image/jpeg;base64,${newData.subCategoryListingIcon}`}
-                              alt="Icon"
-                              className="Swipper-slide-box-Explore-category-image"
-                            />
-                          ) : (
-                            <span>{firstLetter}</span>
-                          )}
-                        </button>
-                        {isLongPress &&
-                        activeCategory === newData.subCategoryListingId ? (
-                          <>
-                            <div className="longpress-box">
-                              <div className="options-main-div">
-                                <span className="icn-display-block">
-                                  {newData.isLiked ? (
-                                    <>
-                                      <span
-                                        onClick={(checked) =>
-                                          toggleLike(false, newData, index)
-                                        }
-                                      >
-                                        <HandThumbsUpFill className="icon-class" />
-                                        <span className="main-options">
-                                          Like
-                                        </span>
-                                      </span>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <span
-                                        onClick={(checked) =>
-                                          toggleLike(true, newData, index)
-                                        }
-                                      >
-                                        <i className="icon-like icon-class"></i>
-                                        <span className="main-options">
-                                          Like
-                                        </span>
-                                      </span>
-                                    </>
-                                  )}
-                                </span>
-                                <span className="icn-display-block">
-                                  {newData.subCategoryContactNumber ? (
-                                    <>
-                                      <i className="icon-call icon-class"></i>
-                                      <span className="main-options">Call</span>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <i className="icon-call IconExplore-disabled-Call"></i>
-                                      <span className="disable-Exploremain-options">
-                                        Call
-                                      </span>
-                                    </>
-                                  )}
-                                </span>
-                                <span className="icn-display-block">
-                                  {newData.subCategoryLocation ? (
-                                    <>
-                                      <a
-                                        href={newData.subCategoryLocation}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="underLine_Text"
-                                      >
-                                        <i className="icon-location icon-class"></i>
-                                      </a>
+                    <SwiperSlide key={getRndomeNumber()}>
+                      <button
+                        src={`data:image/jpeg;base64,${newData.subCategoryListingId}`}
+                        alt="Icon"
+                        id={`swiper-section ${newData.subCategoryListingId}`}
+                        className={`Swipper-slide-box-Explore-category ${
+                          activeCategory === newData.subCategoryListingId
+                            ? "active"
+                            : ""
+                        }`}
+                        onClick={() => {
+                          onClick(newData);
+                        }}
+                      >
+                        {newData.subCategoryListingIcon !== "" ? (
+                          <img
+                            src={`data:image/jpeg;base64,${newData.subCategoryListingIcon}`}
+                            alt="Icon"
+                            className="Swipper-slide-box-Explore-category-image"
+                          />
+                        ) : (
+                          <span>{firstLetter}</span>
+                        )}
+                      </button>
+                      {isLongPress &&
+                      activeCategory === newData.subCategoryListingId ? (
+                        <>
+                          <div className="longpress-box">
+                            <div className="options-main-div">
+                              <span className="icn-display-block">
+                                {newData.isLiked ? (
+                                  <>
+                                    <span
+                                      onClick={(checked) =>
+                                        toggleLike(false, newData, index)
+                                      }
+                                    >
+                                      <HandThumbsUpFill className="icon-class" />
+                                      <span className="main-options">Like</span>
+                                    </span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <span
+                                      onClick={(checked) =>
+                                        toggleLike(true, newData, index)
+                                      }
+                                    >
+                                      <i className="icon-like icon-class"></i>
+                                      <span className="main-options">Like</span>
+                                    </span>
+                                  </>
+                                )}
+                              </span>
+                              <span className="icn-display-block">
+                                {newData.subCategoryContactNumber ? (
+                                  <>
+                                    <i className="icon-call icon-class"></i>
+                                    <span className="main-options">Call</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <i className="icon-call IconExplore-disabled-Call"></i>
+                                    <span className="disable-Exploremain-options">
+                                      Call
+                                    </span>
+                                  </>
+                                )}
+                              </span>
+                              <span className="icn-display-block">
+                                {newData.subCategoryLocation ? (
+                                  <>
+                                    <a
+                                      href={newData.subCategoryLocation}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="underLine_Text"
+                                    >
+                                      <i className="icon-location icon-class"></i>
+                                    </a>
+                                    <span className="main-options">
+                                      Direction
+                                    </span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <i className="icon-location IconExplore-disabled-Direction"></i>
+                                    <span className="disable-Exploremain-options">
+                                      Direction
+                                    </span>
+                                  </>
+                                )}
+                              </span>
+                              <span className="icn-display-block">
+                                <i className="icon-share icon-class"></i>
+                                <span className="main-options">Share</span>
+                              </span>
+                              <span className="icn-display-block-share">
+                                {newData.isFavorite ? (
+                                  <>
+                                    <span
+                                      onClick={(checked) =>
+                                        toggleIcon(false, newData, index)
+                                      }
+                                    >
+                                      <StarFill className="icon-class" />
                                       <span className="main-options">
-                                        Direction
+                                        Favorite
                                       </span>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <i className="icon-location IconExplore-disabled-Direction"></i>
-                                      <span className="disable-Exploremain-options">
-                                        Direction
+                                    </span>
+                                  </>
+                                ) : (
+                                  <>
+                                    {" "}
+                                    <span
+                                      onClick={(checked) =>
+                                        toggleIcon(true, newData, index)
+                                      }
+                                    >
+                                      <i className="icon-star icon-Favorite"></i>
+                                      <span className="main-options">
+                                        Favorite
                                       </span>
-                                    </>
-                                  )}
-                                </span>
-                                <span className="icn-display-block">
-                                  <i className="icon-share icon-class"></i>
-                                  <span className="main-options">Share</span>
-                                </span>
-                                <span className="icn-display-block-share">
-                                  {newData.isFavorite ? (
-                                    <>
-                                      <span
-                                        onClick={(checked) =>
-                                          toggleIcon(false, newData, index)
-                                        }
-                                      >
-                                        <StarFill className="icon-class" />
-                                        <span className="main-options">
-                                          Favorite
-                                        </span>
-                                      </span>
-                                    </>
-                                  ) : (
-                                    <>
-                                      {" "}
-                                      <span
-                                        onClick={(checked) =>
-                                          toggleIcon(true, newData, index)
-                                        }
-                                      >
-                                        <i className="icon-star icon-Favorite"></i>
-                                        <span className="main-options">
-                                          Favorite
-                                        </span>
-                                      </span>
-                                    </>
-                                  )}
-                                </span>
-                              </div>
+                                    </span>
+                                  </>
+                                )}
+                              </span>
                             </div>
-                          </>
-                        ) : null}
+                          </div>
+                        </>
+                      ) : null}
 
-                        <p className="para-color">
-                          {newData.subCategoryListingName}
-                        </p>
-                      </SwiperSlide>
-                    </>
+                      <p className="para-color">
+                        {newData.subCategoryListingName}
+                      </p>
+                    </SwiperSlide>
                   );
                 })}
             </Swiper>

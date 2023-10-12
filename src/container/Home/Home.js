@@ -1,36 +1,23 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import {
-  Button,
-  useLongPressClick,
-  HeadingHoldPU,
-  Loader,
-} from "./../../components/Elements";
+import { Button, HeadingHoldPU, Loader } from "./../../components/Elements";
 import { getdashboardApi } from "../../store/Actions/Actions";
 import { SwiperLongpress } from "../../components/Elements";
 import "swiper/css";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { Spin } from "antd";
 import { Spinner } from "react-bootstrap";
-import { async } from "q";
-// import { useDispatch, useSelector } from "react-redux";
+import { getRndomeNumber } from "../../common/Function/utils";
+import LongPress from "../../components/Elements/LonPress/LongPress";
 
 const Home = () => {
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const { actionReducer } = useSelector((state) => state);
-
   // for long press Heading state
-  const [isHeadingHold, setIsHeadingHold] = useState(false);
   const [isHeadingFood, setIsHeadingFood] = useState(false);
-
-  // const dispatch = useDispatch();
-  const [data, setData] = useState([1, 2, 3, 4, 5]);
-  const [loadingAuto, seLoadingAuto] = useState(false);
-
+  const [loadingAuto, seLoadingAuto] = useState(true);
   // dashboard state
   const [dashboardData, setDashboardData] = useState({
     userID: {
@@ -66,14 +53,8 @@ const Home = () => {
 
   //state for active longPress event
   const [activeCategory, setActiveCategory] = useState(null);
-  console.log(activeCategory, "activeCategoryactiveCategory");
-
-  // state for Loader
-  const [showLoader, setShowLoader] = useState(false);
-
   // long press func
   const onLongPressFood = () => {
-    console.log("longpress is triggered");
     setIsHeadingFood(true);
     setTimeout(() => setIsHeadingFood(false), 3000);
   };
@@ -83,41 +64,15 @@ const Home = () => {
     console.log("click is triggered");
   };
 
-  const defaultOptionsFood = {
-    shouldPreventDefault: true,
-    delay: 500,
-  };
-  const longPressEventFood = useLongPressClick(
-    onLongPressFood,
-    onClickFood,
-    defaultOptionsFood
-  );
-
   const onClickExploreCategory = async (categoryID) => {
     await localStorage.setItem("categoryID", categoryID);
-    navigate("/ExploreCategory");
+    navigate("/BlankSpace/ExploreCategory");
   };
 
   useEffect(() => {
-    let Data = {
-      UserID: dashboardData.userID.value,
-      pageNumber: dashboardData.pageNumber.value,
-      isAutomatic: dashboardData.isAutomatic.value,
-      UserLatitude: actionReducer.locationLatitude,
-      UserLongitude: actionReducer.locationLongitude,
-    };
-    setAutoCheck(false);
-    dispatch(getdashboardApi(Data, seLoadingAuto));
-  }, []);
-
-  useEffect(() => {
-    console.log("actionReducer call on location change");
+    console.log("check for data", actionReducer.locationLatitude);
+    console.log("check for data", actionReducer.locationLongitude);
     if (actionReducer.locationLatitude && actionReducer.locationLongitude) {
-      console.log(
-        "chanegegegegegegeggeerrrr",
-        actionReducer.locationLatitude,
-        actionReducer.locationLongitude
-      );
       let Data = {
         UserID: dashboardData.userID.value,
         pageNumber: dashboardData.pageNumber.value,
@@ -125,17 +80,16 @@ const Home = () => {
         UserLatitude: actionReducer.locationLatitude,
         UserLongitude: actionReducer.locationLongitude,
       };
-      console.log("actionReducer call on location change", Data);
+
       dispatch(getdashboardApi(Data, seLoadingAuto));
       setAutoCheck(true);
-      seLoadingAuto(true);
       setDashboardData({
         ...dashboardData,
         UserLatitude: {
-          value: actionReducer.locationLatitude.toString(),
+          value: actionReducer.locationLatitude,
         },
         UserLongitude: {
-          value: actionReducer.locationLongitude.toString(),
+          value: actionReducer.locationLongitude,
         },
       });
     }
@@ -145,22 +99,10 @@ const Home = () => {
   useEffect(() => {
     try {
       if (actionReducer.dashBoardListings) {
-        console.log(
-          "actionReducer call on location autoCheck",
-          actionReducer.dashBoardListings
-        );
         if (autoCheck) {
-          console.log(
-            "actionReducer call on location autoCheck",
-            actionReducer.dashBoardListings
-          );
           setDashboardInformation(actionReducer.dashBoardListings);
         } else {
           // for lazy loading
-          console.log(
-            "actionReducer call on location autoCheck",
-            actionReducer.dashBoardListings
-          );
           let newDAta = [...dashboardInformation];
           newDAta.push(actionReducer.dashBoardListings);
           setDashboardInformation(newDAta);
@@ -170,89 +112,86 @@ const Home = () => {
       console.log("error");
     }
   }, [actionReducer.dashBoardListings]);
+  const handleLongPress = (e,index) => {
+    e.preventDefault();
+    setActiveCategory(index)  
+    // alert("Long press event:", index);
+  };
 
-  console.log("dashboard Information", dashboardInformation);
-
+  const handleShortPress = (e) => {
+    e.preventDefault();
+    // alert("Short press event:", e);
+  };
   return (
     <Container>
-      <Fragment>
-        {dashboardInformation.map((listing, index) => {
-          console.log(listing, "nanannanan");
-          return (
-            <>
-              {/* Food Section */}
-              <Row className="mt-5">
-                <Col
-                  lg={12}
-                  md={12}
-                  sm={12}
-                  className="d-flex justify-content-between"
+      {dashboardInformation.map((listing, index) => {
+        return (
+          <Fragment key={getRndomeNumber()}>
+            {/* Food Section */}
+            <Row className="mt-5">
+              <Col
+                lg={12}
+                md={12}
+                sm={12}
+                className="d-flex justify-content-between"
+              >
+                <LongPress
+                  onLongPress={(e)=>handleLongPress(e,index)}
+                  onPress={handleShortPress}
+                  duration={500}
                 >
                   <label
                     id={`food-label ${listing.categoryID}`}
                     className={`heading-title-h1 mouse-cursor-heading ${
                       activeCategory === index ? "active" : ""
                     }`}
-                    onClick={() => {
-                      setTimeout(() => {
-                        setActiveCategory(null);
-                      }, 3000);
-                      setActiveCategory(index);
-                    }}
-                    {...longPressEventFood}
                   >
                     {listing.categoryName}
                   </label>
+                </LongPress>
 
-                  {activeCategory === index ? (
-                    <>
-                      <HeadingHoldPU />
-                    </>
-                  ) : null}
+                {activeCategory === index ? (
+                  <>
+                    <HeadingHoldPU />
+                  </>
+                ) : null}
 
-                  {listing.categoryID && (
-                    <>
-                      <Button
-                        id={listing.categoryID}
-                        text="Explore Category"
-                        className="Explore-Home-Button"
-                        onClick={() =>
-                          onClickExploreCategory(listing.categoryID)
-                        }
-                      />
-                    </>
-                  )}
-                </Col>
-              </Row>
-              <Row>
-                <Col lg={12} md={12} sm={12}>
-                  {listing.dashBoardListings !== null &&
-                    listing.dashBoardListings !== undefined &&
-                    listing.dashBoardListings.length > 0 && (
-                      <SwiperLongpress
-                        listingData={listing.dashBoardListings}
-                      />
-                    )}
-                </Col>
-              </Row>
-            </>
-          );
-        })}
-
-        {loadingAuto ? (
-          <>
-            <Row>
-              <Col className="d-flex justify-content-center align-Item-center">
-                <Spinner className="spinner-instead-Loader" />
+                {listing.categoryID && (
+                  <>
+                    <Button
+                      id={listing.categoryID}
+                      text="Explore Category"
+                      className="Explore-Home-Button"
+                      onClick={() => onClickExploreCategory(listing.categoryID)}
+                    />
+                  </>
+                )}
               </Col>
             </Row>
-          </>
-        ) : actionReducer.Loading ||
-          actionReducer.locationLongitude === "" ||
-          actionReducer.locationLatitude === "" ? (
-          <Loader />
-        ) : null}
-      </Fragment>
+            <Row>
+              <Col lg={12} md={12} sm={12}>
+                {listing.dashBoardListings !== null &&
+                  listing.dashBoardListings !== undefined &&
+                  listing.dashBoardListings.length > 0 && (
+                    <SwiperLongpress listingData={listing.dashBoardListings} />
+                  )}
+              </Col>
+            </Row>
+          </Fragment>
+        );
+      })}
+
+      {loadingAuto ? (
+        <Loader />
+      ) : actionReducer.Loading ? (
+        <>
+          <Row>
+            <Col className="d-flex justify-content-center align-Item-center">
+              <Spinner className="spinner-instead-Loader" />
+            </Col>
+          </Row>
+        </>
+      ) : null}
     </Container>
   );
 };

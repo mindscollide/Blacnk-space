@@ -4,7 +4,7 @@ import {
   createHashRouter,
 } from "react-router-dom";
 
-// import Home from "../container/Home/Home";
+import Home from "../container/Home/Home";
 import CategoryDetails from "../container/Categories/CategoryDetails";
 import Dashboard from "../container/Dashboard/Dashboard";
 import ExploreCategory from "../container/Explore/ExploreCategory";
@@ -13,18 +13,24 @@ import SubCategories from "../container/SubCategorySwitch/SubCategory";
 import Favourite from "../container/Favourite/Favourite";
 import SearchPage from "../container/SearchPage/Seacrh";
 import SettingPage from "../container/Setting/SettingPage";
+import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createHashRouter(
   createRoutesFromElements(
     <>
-      <Route exact path="/" element={<Dashboard />} />
-      <Route exact path="/Category" element={<CategoryDetails />} />
-      <Route exact path="/ExploreCategory" element={<ExploreCategory />} />
-      <Route exact path="/Categories" element={<Categories />} />
-      <Route exact path="/SubCategories" element={<SubCategories />} />
-      <Route exact path="/Favourite" element={<Favourite />} />
-      <Route exact path="/SearchPage" element={<SearchPage />} />
-      <Route exact path="/SettingPage" element={<SettingPage />} />
+      <Route element={<PrivateRoutes />}>
+        <Route exact path="/BlankSpace/" element={<Dashboard />}>
+          <Route path="" element={<Home />} />
+          <Route path="Home" element={<Home />} />
+          <Route path="Category" element={<CategoryDetails />} />
+          <Route path="ExploreCategory" element={<ExploreCategory />} />
+          <Route path="Categories" element={<Categories />} />
+          <Route path="SubCategories" element={<SubCategories />} />
+          <Route path="Favourite" element={<Favourite />} />
+          <Route path="SearchPage" element={<SearchPage />} />
+          <Route path="SettingPage" element={<SettingPage />} />
+        </Route>
+      </Route>
     </>
   )
 );

@@ -14,13 +14,14 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./CategoryDetails.css";
+import { getRndomeNumber } from "../../common/Function/utils";
 
 const CategoryDetails = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { actionReducer } = useSelector((state) => state);
   console.log(actionReducer, "actionNation");
 
+  const dispatch = useDispatch();
   //state for businessDetails
   const [businessDetails, setBusinessDetails] = useState([]);
   console.log({ businessDetails }, "businessDetailsbusinessDetails");
@@ -44,22 +45,23 @@ const CategoryDetails = () => {
     ) {
       setBusinessDetails(actionReducer.businessListing);
     }
-  }, []);
-
-  console.log(actionReducer.businessListing, "actionReducerhashshsh");
+  }, [actionReducer.businessListing]);
 
   const clickHomeHandler = () => {
-    navigate("/");
+    navigate("/BlankSpace/");
   };
-
   useEffect(() => {
-    setShowLoader(true);
+    if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+      const storedData = localStorage.getItem("newBusinessIdData");
+      console.log("helloooooo");
+      // Parse the JSON string into an object
+      const newBusinessIdData = JSON.parse(storedData);
 
-    setTimeout(() => {
-      setShowLoader(false);
-    }, 3000);
+      dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
+    } else {
+    }
   }, []);
-  console.log("businessDetails.listOfBase64Images.length", businessDetails);
+
   return (
     <Fragment>
       {Object.keys(businessDetails).length > 0 ? (
@@ -79,21 +81,18 @@ const CategoryDetails = () => {
                       pagination={{
                         clickable: true,
                       }}
-                      // navigation={true}
                       modules={[Autoplay, Pagination]}
                       className="carousel-swiper"
                     >
                       {Object.values(businessDetails.listOfBase64Images).map(
                         (base64Image, index) => (
-                          <>
-                            <SwiperSlide key={index}>
-                              <img
-                                src={`data:image/jpeg;base64,${base64Image}`}
-                                alt={`Slide ${index}`}
-                                className="slide-Image"
-                              />
-                            </SwiperSlide>
-                          </>
+                          <SwiperSlide key={getRndomeNumber()}>
+                            <img
+                              src={`data:image/jpeg;base64,${base64Image}`}
+                              alt={`Slide ${index}`}
+                              className="slide-Image"
+                            />
+                          </SwiperSlide>
                         )
                       )}
                     </Swiper>
@@ -211,19 +210,6 @@ const CategoryDetails = () => {
               >
                 <div className="what-we-offer-bullets">
                   {businessDetails.offering}
-                  {/* <span className="what-we-offer-subtitles">
-                1. montmartre Neighoborhood had a charming, behemian feel with
-                lots of quaint shops and cafes.
-              </span>
-              <span className="what-we-offer-subtitles">
-                2. Accommodation booking.
-              </span>
-              <span className="what-we-offer-subtitles">3. Local guides.</span>
-              <span className="what-we-offer-subtitles">4. 24/7 support.</span>
-              <span className="what-we-offer-subtitles">
-                5. Accommodation booking.
-              </span>
-              <span className="what-we-offer-subtitles">6. Local guides.</span> */}
                 </div>
               </Col>
             </Row>

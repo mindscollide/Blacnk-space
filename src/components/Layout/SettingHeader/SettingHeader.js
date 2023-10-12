@@ -8,7 +8,7 @@ const SettingHeader = () => {
   const navigate = useNavigate();
 
   const onHomePage = () => {
-    navigate("/");
+    navigate("/BlankSpace/");
   };
 
   return (

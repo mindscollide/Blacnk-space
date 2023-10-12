@@ -198,13 +198,12 @@ const actionReducer = (state = initialState, action) => {
     }
 
     case actions.GET_ALL_SUB_CATEGORY_PARENT_INIT: {
-      return {
-        Loading: true,
-      };
+      return { ...state, Loading: true };
     }
 
     case actions.GET_ALL_SUB_CATEGORY_PARENT_SUCCESS: {
       return {
+        ...state,
         Loading: false,
         getParentCategory: action.response,
         ResponseMessage: action.message,
@@ -213,6 +212,7 @@ const actionReducer = (state = initialState, action) => {
 
     case actions.GET_ALL_SUB_CATEGORY_PARENT_FAIL: {
       return {
+        ...state,
         Loading: false,
         getParentCategory: [],
         ResponseMessage: action.message,
@@ -220,13 +220,12 @@ const actionReducer = (state = initialState, action) => {
     }
 
     case actions.LIKE_UNLIKE_BUSINESS_INIT: {
-      return {
-        Loading: true,
-      };
+      return { ...state, Loading: true };
     }
 
     case actions.LIKE_UNLIKE_BUSINESS_SUCCESS: {
       return {
+        ...state,
         Loading: false,
         likeUnlikeBusiness: action.response,
         ResponseMessage: action.message,
@@ -235,6 +234,7 @@ const actionReducer = (state = initialState, action) => {
 
     case actions.LIKE_UNLIKE_BUSINESS_FAIL: {
       return {
+        ...state,
         Loading: false,
         likeUnlikeBusiness: "",
         ResponseMessage: action.message,
@@ -242,13 +242,12 @@ const actionReducer = (state = initialState, action) => {
     }
 
     case actions.SEARCH_BLANCSPACE_INIT: {
-      return {
-        Loading: true,
-      };
+      return { ...state, Loading: true };
     }
 
     case actions.SEARCH_BLANCSPACE_SUCCESS: {
       return {
+        ...state,
         Loading: false,
         searchListing: action.response,
         searchListingCategory: action.response2,
@@ -258,6 +257,7 @@ const actionReducer = (state = initialState, action) => {
 
     case actions.SEARCH_BLANCSPACE_FAIL: {
       return {
+        ...state,
         Loading: false,
         searchListing: [],
         searchListingCategory: [],
@@ -266,13 +266,12 @@ const actionReducer = (state = initialState, action) => {
     }
 
     case actions.BUSINESS_DETAIL_INIT: {
-      return {
-        Loading: true,
-      };
+      return { ...state, Loading: true };
     }
 
     case actions.BUSINESS_DETAIL_SUCCESS: {
       return {
+        ...state,
         Loading: false,
         businessListing: action.response,
         ResponseMessage: action.message,
@@ -281,6 +280,7 @@ const actionReducer = (state = initialState, action) => {
 
     case actions.BUSINESS_DETAIL_FAIL: {
       return {
+        ...state,
         Loading: false,
         businessListing: "",
         ResponseMessage: action.message,

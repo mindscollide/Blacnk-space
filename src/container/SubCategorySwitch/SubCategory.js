@@ -18,6 +18,7 @@ import { Loader } from "./../../components/Elements";
 
 import "./SubCategory.css";
 import { useNavigate } from "react-router-dom";
+import { getRndomeNumber } from "../../common/Function/utils";
 
 const SubCategories = () => {
   const dispatch = useDispatch();
@@ -86,12 +87,10 @@ const SubCategories = () => {
   });
 
   // state for loader
-  // const [showLoader, setShowLoader] = useState(false);
   let CategoryId = localStorage.getItem("CGID");
   const [showMessage, setShowMessage] = useState(false);
   const [entertainmentMessage, setEntertainmentMessage] = useState(false);
   const [switchBlockAll, setSwitchBlockAll] = useState(false);
-  const [switchEntertainment, setSwitchEntertainment] = useState(false);
 
   useEffect(() => {
     if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
@@ -233,20 +232,8 @@ const SubCategories = () => {
   }, [actionReducer.getParentCategory]);
 
   return (
-    <Fragment>
-      <Row>
-        <Col>
-          <>
-            <div className="Sub-Categories-header">
-              <Container>
-                <Header />
-                <UserInfo />
-              </Container>
-            </div>
-          </>
-        </Col>
-      </Row>
-      <Container>
+    <Container>
+      <Fragment key={getRndomeNumber()}>
         <Row className="Sub-Category-margintop">
           <Col
             lg={6}
@@ -288,7 +275,6 @@ const SubCategories = () => {
             )}
           </Col>
         </Row>
-
         <Row>
           <Col>
             {subCategoryInformation !== null &&
@@ -351,14 +337,9 @@ const SubCategories = () => {
               : null}
           </Col>
         </Row>
-        {/* {showLoader && (
-          <div className="loader-overlay">
-            <Loader />
-          </div>
-        )} */}
         {actionReducer.Loading ? <Loader /> : null}
-      </Container>
-    </Fragment>
+      </Fragment>
+    </Container>
   );
 };
 

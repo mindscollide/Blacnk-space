@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { longitudeData } from "../../../store/Actions/Actions";
 import { latitudeData } from "../../../store/Actions/Actions";
+import { getRndomeNumber } from "../../../common/Function/utils";
 // import { Hidden } from "@material-ui/core";
 
 const Header = () => {
@@ -29,62 +30,66 @@ const Header = () => {
   // To locate on Explore Category Page
   useEffect(() => {
     // Check if the current location is the ExplorePage
-    setShowExploreIcon(location.pathname === "/ExploreCategory");
+    setShowExploreIcon(location.pathname === "/BlankSpace/ExploreCategory");
   }, [location.pathname]);
 
   // To locate on Favorite Page
   useEffect(() => {
-    setIsFavorite(location.pathname === "/Favourite");
+    setIsFavorite(location.pathname === "/BlankSpace/Favourite");
   }, [location.pathname]);
 
   // To loacte on main category switch
   useEffect(() => {
-    setIsSwitchCategory(location.pathname === "/Categories");
+    setIsSwitchCategory(location.pathname === "/BlankSpace/Categories");
   }, [location.pathname]);
-
   // To loacte on Sub category switch
-  useEffect(() => {
-    setIsSubSwitchCategory(location.pathname === "/SubCategories");
-  }, [location.pathname]);
 
   const navigateCategories = () => {
-    navigate("/Categories");
+    navigate("/BlankSpace/Categories");
   };
 
   const onClickFavourite = () => {
-    navigate("/Favourite");
+    navigate("/BlankSpace/Favourite");
   };
 
   const onCickSearchIcon = () => {
-    navigate("/SearchPage");
+    navigate("/BlankSpace/SearchPage");
   };
 
   // Function to handle changes in the "longitude" input field
+  // useEffect(() => {
+  //   myFunction();
+  // }, []);
+  // function myFunction() {
+  //   setLatitude("24.503");
+  //   dispatch(latitudeData("24.503"));
+  //   setLongitude("54.388");
+  //   dispatch(longitudeData("54.388"));
+  //   localStorage.setItem("latitudeValue", "24.503");
+
+  //   localStorage.setItem("longitudeValue", "54.388");
+  // }
 
   function myFunction() {
     const latitudeInput = document.getElementById("latitude");
     const longitudeInput = document.getElementById("longitude");
-
     // Check if the element exists
     if (latitudeInput && latitude !== latitudeInput.value) {
       // Access the value of the input element
       const latitudeValue = latitudeInput.value;
       setLatitude(latitudeValue);
+      localStorage.setItem("latitudeValue", latitudeValue);
       dispatch(latitudeData(latitudeValue));
-
-      // Now, you can use latitudeValue as the value of the input
-      // console.log("Latitude Value:", latitudeValue);
     } else {
       // console.log("Element with ID 'latitude' not found.");
     }
     if (longitudeInput && longitudeInput.value !== longitude) {
       // Access the value of the input element
+      localStorage.setItem("longitudeValue", longitudeValue);
+
       const longitudeValue = longitudeInput.value;
       setLongitude(longitudeValue);
       dispatch(longitudeData(longitudeValue));
-
-      // Now, you can use latitudeValue as the value of the input
-      // console.log("longitude Value:", longitudeValue);
     } else {
       // console.log("Element with ID 'longitude' not found.");
     }
@@ -93,13 +98,15 @@ const Header = () => {
   return (
     <>
       <input
+        key={getRndomeNumber()}
         id="latitude"
-        style={{ display: "none" }}
+        // style={{ display: "none" }}
         // value={latitude}
       />
       <input
+        key={getRndomeNumber()}
         id="longitude"
-        style={{ display: "none" }}
+        // style={{ display: "none" }}
         //
         // value={longitude}
       />
@@ -109,7 +116,7 @@ const Header = () => {
             <>
               <i
                 className="icon-home home-icon-color"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/BlankSpace/")}
               ></i>
             </>
           )}
@@ -117,8 +124,9 @@ const Header = () => {
           {isFavorite && (
             <>
               <i
+                key={getRndomeNumber()}
                 className="icon-home home-icon-color"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/BlankSpace/")}
               ></i>
             </>
           )}
@@ -126,8 +134,9 @@ const Header = () => {
           {isSwitchCategory && (
             <>
               <i
+                key={getRndomeNumber()}
                 className="icon-home home-icon-color"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/BlankSpace/")}
               ></i>
             </>
           )}
@@ -135,13 +144,15 @@ const Header = () => {
           {isSubSwitchCategory && (
             <>
               <i
+                key={getRndomeNumber()}
                 className="icon-home home-icon-color"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/BlankSpace/")}
               ></i>
             </>
           )}
 
           <img
+            key={getRndomeNumber()}
             src={BlancLogo}
             className="Blancspace-Logo"
             alt="Blancspace-Logo"
@@ -150,16 +161,25 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="nav-rfq-calculator ms-auto">
             <Nav.Link>
-              <span className="navlink_text" onClick={onClickFavourite}>
+              <span
+                className="navlink_text"
+                key={getRndomeNumber()}
+                onClick={onClickFavourite}
+              >
                 FAVOURITES
               </span>
             </Nav.Link>
             <Nav.Link>
-              <span className="navlink_text" onClick={navigateCategories}>
+              <span
+                className="navlink_text"
+                key={getRndomeNumber()}
+                onClick={navigateCategories}
+              >
                 CATEGORIES
               </span>
             </Nav.Link>
             <i
+              key={getRndomeNumber()}
               className="icon-search icon-search-color"
               onClick={onCickSearchIcon}
             ></i>
