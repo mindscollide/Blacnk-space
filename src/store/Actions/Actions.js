@@ -215,7 +215,7 @@ const exploreCategoryFail = (message) => {
 };
 
 // Explore Categroy Api
-const exploreCategory = (exploreNewData) => {
+const exploreCategory = (exploreNewData, seLoadingAuto) => {
   let Token = JSON.parse(localStorage.getItem("token"));
   return (dispatch) => {
     dispatch(exploreCategoryInit());
@@ -252,6 +252,7 @@ const exploreCategory = (exploreNewData) => {
                   "Data has been returned successfully"
                 )
               );
+              seLoadingAuto(false);
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -260,6 +261,7 @@ const exploreCategory = (exploreNewData) => {
                 )
             ) {
               dispatch(exploreCategoryFail("Could not find the data"));
+              seLoadingAuto(false);
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -270,6 +272,7 @@ const exploreCategory = (exploreNewData) => {
               dispatch(
                 exploreCategoryFail("Provided userid was either null or empty")
               );
+              seLoadingAuto(false);
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -278,17 +281,21 @@ const exploreCategory = (exploreNewData) => {
                 )
             ) {
               dispatch(exploreCategoryFail("Exception Something went wrong"));
+              seLoadingAuto(false);
             }
           } else {
             dispatch(exploreCategoryFail("Something went wrong"));
             console.log("Exception Something went wrong");
+            seLoadingAuto(false);
           }
         } else {
           dispatch(exploreCategoryFail("Something went wrong"));
           console.log("Exception Something went wrong");
+          seLoadingAuto(false);
         }
       })
       .catch((response) => {
+        seLoadingAuto(false);
         dispatch(exploreCategoryFail("something went wrong"));
       });
   };
@@ -878,7 +885,7 @@ const subCategoryParentApi = (navigate, newHandlerClick) => {
                 )
               );
               localStorage.setItem("CGID", newHandlerClick.CategoryID);
-              navigate("/SubCategories");
+              navigate("/BlankSpace/SubCategories");
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -1203,7 +1210,7 @@ const businessDetailsMainApi = (navigate, newBusinessIdData) => {
                   "Updated successfully"
                 )
               );
-              navigate("/Category");
+              navigate("/BlankSpace/Category");
               console.log(businessDetailsSuccess, "SearchSuccessssss");
             } else if (
               response.data.responseResult.responseMessage

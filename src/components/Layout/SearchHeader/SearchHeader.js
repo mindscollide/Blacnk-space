@@ -157,7 +157,7 @@ const SearchHeader = () => {
             <Button
               text="Go Back"
               className="Go-Back-Button"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/BlankSpace/")}
             />
           </Col>
         </Row>

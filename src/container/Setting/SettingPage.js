@@ -50,7 +50,7 @@ const SettingPage = () => {
   }, []);
 
   // const onClickSearch = () => {
-  //   navigate("/SearchPage");
+  //   navigate("/BlankSpace/SearchPage");
   // };
 
   return (

@@ -6,7 +6,6 @@ import Modal from "./Modal/Modal";
 import Table from "./Table/Table";
 import Loader from "./Loader/Loader";
 import CustomButton from "./Button/Button";
-import useLongPressClick from "./LongPress/LongPress";
 import SwiperLongpress from "./SwiperWithLongPress/SwiperLongPress";
 import HeadingHoldPU from "./HeadingHold/HeadingHoldPU";
 import SwiperLoading from "./SwiperLoading/SwiperLoading";
@@ -25,7 +24,6 @@ export {
   CustomModal,
   Table,
   CustomButton,
-  useLongPressClick,
   SwiperLongpress,
   HeadingHoldPU,
   SwiperLoading,
