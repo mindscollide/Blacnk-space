@@ -1,0 +1,122 @@
+[
+  {
+    "categoryID": "CDL_1",
+    "categoryName": "Restaurant",
+    "favoriteByUserListings": [
+      {
+        "businessListingId": "BUL_0x3e5e66548a59d1b7:0xe0a04808a11316b6",
+        "businessListingIcon": "",
+        "businessListingName": "Zuma Abu Dhabi",
+        "businessContactNumber": "+971 2 401 5900",
+        "businessLocation": "https://www.google.com/maps/place/Zuma+Abu+Dhabi/@24.500519,54.387861099999995,14z/data=!4m8!1m2!2m1!1sZuma+Abu+Dhabi!3m4!1s0x3e5e66548a59d1b7:0xe0a04808a11316b6!8m2!3d24.500519!4d54.387861099999995",
+        "isFavorite": false,
+        "isLiked": false
+      },
+      {
+        "businessListingId": "BUL_0x3e5e665500cd3af1:0xeb9286baad4a9109",
+        "businessListingIcon": "",
+        "businessListingName": "COYA Abu Dhabi",
+        "businessContactNumber": "",
+        "businessLocation": "",
+        "isFavorite": false,
+        "isLiked": false
+      },
+      {
+        "businessListingId": "BUL_0x3e5e66f54b6184a9:0x4a7ca3e16a92ae0b",
+        "businessListingIcon": "",
+        "businessListingName": "La Mamma Italian Restaurant",
+        "businessContactNumber": "+971 2 677 3333",
+        "businessLocation": "https://www.google.com/maps/place/La+Mamma+Italian+Restaurant/@24.500819,54.368246,14z/data=!4m8!1m2!2m1!1sLa+Mamma+Italian+Restaurant!3m4!1s0x3e5e66f54b6184a9:0x4a7ca3e16a92ae0b!8m2!3d24.500819!4d54.368246",
+        "isFavorite": false,
+        "isLiked": false
+      },
+      {
+        "businessListingId": "BUL_0x3e5e6661050e3b07:0x85249fdf3dfcb70a",
+        "businessListingIcon": "",
+        "businessListingName": "C House Lounge Cafe Abu Dhabi",
+        "businessContactNumber": "+971 2 626 6955",
+        "businessLocation": "https://www.google.com/maps/place/C+House+Lounge+Cafe+Abu+Dhabi/@24.4952616,54.3654217,14z/data=!4m8!1m2!2m1!1sC+House+Lounge+Cafe+Abu+Dhabi!3m4!1s0x3e5e6661050e3b07:0x85249fdf3dfcb70a!8m2!3d24.4952616!4d54.3654217",
+        "isFavorite": false,
+        "isLiked": false
+      },
+      {
+        "businessListingId": "BUL_0x3e5e667963a5b311:0x6c54ff2e07071f7a",
+        "businessListingIcon": "",
+        "businessListingName": "% ARABICA ABU DHABI CORNICHE",
+        "businessContactNumber": "+971 2 677 7335",
+        "businessLocation": "https://www.google.com/maps/place/%25+ARABICA+ABU+DHABI+CORNICHE/@24.4877748,54.3520087,14z/data=!4m8!1m2!2m1!1s%25+ARABICA+ABU+DHABI+CORNICHE!3m4!1s0x3e5e667963a5b311:0x6c54ff2e07071f7a!8m2!3d24.4877748!4d54.3520087",
+        "isFavorite": false,
+        "isLiked": false
+      },
+      {
+        "businessListingId": "BUL_0x3e5e667aac6a6c8d:0x3ad847941da1d62c",
+        "businessListingIcon": "",
+        "businessListingName": "فيفث ستريت كافيه",
+        "businessContactNumber": "+971 2 698 2255",
+        "businessLocation": "https://www.google.com/maps/place/%D9%81%D9%8A%D9%81%D8%AB+%D8%B3%D8%AA%D8%B1%D9%8A%D8%AA+%D9%83%D8%A7%D9%81%D9%8A%D9%87/@24.486416,54.357406999999995,14z/data=!4m8!1m2!2m1!1s%D9%81%D9%8A%D9%81%D8%AB+%D8%B3%D8%AA%D8%B1%D9%8A%D8%AA+%D9%83%D8%A7%D9%81%D9%8A%D9%87!3m4!1s0x3e5e667aac6a6c8d:0x3ad847941da1d62c!8m2!3d24.486416!4d54.357406999999995",
+        "isFavorite": false,
+        "isLiked": false
+      }
+    ]
+  },
+  {
+    "categoryID": "CDL_1",
+    "categoryName": "Restaurant",
+    "favoriteByUserListings": [
+      {
+        "businessListingId": "BUL_0x3e5e66548a59d1b7:0xe0a04808a11316b6",
+        "businessListingIcon": "",
+        "businessListingName": "Zuma Abu Dhabi",
+        "businessContactNumber": "+971 2 401 5900",
+        "businessLocation": "https://www.google.com/maps/place/Zuma+Abu+Dhabi/@24.500519,54.387861099999995,14z/data=!4m8!1m2!2m1!1sZuma+Abu+Dhabi!3m4!1s0x3e5e66548a59d1b7:0xe0a04808a11316b6!8m2!3d24.500519!4d54.387861099999995",
+        "isFavorite": false,
+        "isLiked": false
+      },
+      {
+        "businessListingId": "BUL_0x3e5e665500cd3af1:0xeb9286baad4a9109",
+        "businessListingIcon": "",
+        "businessListingName": "COYA Abu Dhabi",
+        "businessContactNumber": "",
+        "businessLocation": "",
+        "isFavorite": false,
+        "isLiked": false
+      },
+      {
+        "businessListingId": "BUL_0x3e5e66f54b6184a9:0x4a7ca3e16a92ae0b",
+        "businessListingIcon": "",
+        "businessListingName": "La Mamma Italian Restaurant",
+        "businessContactNumber": "+971 2 677 3333",
+        "businessLocation": "https://www.google.com/maps/place/La+Mamma+Italian+Restaurant/@24.500819,54.368246,14z/data=!4m8!1m2!2m1!1sLa+Mamma+Italian+Restaurant!3m4!1s0x3e5e66f54b6184a9:0x4a7ca3e16a92ae0b!8m2!3d24.500819!4d54.368246",
+        "isFavorite": false,
+        "isLiked": false
+      },
+      {
+        "businessListingId": "BUL_0x3e5e6661050e3b07:0x85249fdf3dfcb70a",
+        "businessListingIcon": "",
+        "businessListingName": "C House Lounge Cafe Abu Dhabi",
+        "businessContactNumber": "+971 2 626 6955",
+        "businessLocation": "https://www.google.com/maps/place/C+House+Lounge+Cafe+Abu+Dhabi/@24.4952616,54.3654217,14z/data=!4m8!1m2!2m1!1sC+House+Lounge+Cafe+Abu+Dhabi!3m4!1s0x3e5e6661050e3b07:0x85249fdf3dfcb70a!8m2!3d24.4952616!4d54.3654217",
+        "isFavorite": false,
+        "isLiked": false
+      },
+      {
+        "businessListingId": "BUL_0x3e5e667963a5b311:0x6c54ff2e07071f7a",
+        "businessListingIcon": "",
+        "businessListingName": "% ARABICA ABU DHABI CORNICHE",
+        "businessContactNumber": "+971 2 677 7335",
+        "businessLocation": "https://www.google.com/maps/place/%25+ARABICA+ABU+DHABI+CORNICHE/@24.4877748,54.3520087,14z/data=!4m8!1m2!2m1!1s%25+ARABICA+ABU+DHABI+CORNICHE!3m4!1s0x3e5e667963a5b311:0x6c54ff2e07071f7a!8m2!3d24.4877748!4d54.3520087",
+        "isFavorite": false,
+        "isLiked": false
+      },
+      {
+        "businessListingId": "BUL_0x3e5e667aac6a6c8d:0x3ad847941da1d62c",
+        "businessListingIcon": "",
+        "businessListingName": "فيفث ستريت كافيه",
+        "businessContactNumber": "+971 2 698 2255",
+        "businessLocation": "https://www.google.com/maps/place/%D9%81%D9%8A%D9%81%D8%AB+%D8%B3%D8%AA%D8%B1%D9%8A%D8%AA+%D9%83%D8%A7%D9%81%D9%8A%D9%87/@24.486416,54.357406999999995,14z/data=!4m8!1m2!2m1!1s%D9%81%D9%8A%D9%81%D8%AB+%D8%B3%D8%AA%D8%B1%D9%8A%D8%AA+%D9%83%D8%A7%D9%81%D9%8A%D9%87!3m4!1s0x3e5e667aac6a6c8d:0x3ad847941da1d62c!8m2!3d24.486416!4d54.357406999999995",
+        "isFavorite": false,
+        "isLiked": false
+      }
+    ]
+  }
+]

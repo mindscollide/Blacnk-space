@@ -233,6 +233,8 @@ const ExploreCategory = () => {
                             exploreListingData={
                               exploreListing.subCategoryListings
                             }
+                            setExploreInformation={setExploreInformation}
+                            exploreInformation={exploreInformation}
                           />
                         )}
                       </Col>

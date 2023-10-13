@@ -184,8 +184,9 @@ const getdashboardApi = (Data, seLoadingAuto) => {
         }
       })
       .catch((response) => {
+        // seLoadingAuto(false);
+
         dispatch(getDashboardFail("something went wrong"));
-        seLoadingAuto(false);
       });
   };
 };
@@ -625,9 +626,16 @@ const updateFavoriteInit = () => {
 // Update Favorite Success
 const updateFavoriteSuccess = (response, message) => {
   return {
-    type: actions.FAVORITE_BY_USER_SUCCESS,
+    type: actions.UPDATE_FAVORITE_BY_USER_SUCCESS,
     response: response,
     message: message,
+  };
+};
+
+//UPDATE fAV CLEARE
+const cleareFavResponce = () => {
+  return {
+    type: actions.CLEARE_FAVORITE_BY_USER_SUCCESS,
   };
 };
 
@@ -641,8 +649,9 @@ const updateFavoriteFail = (message) => {
 
 // Update Favorite Api Func
 
-const updateFavoriteApi = (Data) => {
+const updateFavoriteApi = (Data, dataid) => {
   let Token = JSON.parse(localStorage.getItem("token"));
+  console.log("checkedcheckedchecked isFavorite", Data);
   return (dispatch) => {
     dispatch(updateFavoriteInit());
     let form = new FormData();
@@ -653,30 +662,27 @@ const updateFavoriteApi = (Data) => {
       url: authenticationAPI,
       data: form,
       headers: {
-        _token: Token,
+        // _token: Token,
       },
     })
       .then(async (response) => {
-        console.log("explore Category Api", response);
+        console.log("checkedcheckedchecked isFavorite", response);
+
         if (response.data.responseCode === 417) {
+          console.log("checkedcheckedchecked isFavorite", response);
           await dispatch(refreshTokenApi());
           dispatch(updateFavoriteApi());
         } else if (response.data.responseCode === 200) {
+          console.log("checkedcheckedchecked isFavorite", response);
           if (response.data.responseResult.isExecuted === true) {
+            console.log("checkedcheckedchecked isFavorite", response);
             if (
               response.data.responseResult.responseMessage.toLowerCase() ===
               "BlancSpace_AUTH_AuthManager_UpdateFavorites_01".toLowerCase()
             ) {
-              console.log(
-                "Explore Category Api",
-                response.data.responseResult.responseMessage
-              );
-              dispatch(
-                updateFavoriteSuccess(
-                  response.data.responseResult.categoriesForUsers,
-                  "Updated successfully"
-                )
-              );
+              console.log("checkedcheckedchecked isFavorite", dataid);
+
+              dispatch(updateFavoriteSuccess(dataid, "Updated successfully"));
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -684,6 +690,7 @@ const updateFavoriteApi = (Data) => {
                   "BlancSpace_AUTH_AuthManager_UpdateFavorites_02".toLowerCase()
                 )
             ) {
+              console.log("checkedcheckedchecked isFavorite", response);
               dispatch(
                 updateFavoriteFail("Provided userid was either null or empty")
               );
@@ -694,18 +701,20 @@ const updateFavoriteApi = (Data) => {
                   "BlancSpace_AUTH_AuthManager_UpdateFavorites_03".toLowerCase()
                 )
             ) {
+              console.log("checkedcheckedchecked isFavorite", response);
               dispatch(updateFavoriteFail("Exception Something went wrong"));
             }
           } else {
+            console.log("checkedcheckedchecked isFavorite", response);
             dispatch(updateFavoriteFail("Something went wrong"));
-            console.log("Exception Something went wrong");
           }
         } else {
+          console.log("checkedcheckedchecked isFavorite", response);
           dispatch(updateFavoriteFail("Something went wrong"));
-          console.log("Exception Something went wrong");
         }
       })
       .catch((response) => {
+        console.log("checkedcheckedchecked isFavorite", response);
         dispatch(updateFavoriteFail("something went wrong"));
       });
   };
@@ -939,6 +948,7 @@ const likeUnlikeInit = () => {
 
 // Like un like business Success
 const likeUnlikeSuccess = (response, message) => {
+  console.log(response, "checkedcheckedchecked likeUnlikeSuccess");
   return {
     type: actions.LIKE_UNLIKE_BUSINESS_SUCCESS,
     response: response,
@@ -953,9 +963,13 @@ const likeUnlikeFail = (message) => {
     message: message,
   };
 };
-
+const cleareLikeResponce = () => {
+  return {
+    type: actions.CLEARE_LIKE_UNLIKE_BUSINESS_SUCCESS,
+  };
+};
 // Like un like business Main API
-const likeUnlikeApi = (newLike) => {
+const likeUnlikeApi = (newLike, dataIndex) => {
   let Token = JSON.parse(localStorage.getItem("token"));
   return (dispatch) => {
     dispatch(likeUnlikeInit());
@@ -967,11 +981,10 @@ const likeUnlikeApi = (newLike) => {
       url: authenticationAPI,
       data: form,
       headers: {
-        _token: Token,
+        // _token: Token,
       },
     })
       .then(async (response) => {
-        console.log("explore Category Api", response);
         if (response.data.responseCode === 417) {
           await dispatch(refreshTokenApi());
           dispatch(likeUnlikeApi(newLike));
@@ -981,15 +994,8 @@ const likeUnlikeApi = (newLike) => {
               response.data.responseResult.responseMessage.toLowerCase() ===
               "BlancSpace_AUTH_AuthManager_LikeUnLikeBusinessListings_01".toLowerCase()
             ) {
-              console.log(
-                "Explore Category Api",
-                response.data.responseResult.responseMessage
-              );
-              dispatch(
-                likeUnlikeSuccess(
-                  response.data.responseResult.responseMessage,
-                  "Updated successfully"
-                )
+              await dispatch(
+                likeUnlikeSuccess(dataIndex, "Updated successfully")
               );
             } else if (
               response.data.responseResult.responseMessage
@@ -1012,11 +1018,9 @@ const likeUnlikeApi = (newLike) => {
             }
           } else {
             dispatch(likeUnlikeFail("Something went wrong"));
-            console.log("Exception Something went wrong");
           }
         } else {
           dispatch(likeUnlikeFail("Something went wrong"));
-          console.log("Exception Something went wrong");
         }
       })
       .catch((response) => {
@@ -1262,4 +1266,6 @@ export {
   businessDetailsMainApi,
   longitudeData,
   latitudeData,
+  cleareLikeResponce,
+  cleareFavResponce,
 };

@@ -72,14 +72,14 @@ const Favourite = () => {
   // this is how I get data from Reducer
   useEffect(() => {
     if (
-      actionReducer.favoriteListing !== null &&
-      actionReducer.favoriteListing !== undefined &&
-      actionReducer.favoriteListing.length !== 0
+      actionReducer.favoriteListings !== null &&
+      actionReducer.favoriteListings !== undefined &&
+      actionReducer.favoriteListings.length !== 0
     ) {
-      setFavoriteInformation(actionReducer.favoriteListing);
+      setFavoriteInformation(actionReducer.favoriteListings);
     }
-  }, [actionReducer.favoriteListing]);
-
+  }, [actionReducer.favoriteListings]);
+  console.log("favoriteInformationfavoriteInformation", favoriteInformation);
   return (
     <Container>
       <Row>
@@ -114,13 +114,17 @@ const Favourite = () => {
                 </Row>
                 <Row>
                   <Col lg={12} md={12} sm={12}>
-                    {favoriteUserListing.favoriteByUserListings.length > 0 && (
-                      <FavoriteSwiperLong
-                        favoriteListingData={
-                          favoriteUserListing.favoriteByUserListings
-                        }
-                      />
-                    )}
+                    {favoriteUserListing.favoriteByUserListings !== null &&
+                      favoriteUserListing.favoriteByUserListings !== null &&
+                      favoriteUserListing.favoriteByUserListings.length > 0 && (
+                        <FavoriteSwiperLong
+                          favoriteListingData={
+                            favoriteUserListing.favoriteByUserListings
+                          }
+                          setFavoriteInformation={setFavoriteInformation}
+                          favoriteInformation={favoriteInformation}
+                        />
+                      )}
                   </Col>
                 </Row>
               </Fragment>

@@ -100,13 +100,13 @@ const Header = () => {
       <input
         key={getRndomeNumber()}
         id="latitude"
-        // style={{ display: "none" }}
+        style={{ display: "none" }}
         // value={latitude}
       />
       <input
         key={getRndomeNumber()}
         id="longitude"
-        // style={{ display: "none" }}
+        style={{ display: "none" }}
         //
         // value={longitude}
       />

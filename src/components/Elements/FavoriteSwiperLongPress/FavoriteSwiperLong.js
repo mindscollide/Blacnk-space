@@ -4,18 +4,25 @@ import { Button } from "./../../../components/Elements";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
 import { StarFill, HandThumbsUpFill } from "react-bootstrap-icons";
+import LongPress from "../LonPress/LongPress";
 
 import {
   updateFavoriteApi,
   likeUnlikeApi,
   businessDetailsMainApi,
+  cleareLikeResponce,
+  cleareFavResponce,
 } from "../../../store/Actions/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import "./FavoriteSwiperLong.css";
 import { getRndomeNumber } from "../../../common/Function/utils";
 
-const FavoriteSwiperLong = ({ favoriteListingData }) => {
+const FavoriteSwiperLong = ({
+  favoriteListingData,
+  favoriteInformation,
+  setFavoriteInformation,
+}) => {
   console.log(favoriteListingData, "listingDatalistingData");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -98,86 +105,7 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
     },
   });
 
-  //for Favorite icon toggle onclick
-  const toggleIcon = (checked, CardData, favIndex) => {
-    console.log(checked, "checkedcheckedchecked");
-    // setStarIconVisible(!starIconVisible);
-    let favoriteItem = CardData.businessListingId;
-    let otherIdss = [];
-    longData
-      .filter(
-        (data, index) => data.businessListingId !== CardData.businessListingId
-      )
-      .map((newData, index) => {
-        otherIdss.push(newData.businessListingId);
-      });
-
-    let copyCategoryInformation = [...longData];
-    let getFavSubCategoryIndex = copyCategoryInformation.findIndex(
-      (data, index) => index === favIndex
-    );
-    // this will update the each subCategory
-    let updatedCategory = {
-      ...copyCategoryInformation[getFavSubCategoryIndex],
-    };
-    console.log(updatedCategory, "updatedCategoryupdatedCategory");
-    updatedCategory.isFavorite = checked;
-    copyCategoryInformation[getFavSubCategoryIndex] = updatedCategory;
-    setLongData(copyCategoryInformation);
-    let newUpdateFavorite = {
-      AddRemoveFavoriteBusinessEnum: checked === true ? 1 : 2,
-      UserID: updateFavorite.UserID.value,
-      Latitude: actionReducer.locationLatitude,
-      Longitude: actionReducer.locationLongitude,
-      BusinessListingId: favoriteItem,
-      OtherAvailableListings: otherIdss,
-    };
-    dispatch(updateFavoriteApi(newUpdateFavorite));
-  };
-
-  // For Like and Dislike toggle Button
-  const toggleLike = (checked, LikeData, dataIndex) => {
-    console.log(checked, "checkedcheckedchecked");
-    // setLikeIconVisible(!likeIconVisible);
-    let likeItem = LikeData.businessListingId;
-    let otherLikeIds = [];
-
-    // this long filter is for it will show other unselected items into otherAvailabledatalist
-    longData
-      .filter(
-        (data, index) => data.businessListingId !== LikeData.businessListingId
-      )
-      .map((newData, index) => {
-        otherLikeIds.push(newData.businessListingId);
-      });
-    let copyCategoryInformation = [...longData];
-    let getSubCategoryIndex = copyCategoryInformation.findIndex(
-      (data, index) => index === dataIndex
-    );
-    // this will update the each subCategory
-    let updatedCategory = { ...copyCategoryInformation[getSubCategoryIndex] };
-    console.log(updatedCategory, "updatedCategoryupdatedCategory");
-    updatedCategory.isLiked = checked;
-    copyCategoryInformation[getSubCategoryIndex] = updatedCategory;
-    setLongData(copyCategoryInformation);
-    let newLike = {
-      LikeUnLikeBusinessListingsEnum: checked === true ? 1 : 2,
-      UserID: likeState.UserID.value,
-      Latitude: actionReducer.locationLatitude,
-      Longitude: actionReducer.locationLongitude,
-      BusinessListingId: likeItem,
-      OtherAvailableListings: otherLikeIds,
-    };
-    dispatch(likeUnlikeApi(newLike));
-  };
-
-  const onLongPress = () => {
-    console.log("longpress is triggered");
-    setIsLongPress(true);
-    setTimeout(() => setIsLongPress(false), 3000);
-  };
-
-  const onClick = (favoriteData) => {
+  const detailBusinessFav = (favoriteData) => {
     console.log("click is triggered");
     setClickCount(clickCount + 1);
     if (favoriteData && favoriteData.businessListingId) {
@@ -189,6 +117,133 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
     } else {
       console.error("businessData or businessListingId is undefined.");
     }
+  };
+
+  //for Favorite icon toggle onclick
+  const toggleIcon = (checked, LikeData, favIndex) => {
+    console.log(checked, "checkedcheckedchecked");
+    let likeItem = LikeData.businessListingId;
+    let filterData = [...longData];
+    filterData.splice(favIndex, 1);
+    const businessListingOtherIds = filterData.map(
+      (item) => item.businessListingId
+    );
+    let newLike = {
+      AddRemoveFavoriteBusinessEnum: checked === true ? 1 : 2,
+      UserID: likeState.UserID.value,
+      Latitude: actionReducer.locationLatitude,
+      Longitude: actionReducer.locationLongitude,
+      BusinessListingId: likeItem,
+      OtherAvailableListings: businessListingOtherIds,
+    };
+    dispatch(updateFavoriteApi(newLike, likeItem));
+  };
+  // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
+  const toggleIsFavriote = (businessListingId) => {
+    const updatedData = favoriteInformation.map((category) => {
+      const updatedListings = category.favoriteByUserListings.map((listing) => {
+        if (listing.businessListingId === businessListingId) {
+          // Toggle isLiked value
+          return {
+            ...listing,
+            isFavorite: !listing.isFavorite,
+          };
+        }
+        return listing;
+      });
+
+      return {
+        ...category,
+        favoriteByUserListings: updatedListings,
+      };
+    });
+
+    console.log(
+      "favoriteInformationfavoriteInformation isFavorite",
+      favoriteInformation
+    );
+    setFavoriteInformation(updatedData);
+  };
+  // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
+  useEffect(() => {
+    console.log(
+      "favoriteInformationfavoriteInformation isFavorite",
+      favoriteInformation
+    );
+    if (actionReducer.favoriteListing != null) {
+      toggleIsFavriote(actionReducer.favoriteListing);
+      console.log(
+        "favoriteInformationfavoriteInformation isFavorite",
+        actionReducer.favoriteListing
+      );
+      dispatch(cleareFavResponce());
+    }
+  }, [actionReducer.favoriteListing]);
+  const toggleLike = (checked, LikeData, dataIndex) => {
+    let likeItem = LikeData.businessListingId;
+    let filterData = [...longData];
+
+    filterData.splice(dataIndex, 1);
+    const businessListingOtherIds = filterData.map(
+      (item) => item.businessListingId
+    );
+    let newLike = {
+      LikeUnLikeBusinessListingsEnum: checked === true ? 1 : 2,
+      UserID: likeState.UserID.value,
+      Latitude: actionReducer.locationLatitude,
+      Longitude: actionReducer.locationLongitude,
+      BusinessListingId: likeItem,
+      OtherAvailableListings: businessListingOtherIds,
+    };
+
+    dispatch(likeUnlikeApi(newLike, likeItem));
+  };
+  // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF LIKE
+  const toggleIsLiked = (businessListingId) => {
+    const updatedData = favoriteInformation.map((category) => {
+      const updatedListings = category.favoriteByUserListings.map((listing) => {
+        if (listing.businessListingId === businessListingId) {
+          // Toggle isLiked value
+          return {
+            ...listing,
+            isLiked: !listing.isLiked,
+          };
+        }
+        return listing;
+      });
+
+      return {
+        ...category,
+        favoriteByUserListings: updatedListings,
+      };
+    });
+
+    setFavoriteInformation(updatedData);
+  };
+  // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF LIKE
+  useEffect(() => {
+    if (actionReducer.likeUnlikeBusiness != null) {
+      toggleIsLiked(actionReducer.likeUnlikeBusiness);
+      dispatch(cleareLikeResponce());
+    }
+  }, [actionReducer.likeUnlikeBusiness]);
+
+  console.log(longData, "longDatalongDatalongData");
+  const handleLongPress = (e, value) => {
+    // Handle long press here
+    console.log("Long press event on button", value);
+    e.preventDefault();
+    setActiveCategory(value);
+  };
+
+  const handleShortPress = (e, value) => {
+    // Handle short press here
+    e.preventDefault();
+    detailBusinessFav(value);
+    console.log("Short press event on button:", e);
+
+    // Uncomment this line to trigger the detailBusiness function on a short press
+    // detailBusiness(newData);
   };
 
   useEffect(() => {
@@ -263,31 +318,37 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
                 .toUpperCase();
               return (
                 <SwiperSlide key={getRndomeNumber()}>
-                  <button
-                    src={`data:image/jpeg;base64,${newData.businessListingId}`}
-                    alt="Icon"
-                    id={`swiper-section ${newData.businessListingId}`}
-                    className={`Swipper-slide-box-fav ${
-                      activeCategory === newData.businessListingId
-                        ? "active"
-                        : ""
-                    }`}
-                    onClick={() => {
-                      onClick(newData);
-                    }}
+                  <LongPress
+                    onLongPress={(e) =>
+                      handleLongPress(e, newData.businessListingId)
+                    }
+                    onPress={(e) => handleShortPress(e, newData)}
+                    duration={500}
                   >
-                    {newData.businessListingIcon !== "" ? (
-                      <img
-                        src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
-                        alt="Icon"
-                        className="Swipper-slide-box-Fav-category-image"
-                      />
-                    ) : (
-                      <span>{firstLetter}</span>
-                    )}
-                  </button>
-                  {isLongPress &&
-                  activeCategory === newData.businessListingId ? (
+                    <Button
+                      id={`swiper-section ${newData.businessListingId}`}
+                      className={`Swipper-slide-box ${
+                        activeCategory === newData.businessListingId
+                          ? "active"
+                          : ""
+                      }`}
+                      // onClick={(e) => {
+                      //   detailBusiness(newData);
+                      // }}
+                      text={
+                        newData.businessListingIcon !== "" ? (
+                          <img
+                            src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
+                            alt="Icon"
+                            className="Swipper-slide-box-image"
+                          />
+                        ) : (
+                          <span>{firstLetter}</span>
+                        )
+                      }
+                    ></Button>
+                  </LongPress>
+                  {activeCategory === newData.businessListingId ? (
                     <>
                       <div className="longpress-box">
                         <div className="options-main-div">

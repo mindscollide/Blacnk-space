@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useRef } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Button, HeadingHoldPU, Loader } from "./../../components/Elements";
 import { getdashboardApi } from "../../store/Actions/Actions";
@@ -15,6 +15,7 @@ const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { actionReducer } = useSelector((state) => state);
+
   // for long press Heading state
   const [isHeadingFood, setIsHeadingFood] = useState(false);
   const [loadingAuto, seLoadingAuto] = useState(true);
@@ -112,9 +113,10 @@ const Home = () => {
       console.log("error");
     }
   }, [actionReducer.dashBoardListings]);
-  const handleLongPress = (e,index) => {
+
+  const handleLongPress = (e, index) => {
     e.preventDefault();
-    setActiveCategory(index)  
+    setActiveCategory(index);
     // alert("Long press event:", index);
   };
 
@@ -136,7 +138,7 @@ const Home = () => {
                 className="d-flex justify-content-between"
               >
                 <LongPress
-                  onLongPress={(e)=>handleLongPress(e,index)}
+                  onLongPress={(e) => handleLongPress(e, index)}
                   onPress={handleShortPress}
                   duration={500}
                 >
@@ -173,7 +175,12 @@ const Home = () => {
                 {listing.dashBoardListings !== null &&
                   listing.dashBoardListings !== undefined &&
                   listing.dashBoardListings.length > 0 && (
-                    <SwiperLongpress listingData={listing.dashBoardListings} />
+                    <SwiperLongpress
+                      dashboardData={dashboardData}
+                      listingData={listing.dashBoardListings}
+                      setDashboardInformation={setDashboardInformation}
+                      dashboardInformation={dashboardInformation}
+                    />
                   )}
               </Col>
             </Row>
