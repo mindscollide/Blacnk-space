@@ -6,7 +6,7 @@
   justify-content: center !important;
   align-items: center !important;
   font-size: 3rem !important;
-  color: rgb(255, 255, 255)!important;
+  color: rgb(255, 255, 255) !important;
   margin: 50px auto;
   margin-bottom: 10px;
   border: 1px solid #d00510;
@@ -39,7 +39,7 @@
   background-color: #d00510;
   border: 2.5px solid #ffffff;
   border-radius: 8px;
-  z-index: 1 !important;
+  z-index: 3 !important;
   padding: 0px;
   margin: 0px;
   display: flex;

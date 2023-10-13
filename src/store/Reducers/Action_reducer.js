@@ -5,19 +5,20 @@ const initialState = {
   Loading: false,
   dashBoardListings: [],
   subCategoryDashboardListing: [],
-  favoriteListing: [],
+  favoriteListing: null,
   getAllCategoriesUser: [],
   getAllSubCategories: [],
   updateFavoriteList: "",
   blockUnBlockCategory: "",
   getParentCategory: [],
-  likeUnlikeBusiness: "",
+  likeUnlikeBusiness: null,
   searchListing: [],
   searchListingCategory: [],
   filterData: null,
   businessListing: "",
   locationLongitude: "",
   locationLatitude: "",
+  favoriteListings: [],
 };
 
 const actionReducer = (state = initialState, action) => {
@@ -78,8 +79,11 @@ const actionReducer = (state = initialState, action) => {
         Loading: true,
       };
     }
-
-    case actions.FAVORITE_BY_USER_SUCCESS: {
+    case actions.UPDATE_FAVORITE_BY_USER_SUCCESS: {
+      console.log(
+        action.response,
+        "checkedcheckedchecked UPDATE_FAVORITE_BY_USER_SUCCESS"
+      );
       return {
         ...state,
         Loading: false,
@@ -88,11 +92,36 @@ const actionReducer = (state = initialState, action) => {
       };
     }
 
+    case actions.FAVORITE_BY_USER_SUCCESS: {
+      console.log(
+        action.response,
+        "checkedcheckedchecked FAVORITE_BY_USER_SUCCESS"
+      );
+      return {
+        ...state,
+        Loading: false,
+        favoriteListings: action.response,
+        ResponseMessage: action.message,
+      };
+    }
+
+    case actions.CLEARE_FAVORITE_BY_USER_SUCCESS: {
+      console.log(
+        action.response,
+        "checkedcheckedchecked CLEARE_FAVORITE_BY_USER_SUCCESS"
+      );
+      return {
+        ...state,
+        favoriteListing: null,
+        ResponseMessage: "",
+      };
+    }
+
     case actions.FAVORITE_BY_USER_FAIL: {
       return {
         ...state,
         Loading: false,
-        favoriteListing: [],
+        favoriteListing: null,
         ResponseMessage: action.message,
       };
     }
@@ -224,11 +253,23 @@ const actionReducer = (state = initialState, action) => {
     }
 
     case actions.LIKE_UNLIKE_BUSINESS_SUCCESS: {
+      console.log(action.response, "checkedcheckedchecked likeUnlikeSuccess");
       return {
         ...state,
         Loading: false,
         likeUnlikeBusiness: action.response,
         ResponseMessage: action.message,
+      };
+    }
+    case actions.CLEARE_LIKE_UNLIKE_BUSINESS_SUCCESS: {
+      console.log(
+        action.response,
+        "checkedcheckedchecked CLEARE_LIKE_UNLIKE_BUSINESS_SUCCESS"
+      );
+      return {
+        ...state,
+        likeUnlikeBusiness: null,
+        ResponseMessage: "",
       };
     }
 

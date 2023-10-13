@@ -33,13 +33,13 @@
   z-index: 0 !important;
 }
 
-.longpress-box {
+.swiper-longpress-box {
   position: absolute !important;
   top: 0px !important;
   background-color: #d00510;
   border: 2.5px solid #ffffff;
   border-radius: 8px;
-  z-index: 1 !important;
+  z-index: 3 !important;
   padding: 0px;
   margin: 0px;
   display: flex;
@@ -61,7 +61,7 @@
 }
 
 .icn-display-block {
-  padding: 4px 10px;
+  padding: 2px 6px;
   text-align: center;
   text-transform: uppercase;
   font-weight: normal;
