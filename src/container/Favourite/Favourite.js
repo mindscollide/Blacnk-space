@@ -1,10 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import {
-  HeadingHoldPU,
-  Loader,
-  FavoriteSwiperLong,
-} from "../../components/Elements";
+import { Loader, FavoriteSwiperLong } from "../../components/Elements";
 import { favoriteByUserApi } from "../../store/Actions/Actions";
 import "swiper/css";
 import "./Favourite.css";
@@ -18,8 +14,6 @@ const Favourite = () => {
   const favoriteListings = useSelector(
     (state) => state.actionReducer.favoriteListings
   );
-  //state for active longPress event
-  const [activeCategory, setActiveCategory] = useState(null);
 
   // state for explore Favourite status
   const [favoriteInformation, setFavoriteInformation] = useState([]);
@@ -69,19 +63,11 @@ const Favourite = () => {
                   >
                     <label
                       id={`food-label ${index}`}
-                      className={`heading-title-h1 mouse-cursor-heading ${
-                        activeCategory === index ? "active" : ""
-                      }`}
-                      onClick={() => {}}
+                      className={`heading-title-h1 mouse-cursor-heading 
+                        active`}
                     >
                       {favoriteUserListing.categoryName}
                     </label>
-
-                    {activeCategory === index ? (
-                      <>
-                        <HeadingHoldPU />
-                      </>
-                    ) : null}
                   </Col>
                 </Row>
                 <Row>

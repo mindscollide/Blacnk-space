@@ -5,11 +5,15 @@ import {
   HeadingHoldPU,
   Loader,
 } from "../../components/Elements";
-import { exploreCategory } from "../../store/Actions/Actions";
+import {
+  CleareblockUnBlockSuccess,
+  exploreCategory,
+} from "../../store/Actions/Actions";
 import "swiper/css";
 import "./ExploreCategory.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getRndomeNumber } from "../../common/Function/utils";
+import LongPress from "../../components/Elements/LonPress/LongPress";
 
 const ExploreCategory = () => {
   const dispatch = useDispatch();
@@ -23,8 +27,12 @@ const ExploreCategory = () => {
     (state) => state.actionReducer.subCategoryDashboardListing
   );
   const Loading = useSelector((state) => state.actionReducer.Loading);
-  const [isHeadingFood, setIsHeadingFood] = useState(false);
+  const blockUnBlockCategory = useSelector(
+    (state) => state.actionReducer.blockUnBlockCategory
+  );
+
   let categoryID = localStorage.getItem("categoryID");
+
   const [loadingAuto, seLoadingAuto] = useState(true);
 
   //state for active longPress event
@@ -32,6 +40,7 @@ const ExploreCategory = () => {
 
   // state for explore Category status
   const [exploreInformation, setExploreInformation] = useState([]);
+
   //this state is for Explore Category
   const [exploreData, setExploreData] = useState({
     UserID: {
@@ -65,54 +74,6 @@ const ExploreCategory = () => {
       errorStatus: false,
     },
   });
-
-  // useEffect(() => {
-  //   let exploreNewData = {
-  //     UserID: "PLU_1",
-  //     pageNumber: 1,
-  //     isAutomatic: false,
-  //     ParentCategoryID: categoryID,
-  //     UserLatitude: locationLatitude,
-  //     UserLongitude: locationLongitude,
-  //   };
-
-  //   setExploreData((prevState) => ({
-  //     ...prevState,
-  //     ParentCategoryID: {
-  //       value: categoryID,
-  //       errorMessage: "",
-  //       errorStatus: false,
-  //     },
-  //     UserID: {
-  //       value: exploreNewData.UserID,
-  //       errorMessage: "",
-  //       errorStatus: false,
-  //     },
-  //     pageNumber: {
-  //       value: exploreNewData.pageNumber,
-  //       errorMessage: "",
-  //       errorStatus: false,
-  //     },
-  //     isAutomatic: {
-  //       value: exploreNewData.isAutomatic,
-  //       errorMessage: "",
-  //       errorStatus: false,
-  //     },
-  //     UserLatitude: {
-  //       value: locationLatitude,
-  //       errorMessage: "",
-  //       errorStatus: false,
-  //     },
-  //     UserLongitude: {
-  //       value: locationLongitude,
-  //       errorMessage: "",
-  //       errorStatus: false,
-  //     },
-  //   }));
-  //   if (categoryID !== undefined) {
-  //     dispatch(exploreCategory(exploreNewData, seLoadingAuto));
-  //   }
-  // }, []);
 
   useEffect(() => {
     if (
@@ -155,24 +116,6 @@ const ExploreCategory = () => {
     }
   }, [locationLatitude, locationLongitude]);
 
-  // useEffect(() => {
-  //   if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-  //     let latitudeValueLocal = localStorage.getItem("latitudeValue");
-  //     let longitudeValueLocal = localStorage.getItem("longitudeValue");
-  //     let exploreNewData = {
-  //       UserID: "PLU_1",
-  //       pageNumber: 1,
-  //       isAutomatic: false,
-  //       ParentCategoryID: categoryID,
-  //       UserLatitude: latitudeValueLocal,
-  //       UserLongitude: longitudeValueLocal,
-  //     };
-
-  //     dispatch(exploreCategory(exploreNewData, seLoadingAuto));
-  //   } else {
-  //   }
-  // }, []);
-
   // this is how I get data from Reducer
   useEffect(() => {
     if (
@@ -183,6 +126,34 @@ const ExploreCategory = () => {
       setExploreInformation(subCategoryDashboardListing);
     }
   }, [subCategoryDashboardListing]);
+
+  const handleLongPress = (e, value) => {
+    // Handle long press here
+    e.preventDefault();
+    setActiveCategory(value);
+  };
+  const handleShortPress = (e) => {
+    // Handle short press here
+    e.preventDefault();
+  };
+  // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF Block
+  const blockCategory = (categoryID) => {
+    setExploreInformation((prevDashboardInfo) => {
+      const updatedDashboardInformation = prevDashboardInfo.filter(
+        (item) => item.subCategoryID !== categoryID
+      );
+      return updatedDashboardInformation;
+    });
+  };
+
+  // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF Block
+  useEffect(() => {
+    if (blockUnBlockCategory) {
+      console.log("block check home cleare", blockUnBlockCategory);
+      blockCategory(blockUnBlockCategory);
+      dispatch(CleareblockUnBlockSuccess());
+    }
+  }, [blockUnBlockCategory]);
 
   return (
     <Container>
@@ -202,20 +173,30 @@ const ExploreCategory = () => {
                         sm={12}
                         className="d-flex justify-content-between"
                       >
-                        <label
-                          id={`food-label ${exploreListing.subCategoryID}`}
-                          className={`heading-title-h1 mouse-cursor-heading ${
-                            activeCategory === index ? "active" : ""
-                          }`}
-                          onClick={() => {}}
+                        <LongPress
+                          onLongPress={(e) => handleLongPress(e, index)}
+                          onPress={handleShortPress}
+                          duration={500}
                         >
-                          {exploreListing.subCategoryName}
-                        </label>
+                          <label
+                            id={`food-label ${exploreListing.subCategoryID}`}
+                            className={`heading-title-h1 mouse-cursor-heading ${
+                              activeCategory === index ? "active" : ""
+                            }`}
+                            onClick={() => {}}
+                          >
+                            {exploreListing.subCategoryName}
+                          </label>
+                        </LongPress>
 
                         {activeCategory === index ? (
-                          <>
-                            <HeadingHoldPU />
-                          </>
+                          <HeadingHoldPU
+                            parentIndex={index}
+                            parentcategoryID={exploreListing.subCategoryID}
+                            setDashboardInformation={setExploreInformation}
+                            dashboardInformation={exploreInformation}
+                            setActiveCategory={setActiveCategory}
+                          />
                         ) : null}
                       </Col>
                     </Row>
