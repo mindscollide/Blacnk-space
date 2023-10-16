@@ -192,6 +192,7 @@ body {
   .home_Container {
     padding: 0px 25px;
     margin-top: 150px !important;
+    background-color: #000000 !important;
   }
 
   .heading-title-h1 {
@@ -336,5 +337,5 @@ body {
   flex: auto;
   flex-direction: column;
   min-height: 0;
-  background: none !important;
+  background: #000000 !important;
 }
