@@ -1,7 +1,8 @@
 .slide-Image {
   display: block !important;
   width: 100% !important;
-  height: 400px !important;
+  height: 380px !important;
+  padding: 0px 100px !important;
   object-fit: cover;
 }
 
@@ -16,12 +17,20 @@ img {
 }
 
 .carousel-swiper .swiper-pagination-bullet {
-  /* background-color: yellow !important; */
-  border-radius: 50%;
-  height: 18px;
-  width: 18px;
+  background-color: transparent !important;
+  border: 1px solid #ffffff;
+  height: 16px;
+  width: 16px;
+  opacity: 0.5;
+}
+
+.carousel-swiper .swiper-pagination-bullet-active {
+  background: #d00510 !important; /* Highlight color */
+  border: 1px solid #d00510;
   opacity: 1;
-  background: #d00510 !important;
+  width: 20px; /* Adjust the size as needed */
+  height: 20px; /* Adjust the size as needed */
+  border-radius: 50%;
 }
 
 .title-emirates-heading {
@@ -44,18 +53,13 @@ img {
 }
 
 .Tour-button {
-  border: 1px solid #ffffff !important;
+  border: 1px solid #d00510 !important;
   border-radius: 6px !important;
   color: #ffffff;
-  background-color: transparent;
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 35px;
-  padding: 0.2rem 3rem 0.1rem 3rem;
-}
-
-.Tour-button:hover {
   background-color: #d00510 !important;
-  border: 1px solid #d00510 !important;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 18px;
+  padding: 0.2rem 3rem 0.1rem 3rem;
 }
 
 .verticalline {
@@ -149,7 +153,7 @@ img {
   color: #ffffff !important;
 }
 .margin-top-403 {
-  margin-top: 300px !important;
+  margin-top: 240px !important;
   width: auto !important;
 }
 .line-height {
@@ -184,19 +188,23 @@ img {
     font-family: "Bebas Neue", sans-serif;
   }
 
-  .Tour-button {
-    border: 1px solid #ffffff !important;
-    border-radius: 6px !important;
-    color: #ffffff;
-    background-color: transparent;
-    font-family: "Bebas Neue", sans-serif;
-    font-size: 20px;
-    padding: 0.1rem 2rem 0.1rem 2rem;
+  .slide-Image {
+    display: block !important;
+    width: 100% !important;
+    height: 380px !important;
+    padding: 0px 50px !important;
+    margin: auto;
+    object-fit: cover;
   }
 
-  .Tour-button:hover {
-    background-color: #d00510 !important;
+  .Tour-button {
     border: 1px solid #d00510 !important;
+    border-radius: 6px !important;
+    color: #ffffff;
+    background-color: #d00510 !important;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 14px;
+    padding: 0.1rem 2rem 0.1rem 2rem;
   }
 
   .package-start-heading {
@@ -231,7 +239,7 @@ img {
 
   .margin-top-403 {
     padding: 20px 15px;
-    margin-top: 400px;
+    margin-top: 280px !important;
     width: auto !important;
   }
 
@@ -282,5 +290,14 @@ img {
     margin-top: 5px;
     margin-left: 10px;
     font-size: 12px !important;
+  }
+
+  .slide-Image {
+    display: block !important;
+    width: 100% !important;
+    height: 380px !important;
+    padding: 0px 30px !important;
+    margin: auto;
+    object-fit: cover;
   }
 }

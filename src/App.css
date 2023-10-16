@@ -197,7 +197,7 @@ body {
 @media (max-width: 650px) {
   .home_Container {
     padding: 0px 25px;
-    margin-top: 120px !important;
+    margin-top: 100px !important;
     background-color: #000000 !important;
   }
 

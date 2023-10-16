@@ -43,6 +43,13 @@ const FavoriteSwiperLong = ({
 
   const [clickCount, setClickCount] = useState(0);
 
+  const truncateFavText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
+
   // state for update Favorite
   const [updateFavorite, setUpdateFavorite] = useState({
     AddRemoveFavoriteBusinessEnum: {
@@ -155,14 +162,14 @@ const FavoriteSwiperLong = ({
           const updatedListings = category.favoriteByUserListings.filter(
             (listing) => listing.businessListingId !== businessListingId
           );
-    
+
           return {
             ...category,
             favoriteByUserListings: updatedListings,
           };
         })
         .filter((category) => category.favoriteByUserListings.length > 0);
-    
+
       return updatedData;
     });
   };
@@ -332,7 +339,9 @@ const FavoriteSwiperLong = ({
                             className="Swipper-slide-box-image"
                           />
                         ) : (
-                          <span>{firstLetter}</span>
+                          <span className="fav-tile-empty-letter">
+                            {firstLetter}
+                          </span>
                         )
                       }
                     ></Button>
@@ -350,7 +359,7 @@ const FavoriteSwiperLong = ({
                                   }
                                 >
                                   <HandThumbsUpFill className="icon-class" />
-                                  <span className="main-options">Like</span>
+                                  <span className="main-options">UnLike</span>
                                 </span>
                               </>
                             ) : (
@@ -375,7 +384,7 @@ const FavoriteSwiperLong = ({
                             ) : (
                               <>
                                 <i className="icon-call icon-class"></i>
-                                <span className="main-options">No Call</span>
+                                <span className="main-options">NoCall</span>
                               </>
                             )}
                           </span>
@@ -407,7 +416,9 @@ const FavoriteSwiperLong = ({
                                   }
                                 >
                                   <StarFill className="icon-class" />
-                                  <span className="main-options">Favorite</span>
+                                  <span className="main-options">
+                                    UnFavorite
+                                  </span>
                                 </span>
                               </>
                             ) : (
@@ -429,7 +440,9 @@ const FavoriteSwiperLong = ({
                     </>
                   ) : null}
 
-                  <p className="para-color">{newData.businessListingName}</p>
+                  <p className="Fav-para-color">
+                    {truncateFavText(newData.businessListingName, 15)}
+                  </p>
                 </SwiperSlide>
               );
             })}

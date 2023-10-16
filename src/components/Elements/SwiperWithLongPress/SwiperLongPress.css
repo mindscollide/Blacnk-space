@@ -33,13 +33,19 @@
   z-index: 0 !important;
 }
 
+.tile-empty-letter {
+  position: absolute !important;
+  align-items: center !important;
+  bottom: 5px !important;
+}
+
 .swiper-longpress-box {
   position: absolute !important;
   top: 0px !important;
   background-color: #d00510;
   border: 2.5px solid #ffffff;
   border-radius: 8px;
-  z-index: 3 !important;
+  z-index: 10 !important;
   padding: 0px;
   margin: 0px;
   display: flex;
@@ -48,6 +54,7 @@
 
 .options-main-div {
   display: flex;
+  flex-direction: row;
 }
 
 .main-options {
@@ -61,7 +68,7 @@
 }
 
 .icn-display-block {
-  padding: 2px 6px;
+  padding: 2px 10px !important;
   text-align: center;
   text-transform: uppercase;
   font-weight: normal;
@@ -142,6 +149,12 @@
     border: 1px solid #d00510;
     cursor: pointer;
     z-index: 2;
+  }
+
+  .tile-empty-letter {
+    position: absolute !important;
+    align-items: center !important;
+    bottom: 2.5px !important;
   }
 }
 

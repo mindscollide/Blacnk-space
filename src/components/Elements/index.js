@@ -14,6 +14,7 @@ import ExploreSwiperLong from "./ExploreSwiperLongPress/ExploreSwiperLong";
 import FavoriteSwiperLong from "./FavoriteSwiperLongPress/FavoriteSwiperLong";
 import HighlightedText from "./SearchHighlight/HighlightSearch";
 import StarRating from "./StarsRating/Stars";
+import LongPress from "./LonPress/LongPress";
 
 export {
   Button,
@@ -32,4 +33,5 @@ export {
   FavoriteSwiperLong,
   HighlightedText,
   StarRating,
+  LongPress,
 };

@@ -38,6 +38,13 @@ const ExploreSwiperLong = ({
     (state) => state.actionReducer.likeUnlikeBusiness
   );
 
+  const truncateExploreText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
+
   // state for like and dislike
   const [likeState, setLikeState] = useState({
     LikeUnLikeBusinessListingsEnum: {
@@ -304,7 +311,9 @@ const ExploreSwiperLong = ({
                                 className="Swipper-slide-box-image"
                               />
                             ) : (
-                              <span>{firstLetter}</span>
+                              <span className="explore-tile-empty-letter">
+                                {firstLetter}
+                              </span>
                             )
                           }
                         ></Button>
@@ -322,7 +331,9 @@ const ExploreSwiperLong = ({
                                       }
                                     >
                                       <HandThumbsUpFill className="icon-class" />
-                                      <span className="main-options">Like</span>
+                                      <span className="main-options">
+                                        UnLike
+                                      </span>
                                     </span>
                                   </>
                                 ) : (
@@ -391,7 +402,7 @@ const ExploreSwiperLong = ({
                                     >
                                       <StarFill className="icon-class" />
                                       <span className="main-options">
-                                        Favorite
+                                        UnFavorite
                                       </span>
                                     </span>
                                   </>
@@ -416,8 +427,11 @@ const ExploreSwiperLong = ({
                         </>
                       ) : null}
 
-                      <p className="para-color">
-                        {newData.subCategoryListingName}
+                      <p className="explore-para-color">
+                        {truncateExploreText(
+                          newData.subCategoryListingName,
+                          15
+                        )}
                       </p>
                     </SwiperSlide>
                   );
