@@ -1,11 +1,10 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Button } from "./../../../components/Elements";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
 import { StarFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import LongPress from "../LonPress/LongPress";
-
 import {
   updateFavoriteApi,
   likeUnlikeApi,
@@ -39,7 +38,7 @@ const FavoriteSwiperLong = ({
     (state) => state.actionReducer.likeUnlikeBusiness
   );
   const [longData, setLongData] = useState([]);
-  console.log(longData, longData.length, "longDatalongDatalongDatalongData");
+
   const [activeCategory, setActiveCategory] = useState(0);
 
   const [clickCount, setClickCount] = useState(0);
@@ -147,46 +146,35 @@ const FavoriteSwiperLong = ({
     };
     dispatch(updateFavoriteApi(newLike, likeItem));
   };
+
   // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
-  console.log("favoriteListing out", favoriteInformation);
   const toggleIsFavriote = (businessListingId) => {
-    console.log("favoriteListing toggleIsFavriote", businessListingId);
-
     setFavoriteInformation((prevDashboardInfo) => {
-      const updatedData = prevDashboardInfo.map((category) => {
-        const updatedListings = category.favoriteByUserListings.map(
-          (listing) => {
-            if (listing.businessListingId === businessListingId) {
-              // Toggle isFavorite value
-              return {
-                ...listing,
-                isFavorite: !listing.isFavorite,
-              };
-            }
-            console.log("favoriteListing listing", listing);
-
-            return listing;
-          }
-        );
-        console.log("favoriteListing updatedListings", updatedListings);
-
-        return {
-          ...category,
-          favoriteByUserListings: updatedListings,
-        };
-      });
-
+      const updatedData = prevDashboardInfo
+        .map((category) => {
+          const updatedListings = category.favoriteByUserListings.filter(
+            (listing) => listing.businessListingId !== businessListingId
+          );
+    
+          return {
+            ...category,
+            favoriteByUserListings: updatedListings,
+          };
+        })
+        .filter((category) => category.favoriteByUserListings.length > 0);
+    
       return updatedData;
     });
   };
+
   // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
   useEffect(() => {
     if (favoriteListing != null) {
-      console.log("favoriteListing cleareFavResponce", favoriteListing);
       toggleIsFavriote(favoriteListing);
       dispatch(cleareFavResponce());
     }
   }, [favoriteListing]);
+
   const toggleLike = (checked, LikeData, dataIndex) => {
     let likeItem = LikeData.businessListingId;
     let filterData = [...longData];
@@ -206,6 +194,7 @@ const FavoriteSwiperLong = ({
 
     dispatch(likeUnlikeApi(newLike, likeItem));
   };
+
   // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF LIKE
   const toggleIsLiked = (businessListingId) => {
     const updatedData = favoriteInformation.map((category) => {
@@ -228,6 +217,7 @@ const FavoriteSwiperLong = ({
 
     setFavoriteInformation(updatedData);
   };
+
   // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF LIKE
   useEffect(() => {
     if (likeUnlikeBusiness != null) {
@@ -236,10 +226,8 @@ const FavoriteSwiperLong = ({
     }
   }, [likeUnlikeBusiness]);
 
-  console.log(longData, "longDatalongDatalongData");
   const handleLongPress = (e, value) => {
     // Handle long press here
-    console.log("Long press event on button", value);
     e.preventDefault();
     setActiveCategory(value);
   };
@@ -248,10 +236,6 @@ const FavoriteSwiperLong = ({
     // Handle short press here
     e.preventDefault();
     detailBusinessFav(value);
-    console.log("Short press event on button:", e);
-
-    // Uncomment this line to trigger the detailBusiness function on a short press
-    // detailBusiness(newData);
   };
 
   useEffect(() => {

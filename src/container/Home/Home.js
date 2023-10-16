@@ -111,7 +111,7 @@ const Home = () => {
   }, [locationLatitude, locationLongitude]);
 
   // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF Block
-  const toggleIsFavriote = (categoryID) => {
+  const blockCategory = (categoryID) => {
     setDashboardInformation((prevDashboardInfo) => {
       const updatedDashboardInformation = prevDashboardInfo.filter(
         (item) => item.categoryID !== categoryID
@@ -124,7 +124,7 @@ const Home = () => {
   useEffect(() => {
     if (blockUnBlockCategory) {
       console.log("block check home cleare", blockUnBlockCategory);
-      toggleIsFavriote(blockUnBlockCategory);
+      blockCategory(blockUnBlockCategory);
       dispatch(CleareblockUnBlockSuccess());
     }
   }, [blockUnBlockCategory]);
