@@ -61,8 +61,8 @@ const CategoryDetails = () => {
       {Object.keys(businessDetails).length > 0 ? (
         <>
           {Object.keys(businessDetails.listOfBase64Images).length > 0 ? (
-            <div className="swiper-category-slider">
-              <Container>
+            <Container>
+              <div className="swiper-category-slider">
                 <Row>
                   <Col lg={12} md={12} sm={12}>
                     <Swiper
@@ -92,8 +92,8 @@ const CategoryDetails = () => {
                     </Swiper>
                   </Col>
                 </Row>
-              </Container>
-            </div>
+              </div>
+            </Container>
           ) : (
             <></>
           )}
@@ -191,7 +191,19 @@ const CategoryDetails = () => {
                 sm={12}
                 className="d-flex justify-content-start"
               >
-                <span className="what-we-offer-heading">WHAT WE OFFER</span>
+                {businessDetails.offering !== "" ? (
+                  <>
+                    <span className="what-we-offer-heading">WHAT WE OFFER</span>
+                  </>
+                ) : (
+                  <>
+                    <Row>
+                      <Col>
+                        <div style={{ diplay: "none" }}></div>
+                      </Col>
+                    </Row>
+                  </>
+                )}
               </Col>
             </Row>
 
@@ -203,7 +215,9 @@ const CategoryDetails = () => {
                 className="d-flex justify-content-start"
               >
                 <div className="what-we-offer-bullets">
-                  {businessDetails.offering}
+                  <span className="what-we-offer-subtitles">
+                    {businessDetails.offering}
+                  </span>
                 </div>
               </Col>
             </Row>

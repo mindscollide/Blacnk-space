@@ -47,9 +47,17 @@ const Dashboard = () => {
             )}
           </Container>
         </div>
-        <div className="home_Container">
-          <Outlet />
-        </div>
+        {isCategoryDetail ? (
+          <>
+            <div className="category-Detail-page">
+              <Outlet />
+            </div>
+          </>
+        ) : (
+          <div className="home_Container">
+            <Outlet />
+          </div>
+        )}
       </Layout>
 
       {/* <Row>

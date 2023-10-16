@@ -34,6 +34,7 @@
 
 body {
   background-color: #000 !important;
+  background: #000 !important;
   overflow-x: hidden;
 }
 
@@ -51,6 +52,11 @@ body {
   z-index: 3;
   background-color: #000000;
   width: 100%;
+}
+
+.category-Detail-page {
+  margin-top: 150px !important;
+  background-color: #000000 !important;
 }
 
 .home_Container {
@@ -191,7 +197,14 @@ body {
 @media (max-width: 650px) {
   .home_Container {
     padding: 0px 25px;
-    margin-top: 150px !important;
+    margin-top: 120px !important;
+    background-color: #000000 !important;
+  }
+
+  .category-Detail-page {
+    padding: 0px 0px !important;
+    margin: 0 !important;
+    margin-top: 120px !important;
     background-color: #000000 !important;
   }
 

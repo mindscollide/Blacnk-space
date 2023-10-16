@@ -226,7 +226,7 @@ img {
 @media (max-width: 650px) {
   .carousel-swiper {
     padding: 0 !important;
-    margin: 0px !important;
+    margin: 0 !important;
   }
 
   .margin-top-403 {
