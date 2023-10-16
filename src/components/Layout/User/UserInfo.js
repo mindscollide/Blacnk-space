@@ -13,6 +13,7 @@ const UserInfo = () => {
   const [showFavoriteUser, setShowFavoriteUser] = useState(false);
   const [showSwitchCategory, setShowSwitchCategory] = useState(false);
   const [showSubSwitchCategory, setShowSubSwitchCategory] = useState(false);
+  const [showCategoryDetail, setShowCategoryDetail] = useState(false);
 
   // to show Explore userInfo
   useEffect(() => {
@@ -32,7 +33,12 @@ const UserInfo = () => {
 
   //To show Sub category switch User Info
   useEffect(() => {
-    setShowSubSwitchCategory(location.pathname === "/SubCategories");
+    setShowSubSwitchCategory(location.pathname === "/BlankSpace/SubCategories");
+  }, [location.pathname]);
+
+  // To show Nothing on CategoryDetails UserInfo even Header
+  useEffect(() => {
+    setShowCategoryDetail(Location.pathname === "/BlankSpace/Category");
   }, [location.pathname]);
 
   const onClickSettingIcon = () => {
@@ -145,6 +151,32 @@ const UserInfo = () => {
                 className="Go-Back-Button"
                 onClick={() => navigate("/BlankSpace/Categories")}
               />
+            </Col>
+          </Row>
+        </>
+      ) : showCategoryDetail ? (
+        <>
+          <Row className="mt-3">
+            <Col lg={8} md={8} sm={12} className="d-flex justify-content-start">
+              <div className="User-heading">GOOD MORNING Aun</div>
+            </Col>
+            <Col lg={4} md={4} sm={12} className="d-flex justify-content-end ">
+              <i
+                className="icon-setting setting-icon-size"
+                // onClick={onClickSettingIcon}
+              ></i>
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col
+              lg={12}
+              md={12}
+              sm={12}
+              className="d-flex justify-content-start"
+            >
+              <div className="User-Sub-Heading">
+                HERE'S OUR TOP Recipe for youngster!
+              </div>
             </Col>
           </Row>
         </>
