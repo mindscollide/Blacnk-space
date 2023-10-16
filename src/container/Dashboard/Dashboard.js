@@ -13,6 +13,14 @@ const Dashboard = () => {
   const location = useLocation();
   const [exploreHeaderUser, setExploreHeaderUser] = useState(false);
 
+  // For category Detail page
+  const [isCategoryDetail, setIsCategoryDetail] = useState(false);
+
+  // To locate category Details
+  useEffect(() => {
+    setIsCategoryDetail(location.pathname === "/BlankSpace/Category");
+  }, [location.pathname]);
+
   // To locate on Explore Category Page
   useEffect(() => {
     // Check if the current location is the ExplorePage
@@ -23,8 +31,20 @@ const Dashboard = () => {
       <Layout>
         <div className="header">
           <Container>
-            <Header />
-            <UserInfo />
+            {isCategoryDetail ? (
+              <>
+                <Row>
+                  <Col>
+                    <div style={{ display: "none" }}></div>
+                  </Col>
+                </Row>
+              </>
+            ) : (
+              <>
+                <Header />
+                <UserInfo />
+              </>
+            )}
           </Container>
         </div>
         <div className="home_Container">
