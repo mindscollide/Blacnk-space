@@ -7,9 +7,6 @@ import { Autoplay, Pagination } from "swiper/modules";
 import { businessDetailsMainApi } from "../../store/Actions/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Footer } from "../../components/Layout";
-import categoryImg from "./../../assets/Images/cat-detail-slide.jpg";
-import categoryImg2 from "./../../assets/Images/cat-detail-slide2.jpg";
-import categoryImg3 from "./../../assets/Images/cat-detail-slide3.jpg";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -18,13 +15,13 @@ import { getRndomeNumber } from "../../common/Function/utils";
 
 const CategoryDetails = () => {
   const navigate = useNavigate();
-  const { actionReducer } = useSelector((state) => state);
-  console.log(actionReducer, "actionNation");
+  const businessListing = useSelector(
+    (state) => state.actionReducer.businessListing
+  );
 
   const dispatch = useDispatch();
   //state for businessDetails
   const [businessDetails, setBusinessDetails] = useState([]);
-  console.log({ businessDetails }, "businessDetailsbusinessDetails");
 
   // STATE FOR LOADER
   const [showLoader, setShowLoader] = useState(false);
@@ -39,13 +36,10 @@ const CategoryDetails = () => {
   });
 
   useEffect(() => {
-    if (
-      actionReducer.businessListing !== null &&
-      actionReducer.businessListing !== undefined
-    ) {
-      setBusinessDetails(actionReducer.businessListing);
+    if (businessListing !== null && businessListing !== undefined) {
+      setBusinessDetails(businessListing);
     }
-  }, [actionReducer.businessListing]);
+  }, [businessListing]);
 
   const clickHomeHandler = () => {
     navigate("/BlankSpace/");

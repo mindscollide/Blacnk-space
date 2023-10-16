@@ -26,8 +26,18 @@ const FavoriteSwiperLong = ({
   console.log(favoriteListingData, "listingDatalistingData");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isLongPress, setIsLongPress] = useState(false);
-  const { actionReducer } = useSelector((state) => state);
+  const locationLatitude = useSelector(
+    (state) => state.actionReducer.locationLatitude
+  );
+  const locationLongitude = useSelector(
+    (state) => state.actionReducer.locationLongitude
+  );
+  const favoriteListing = useSelector(
+    (state) => state.actionReducer.favoriteListing
+  );
+  const likeUnlikeBusiness = useSelector(
+    (state) => state.actionReducer.likeUnlikeBusiness
+  );
   const [longData, setLongData] = useState([]);
   console.log(longData, longData.length, "longDatalongDatalongDatalongData");
   const [activeCategory, setActiveCategory] = useState(0);
@@ -47,12 +57,12 @@ const FavoriteSwiperLong = ({
       errorStatus: false,
     },
     Latitude: {
-      value: actionReducer.locationLatitude,
+      value: locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
     Longitude: {
-      value: actionReducer.locationLongitude,
+      value: locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -81,12 +91,12 @@ const FavoriteSwiperLong = ({
       errorStatus: false,
     },
     Latitude: {
-      value: actionReducer.locationLatitude,
+      value: locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
     Longitude: {
-      value: actionReducer.locationLongitude,
+      value: locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -121,7 +131,6 @@ const FavoriteSwiperLong = ({
 
   //for Favorite icon toggle onclick
   const toggleIcon = (checked, LikeData, favIndex) => {
-    console.log(checked, "checkedcheckedchecked");
     let likeItem = LikeData.businessListingId;
     let filterData = [...longData];
     filterData.splice(favIndex, 1);
@@ -131,54 +140,53 @@ const FavoriteSwiperLong = ({
     let newLike = {
       AddRemoveFavoriteBusinessEnum: checked === true ? 1 : 2,
       UserID: likeState.UserID.value,
-      Latitude: actionReducer.locationLatitude,
-      Longitude: actionReducer.locationLongitude,
+      Latitude: locationLatitude,
+      Longitude: locationLongitude,
       BusinessListingId: likeItem,
       OtherAvailableListings: businessListingOtherIds,
     };
     dispatch(updateFavoriteApi(newLike, likeItem));
   };
   // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
+  console.log("favoriteListing out", favoriteInformation);
   const toggleIsFavriote = (businessListingId) => {
-    const updatedData = favoriteInformation.map((category) => {
-      const updatedListings = category.favoriteByUserListings.map((listing) => {
-        if (listing.businessListingId === businessListingId) {
-          // Toggle isLiked value
-          return {
-            ...listing,
-            isFavorite: !listing.isFavorite,
-          };
-        }
-        return listing;
+    console.log("favoriteListing toggleIsFavriote", businessListingId);
+
+    setFavoriteInformation((prevDashboardInfo) => {
+      const updatedData = prevDashboardInfo.map((category) => {
+        const updatedListings = category.favoriteByUserListings.map(
+          (listing) => {
+            if (listing.businessListingId === businessListingId) {
+              // Toggle isFavorite value
+              return {
+                ...listing,
+                isFavorite: !listing.isFavorite,
+              };
+            }
+            console.log("favoriteListing listing", listing);
+
+            return listing;
+          }
+        );
+        console.log("favoriteListing updatedListings", updatedListings);
+
+        return {
+          ...category,
+          favoriteByUserListings: updatedListings,
+        };
       });
 
-      return {
-        ...category,
-        favoriteByUserListings: updatedListings,
-      };
+      return updatedData;
     });
-
-    console.log(
-      "favoriteInformationfavoriteInformation isFavorite",
-      favoriteInformation
-    );
-    setFavoriteInformation(updatedData);
   };
   // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
   useEffect(() => {
-    console.log(
-      "favoriteInformationfavoriteInformation isFavorite",
-      favoriteInformation
-    );
-    if (actionReducer.favoriteListing != null) {
-      toggleIsFavriote(actionReducer.favoriteListing);
-      console.log(
-        "favoriteInformationfavoriteInformation isFavorite",
-        actionReducer.favoriteListing
-      );
+    if (favoriteListing != null) {
+      console.log("favoriteListing cleareFavResponce", favoriteListing);
+      toggleIsFavriote(favoriteListing);
       dispatch(cleareFavResponce());
     }
-  }, [actionReducer.favoriteListing]);
+  }, [favoriteListing]);
   const toggleLike = (checked, LikeData, dataIndex) => {
     let likeItem = LikeData.businessListingId;
     let filterData = [...longData];
@@ -190,8 +198,8 @@ const FavoriteSwiperLong = ({
     let newLike = {
       LikeUnLikeBusinessListingsEnum: checked === true ? 1 : 2,
       UserID: likeState.UserID.value,
-      Latitude: actionReducer.locationLatitude,
-      Longitude: actionReducer.locationLongitude,
+      Latitude: locationLatitude,
+      Longitude: locationLongitude,
       BusinessListingId: likeItem,
       OtherAvailableListings: businessListingOtherIds,
     };
@@ -222,11 +230,11 @@ const FavoriteSwiperLong = ({
   };
   // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF LIKE
   useEffect(() => {
-    if (actionReducer.likeUnlikeBusiness != null) {
-      toggleIsLiked(actionReducer.likeUnlikeBusiness);
+    if (likeUnlikeBusiness != null) {
+      toggleIsLiked(likeUnlikeBusiness);
       dispatch(cleareLikeResponce());
     }
-  }, [actionReducer.likeUnlikeBusiness]);
+  }, [likeUnlikeBusiness]);
 
   console.log(longData, "longDatalongDatalongData");
   const handleLongPress = (e, value) => {
@@ -332,9 +340,6 @@ const FavoriteSwiperLong = ({
                           ? "active"
                           : ""
                       }`}
-                      // onClick={(e) => {
-                      //   detailBusiness(newData);
-                      // }}
                       text={
                         newData.businessListingIcon !== "" ? (
                           <img

@@ -26,8 +26,6 @@ const Loader = () => {
               <img
                 src={BlancspaceLogo}
                 className={styles["Loader-width-class"]}
-                // width={200}
-                // height={250}
                 alt="Blancspace Logo"
               />
             </div>

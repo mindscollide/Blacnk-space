@@ -5,7 +5,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
 import { StarFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import LongPress from "../LonPress/LongPress";
-
 import {
   updateFavoriteApi,
   likeUnlikeApi,
@@ -26,43 +25,18 @@ const ExploreSwiperLong = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { actionReducer } = useSelector((state) => state);
-  console.log(actionReducer, "actioonnnReducceer");
-  const [isLongPress, setIsLongPress] = useState(false);
-
-  // state for update Favorite
-  const [updateFavorite, setUpdateFavorite] = useState({
-    AddRemoveFavoriteBusinessEnum: {
-      value: 1,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    UserID: {
-      value: "PLU_1",
-      errorMessage: "",
-      errorStatus: false,
-    },
-    Latitude: {
-      value: actionReducer.locationLatitude,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    Longitude: {
-      value: actionReducer.locationLongitude,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    BusinessListingId: {
-      value: "BUL_0x3eb33eb25e826edb:0xf8830cefa06c2a7d",
-      errorMessage: "",
-      errorStatus: false,
-    },
-    OtherAvailableListings: {
-      value: ["BUL_0x3eb33f7b8bf5d8d3:0x828884303c4824cf"],
-      errorMessage: "",
-      errorStatus: false,
-    },
-  });
+  const locationLatitude = useSelector(
+    (state) => state.actionReducer.locationLatitude
+  );
+  const locationLongitude = useSelector(
+    (state) => state.actionReducer.locationLongitude
+  );
+  const favoriteListing = useSelector(
+    (state) => state.actionReducer.favoriteListing
+  );
+  const likeUnlikeBusiness = useSelector(
+    (state) => state.actionReducer.likeUnlikeBusiness
+  );
 
   // state for like and dislike
   const [likeState, setLikeState] = useState({
@@ -77,12 +51,12 @@ const ExploreSwiperLong = ({
       errorStatus: false,
     },
     Latitude: {
-      value: actionReducer.locationLatitude,
+      value: locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
     Longitude: {
-      value: actionReducer.locationLongitude,
+      value: locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -104,14 +78,9 @@ const ExploreSwiperLong = ({
   const [longData, setLongData] = useState([]);
   const [activeCategory, setActiveCategory] = useState(0);
   const [clickCount, setClickCount] = useState(0);
-  console.log(
-    exploreInformation,
-    "checkedcheckedchecked updatedCategoryupdatedCategory"
-  );
 
   //for Favorite icon toggle onclick
   const toggleIcon = (checked, LikeData, favIndex) => {
-    console.log(checked, "checkedcheckedchecked");
     // setStarIconVisible(!starIconVisible);
     let likeItem = LikeData.subCategoryListingId;
     let filterData = [...longData];
@@ -122,8 +91,8 @@ const ExploreSwiperLong = ({
     let newLike = {
       AddRemoveFavoriteBusinessEnum: checked === true ? 1 : 2,
       UserID: likeState.UserID.value,
-      Latitude: actionReducer.locationLatitude,
-      Longitude: actionReducer.locationLongitude,
+      Latitude: locationLatitude,
+      Longitude: locationLongitude,
       BusinessListingId: likeItem,
       OtherAvailableListings: businessListingOtherIds,
     };
@@ -154,23 +123,16 @@ const ExploreSwiperLong = ({
   };
   // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
   useEffect(() => {
-    console.log("checkedcheckedchecked isFavorite", exploreInformation);
-    if (actionReducer.favoriteListing != null) {
-      toggleIsFavriote(actionReducer.favoriteListing);
-      console.log(
-        "checkedcheckedchecked isFavorite",
-        actionReducer.favoriteListing
-      );
+    if (favoriteListing != null) {
+      toggleIsFavriote(favoriteListing);
       dispatch(cleareFavResponce());
     }
-  }, [actionReducer.favoriteListing]);
+  }, [favoriteListing]);
 
   // For Like and Dislike toggle Button
   const toggleLike = (checked, LikeData, dataIndex) => {
-    console.log(LikeData, "checkedcheckedchecked");
     let likeItem = LikeData.subCategoryListingId;
     let filterData = [...longData];
-
     filterData.splice(dataIndex, 1);
     const businessListingOtherIds = filterData.map(
       (item) => item.subCategoryListingId
@@ -178,8 +140,8 @@ const ExploreSwiperLong = ({
     let newLike = {
       LikeUnLikeBusinessListingsEnum: checked === true ? 1 : 2,
       UserID: likeState.UserID.value,
-      Latitude: actionReducer.locationLatitude,
-      Longitude: actionReducer.locationLongitude,
+      Latitude: locationLatitude,
+      Longitude: locationLongitude,
       BusinessListingId: likeItem,
       OtherAvailableListings: businessListingOtherIds,
     };
@@ -209,13 +171,13 @@ const ExploreSwiperLong = ({
   };
   // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF LIKE
   useEffect(() => {
-    if (actionReducer.likeUnlikeBusiness != null) {
-      toggleIsLiked(actionReducer.likeUnlikeBusiness);
+    if (likeUnlikeBusiness != null) {
+      toggleIsLiked(likeUnlikeBusiness);
       dispatch(cleareLikeResponce());
     }
-  }, [actionReducer.likeUnlikeBusiness]);
+  }, [likeUnlikeBusiness]);
+
   const onExploreCat = async (exploreData) => {
-    console.log("click is triggered");
     setClickCount(clickCount + 1);
     if (exploreData && exploreData.subCategoryListingId) {
       let newBusinessIdData = {
@@ -225,7 +187,6 @@ const ExploreSwiperLong = ({
         "newBusinessIdData",
         JSON.stringify(newBusinessIdData)
       );
-      console.log(newBusinessIdData, "newBusinessIdDatanewBusinessIdData");
       dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
     } else {
       console.error("exploreDatabusinessListingId");
@@ -234,7 +195,6 @@ const ExploreSwiperLong = ({
 
   const handleLongPress = (e, value) => {
     // Handle long press here
-    console.log("Long press event on button", value);
     e.preventDefault();
     setActiveCategory(value);
   };
@@ -243,10 +203,6 @@ const ExploreSwiperLong = ({
     // Handle short press here
     e.preventDefault();
     onExploreCat(value);
-    console.log("Short press event on button:", e);
-
-    // Uncomment this line to trigger the detailBusiness function on a short press
-    // detailBusiness(newData);
   };
 
   useEffect(() => {

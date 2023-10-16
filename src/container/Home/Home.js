@@ -1,7 +1,10 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Button, HeadingHoldPU, Loader } from "./../../components/Elements";
-import { getdashboardApi } from "../../store/Actions/Actions";
+import {
+  CleareblockUnBlockSuccess,
+  getdashboardApi,
+} from "../../store/Actions/Actions";
 import { SwiperLongpress } from "../../components/Elements";
 import "swiper/css";
 import "./Home.css";
@@ -14,11 +17,29 @@ import LongPress from "../../components/Elements/LonPress/LongPress";
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { actionReducer } = useSelector((state) => state);
+  const locationLatitude = useSelector(
+    (state) => state.actionReducer.locationLatitude
+  );
+  const locationLongitude = useSelector(
+    (state) => state.actionReducer.locationLongitude
+  );
+  const blockUnBlockCategory = useSelector(
+    (state) => state.actionReducer.blockUnBlockCategory
+  );
+  const dashBoardListings = useSelector(
+    (state) => state.actionReducer.dashBoardListings
+  );
+  const Loading = useSelector((state) => state.actionReducer.Loading);
 
-  // for long press Heading state
-  const [isHeadingFood, setIsHeadingFood] = useState(false);
   const [loadingAuto, seLoadingAuto] = useState(true);
+
+  const [autoCheck, setAutoCheck] = useState(false);
+  // state for dashboard Title, swiper, swiperLabel
+  const [dashboardInformation, setDashboardInformation] = useState([]);
+
+  //state for active longPress event
+  const [activeCategory, setActiveCategory] = useState(null);
+
   // dashboard state
   const [dashboardData, setDashboardData] = useState({
     userID: {
@@ -48,38 +69,31 @@ const Home = () => {
     },
   });
 
-  const [autoCheck, setAutoCheck] = useState(false);
-  // state for dashboard Title, swiper, swiperLabel
-  const [dashboardInformation, setDashboardInformation] = useState([]);
-
-  //state for active longPress event
-  const [activeCategory, setActiveCategory] = useState(null);
-  // long press func
-  const onLongPressFood = () => {
-    setIsHeadingFood(true);
-    setTimeout(() => setIsHeadingFood(false), 3000);
-  };
-
-  //long onClick func
-  const onClickFood = () => {
-    console.log("click is triggered");
-  };
-
   const onClickExploreCategory = async (categoryID) => {
     await localStorage.setItem("categoryID", categoryID);
     navigate("/BlankSpace/ExploreCategory");
   };
 
   useEffect(() => {
-    console.log("check for data", actionReducer.locationLatitude);
-    console.log("check for data", actionReducer.locationLongitude);
-    if (actionReducer.locationLatitude && actionReducer.locationLongitude) {
+    const handleOutsideClick = () => {
+      if (activeCategory !== null) {
+        setActiveCategory(null);
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [activeCategory]);
+
+  useEffect(() => {
+    if (locationLatitude && locationLongitude) {
       let Data = {
         UserID: dashboardData.userID.value,
         pageNumber: dashboardData.pageNumber.value,
         isAutomatic: dashboardData.isAutomatic.value,
-        UserLatitude: actionReducer.locationLatitude,
-        UserLongitude: actionReducer.locationLongitude,
+        UserLatitude: locationLatitude,
+        UserLongitude: locationLongitude,
       };
 
       dispatch(getdashboardApi(Data, seLoadingAuto));
@@ -87,43 +101,61 @@ const Home = () => {
       setDashboardData({
         ...dashboardData,
         UserLatitude: {
-          value: actionReducer.locationLatitude,
+          value: locationLatitude,
         },
         UserLongitude: {
-          value: actionReducer.locationLongitude,
+          value: locationLongitude,
         },
       });
     }
-  }, [actionReducer.locationLatitude, actionReducer.locationLongitude]);
+  }, [locationLatitude, locationLongitude]);
+
+  // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF Block
+  const toggleIsFavriote = (categoryID) => {
+    setDashboardInformation((prevDashboardInfo) => {
+      const updatedDashboardInformation = prevDashboardInfo.filter(
+        (item) => item.categoryID !== categoryID
+      );
+      return updatedDashboardInformation;
+    });
+  };
+
+  // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF Block
+  useEffect(() => {
+    if (blockUnBlockCategory) {
+      console.log("block check home cleare", blockUnBlockCategory);
+      toggleIsFavriote(blockUnBlockCategory);
+      dispatch(CleareblockUnBlockSuccess());
+    }
+  }, [blockUnBlockCategory]);
 
   // this is how I set data from reducer
   useEffect(() => {
     try {
-      if (actionReducer.dashBoardListings) {
+      if (dashBoardListings) {
         if (autoCheck) {
-          setDashboardInformation(actionReducer.dashBoardListings);
+          setDashboardInformation(dashBoardListings);
         } else {
           // for lazy loading
           let newDAta = [...dashboardInformation];
-          newDAta.push(actionReducer.dashBoardListings);
+          newDAta.push(dashBoardListings);
           setDashboardInformation(newDAta);
         }
       }
     } catch {
       console.log("error");
     }
-  }, [actionReducer.dashBoardListings]);
+  }, [dashBoardListings]);
 
   const handleLongPress = (e, index) => {
     e.preventDefault();
     setActiveCategory(index);
-    // alert("Long press event:", index);
   };
 
   const handleShortPress = (e) => {
-    e.preventDefault();
-    // alert("Short press event:", e);
+    // e.preventDefault();
   };
+
   return (
     <Container>
       {dashboardInformation.map((listing, index) => {
@@ -153,9 +185,14 @@ const Home = () => {
                 </LongPress>
 
                 {activeCategory === index ? (
-                  <>
-                    <HeadingHoldPU />
-                  </>
+                  <HeadingHoldPU
+                    listing={listing}
+                    parentIndex={index}
+                    parentcategoryID={listing.categoryID}
+                    setDashboardInformation={setDashboardInformation}
+                    dashboardInformation={dashboardInformation}
+                    setActiveCategory={setActiveCategory}
+                  />
                 ) : null}
 
                 {listing.categoryID && (
@@ -190,7 +227,7 @@ const Home = () => {
 
       {loadingAuto ? (
         <Loader />
-      ) : actionReducer.Loading ? (
+      ) : Loading ? (
         <>
           <Row>
             <Col className="d-flex justify-content-center align-Item-center">

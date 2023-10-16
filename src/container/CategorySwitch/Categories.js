@@ -1,13 +1,8 @@
-import { Fragment, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Switch } from "antd";
-import {
-  Header,
-  UserInfo,
-  CategoryHeader,
-  CategoryUser,
-} from "../../components/Layout";
+
 import {
   getAllCategoriesApi,
   subCategoryParentApi,
@@ -24,36 +19,19 @@ const Categories = () => {
   const navigate = useNavigate();
 
   // get reducers from Action_Reducers
-  const { actionReducer } = useSelector((state) => state);
+  const locationLatitude = useSelector(
+    (state) => state.actionReducer.locationLatitude
+  );
+  const locationLongitude = useSelector(
+    (state) => state.actionReducer.locationLongitude
+  );
+  const getAllCategoriesUser = useSelector(
+    (state) => state.actionReducer.getAllCategoriesUser
+  );
+  const Loading = useSelector((state) => state.Loading);
 
   //state for main Categories Information
   const [categoriesInformation, setCategoriesInformation] = useState([]);
-  console.log(
-    categoriesInformation,
-    "categoriesInformationcategoriesInformation"
-  );
-  //state for Main Categories
-  const [mainCategory, setMainCategory] = useState({
-    userID: {
-      value: "PLU_1",
-      errorMessage: "",
-      errorStatus: false,
-    },
-  });
-
-  // State for Parent Categories
-  const [parentCategory, setParentCategory] = useState({
-    UserID: {
-      value: "PLU_1",
-      errorMessage: "",
-      errorStatus: false,
-    },
-    CategoryID: {
-      value: "CDL_1",
-      errorMessage: "",
-      errorStatus: false,
-    },
-  });
 
   //state for subCategory BlockUnBlockCategory
   const [categoryBlockUnblock, setCategoryBlockUnblock] = useState({
@@ -63,13 +41,13 @@ const Categories = () => {
       errorStatus: false,
     },
     Latitude: {
-      value: actionReducer.locationLatitude,
+      value: locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
 
     Longitude: {
-      value: actionReducer.locationLongitude,
+      value: locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -94,15 +72,9 @@ const Categories = () => {
     },
   });
 
-  // state for loader
-  // const [showLoader, setShowLoader] = useState(false);
-
   const [showMessage, setShowMessage] = useState(false);
 
-  const [isHome, setIsHome] = useState(false);
-
   const handleSwitchChange = async (checked, categoryIndex) => {
-    console.log(checked, categoryIndex, "checkedchecked");
     let newIds = [];
     let newArrOtherAvailableList = [];
     let copyCategoryInformation = [...categoriesInformation];
@@ -132,14 +104,16 @@ const Categories = () => {
     // this will send data to Api where we give the OtherAvailable array which is not selected
     let categoryUnblock = {
       UserID: categoryBlockUnblock.UserID.value,
-      Latitude: actionReducer.locationLatitude,
-      Longitude: actionReducer.locationLongitude,
+      Latitude: locationLatitude,
+      Longitude: locationLongitude,
       CategoryWithStatuses: newIds, // in this newIds we have selected categoryId and categoryName
       OtherAvailableListings: newArrOtherAvailableList, // this will send the other array in this list
     };
+
     let mainCategories = {
-      UserID: mainCategory.userID.value,
+      UserID: "PLU_1",
     };
+
     await dispatch(
       blockUnBlockCategoryApi(categoryUnblock, navigate, mainCategories, 1)
     );
@@ -153,9 +127,8 @@ const Categories = () => {
 
   //onClick handler in Title
   const clickTitleHandler = (categoryData) => {
-    console.log("categoryData", { categoryData });
     let newHandlerClick = {
-      UserID: parentCategory.UserID.value,
+      UserID: "PLU_1",
       CategoryID: categoryData.categoryID,
     };
     dispatch(subCategoryParentApi(navigate, newHandlerClick));
@@ -164,22 +137,21 @@ const Categories = () => {
   // useEffect for main getAllCategories
   useEffect(() => {
     let mainCategories = {
-      UserID: mainCategory.userID.value,
+      UserID: "PLU_1",
     };
     dispatch(getAllCategoriesApi(mainCategories));
   }, []);
-  console.log("actionReducer", actionReducer);
 
   // useEffect for getting data from reducers
   useEffect(() => {
     if (
-      actionReducer.getAllCategoriesUser !== null &&
-      actionReducer.getAllCategoriesUser !== undefined &&
-      actionReducer.getAllCategoriesUser.length !== 0
+      getAllCategoriesUser !== null &&
+      getAllCategoriesUser !== undefined &&
+      getAllCategoriesUser.length !== 0
     ) {
-      setCategoriesInformation(actionReducer.getAllCategoriesUser);
+      setCategoriesInformation(getAllCategoriesUser);
     }
-  }, [actionReducer.getAllCategoriesUser]);
+  }, [getAllCategoriesUser]);
 
   return (
     <Container>
@@ -243,7 +215,7 @@ const Categories = () => {
                 );
               })
             : null}
-          {actionReducer.Loading ? <Loader /> : null}
+          {Loading ? <Loader /> : null}
         </Col>
       </Row>
     </Container>

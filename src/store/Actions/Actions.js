@@ -625,6 +625,7 @@ const updateFavoriteInit = () => {
 
 // Update Favorite Success
 const updateFavoriteSuccess = (response, message) => {
+  console.log("favoriteListing updateFavoriteSuccess", response);
   return {
     type: actions.UPDATE_FAVORITE_BY_USER_SUCCESS,
     response: response,
@@ -634,6 +635,7 @@ const updateFavoriteSuccess = (response, message) => {
 
 //UPDATE fAV CLEARE
 const cleareFavResponce = () => {
+  console.log("favoriteListing cleareFavResponce");
   return {
     type: actions.CLEARE_FAVORITE_BY_USER_SUCCESS,
   };
@@ -651,7 +653,7 @@ const updateFavoriteFail = (message) => {
 
 const updateFavoriteApi = (Data, dataid) => {
   let Token = JSON.parse(localStorage.getItem("token"));
-  console.log("checkedcheckedchecked isFavorite", Data);
+  console.log("favoriteListing updateFavoriteApi", Data);
   return (dispatch) => {
     dispatch(updateFavoriteInit());
     let form = new FormData();
@@ -666,21 +668,21 @@ const updateFavoriteApi = (Data, dataid) => {
       },
     })
       .then(async (response) => {
-        console.log("checkedcheckedchecked isFavorite", response);
+        console.log("favoriteListing updateFavoriteApi", response);
 
         if (response.data.responseCode === 417) {
-          console.log("checkedcheckedchecked isFavorite", response);
+          console.log("favoriteListing updateFavoriteApi", response);
           await dispatch(refreshTokenApi());
           dispatch(updateFavoriteApi());
         } else if (response.data.responseCode === 200) {
-          console.log("checkedcheckedchecked isFavorite", response);
+          console.log("favoriteListing updateFavoriteApi", response);
           if (response.data.responseResult.isExecuted === true) {
-            console.log("checkedcheckedchecked isFavorite", response);
+            console.log("favoriteListing updateFavoriteApi", response);
             if (
               response.data.responseResult.responseMessage.toLowerCase() ===
               "BlancSpace_AUTH_AuthManager_UpdateFavorites_01".toLowerCase()
             ) {
-              console.log("checkedcheckedchecked isFavorite", dataid);
+              console.log("favoriteListing updateFavoriteApi", dataid);
 
               dispatch(updateFavoriteSuccess(dataid, "Updated successfully"));
             } else if (
@@ -690,7 +692,7 @@ const updateFavoriteApi = (Data, dataid) => {
                   "BlancSpace_AUTH_AuthManager_UpdateFavorites_02".toLowerCase()
                 )
             ) {
-              console.log("checkedcheckedchecked isFavorite", response);
+              console.log("favoriteListing updateFavoriteApi", response);
               dispatch(
                 updateFavoriteFail("Provided userid was either null or empty")
               );
@@ -701,20 +703,20 @@ const updateFavoriteApi = (Data, dataid) => {
                   "BlancSpace_AUTH_AuthManager_UpdateFavorites_03".toLowerCase()
                 )
             ) {
-              console.log("checkedcheckedchecked isFavorite", response);
+              console.log("favoriteListing updateFavoriteApi", response);
               dispatch(updateFavoriteFail("Exception Something went wrong"));
             }
           } else {
-            console.log("checkedcheckedchecked isFavorite", response);
+            console.log("favoriteListing updateFavoriteApi", response);
             dispatch(updateFavoriteFail("Something went wrong"));
           }
         } else {
-          console.log("checkedcheckedchecked isFavorite", response);
+          console.log("favoriteListing updateFavoriteApi", response);
           dispatch(updateFavoriteFail("Something went wrong"));
         }
       })
       .catch((response) => {
-        console.log("checkedcheckedchecked isFavorite", response);
+        console.log("checkedcheckedchecked updateFavoriteApi", response);
         dispatch(updateFavoriteFail("something went wrong"));
       });
   };
@@ -735,7 +737,11 @@ const blockUnBlockSuccess = (response, message) => {
     message: message,
   };
 };
-
+const CleareblockUnBlockSuccess = () => {
+  return {
+    type: actions.CLEARE_BLOCK_UN_BLOCK_SUCCESS,
+  };
+};
 //block unBlock category Fail
 const blockUnBlockFail = (message) => {
   return {
@@ -783,20 +789,37 @@ const blockUnBlockCategoryApi = (
               response.data.responseResult.responseMessage.toLowerCase() ===
               "BlancSpace_AUTH_AuthManager_BlockUnBlockCategory_01".toLowerCase()
             ) {
-              console.log(
-                "Explore Category Api",
-                response.data.responseResult.responseMessage
-              );
-              await dispatch(
-                blockUnBlockSuccess(
-                  response.data.responseResult.categoriesForUsers,
-                  "Updated successfully"
-                )
-              );
-              if (no === 1) {
+              console.log("block check");
+
+              if (no === 1 && no !== undefined) {
+                console.log("block check");
+                await dispatch(
+                  blockUnBlockSuccess(
+                    response.data.responseResult.categoriesForUsers,
+                    "Updated successfully"
+                  )
+                );
                 dispatch(getAllCategoriesApi(newHandlerClick));
-              } else {
+              } else if (no === 2 && no !== undefined) {
+                console.log("block check");
+                await dispatch(
+                  blockUnBlockSuccess(
+                    response.data.responseResult.categoriesForUsers,
+                    "Updated successfully"
+                  )
+                );
                 dispatch(subCategoryParentApi(navigate, newHandlerClick));
+              } else {
+                console.log(
+                  "block check",
+                  subCategoryUnblock.CategoryWithStatuses[0]
+                );
+                await dispatch(
+                  blockUnBlockSuccess(
+                    subCategoryUnblock.CategoryWithStatuses[0].CategoryID,
+                    "Updated successfully"
+                  )
+                );
               }
             } else if (
               response.data.responseResult.responseMessage
@@ -1268,4 +1291,5 @@ export {
   latitudeData,
   cleareLikeResponce,
   cleareFavResponce,
+  CleareblockUnBlockSuccess,
 };

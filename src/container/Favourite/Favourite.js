@@ -1,20 +1,11 @@
 import { Fragment, useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { Swiper, SwiperSlide } from "swiper/react";
 import {
-  Button,
   HeadingHoldPU,
   Loader,
   FavoriteSwiperLong,
 } from "../../components/Elements";
 import { favoriteByUserApi } from "../../store/Actions/Actions";
-// import { useNavigate } from "react-router-dom";
-import {
-  Header,
-  UserInfo,
-  ExploreHeader,
-  ExploreUser,
-} from "../../components/Layout";
 import "swiper/css";
 import "./Favourite.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,19 +14,15 @@ import { getRndomeNumber } from "../../common/Function/utils";
 const Favourite = () => {
   // const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { actionReducer } = useSelector((state) => state);
-  const [isHeadingFood, setIsHeadingFood] = useState(false);
-
-  const [isHome, setIsHome] = useState(false);
-
+  const Loading = useSelector((state) => state.actionReducer.Loading);
+  const favoriteListings = useSelector(
+    (state) => state.actionReducer.favoriteListings
+  );
   //state for active longPress event
   const [activeCategory, setActiveCategory] = useState(null);
 
   // state for explore Favourite status
   const [favoriteInformation, setFavoriteInformation] = useState([]);
-
-  // state for Loader
-  // const [showLoader, setShowLoader] = useState(false);
 
   //this state is for Favourite
   const [favoriteData, setFavoriteData] = useState({
@@ -46,19 +33,6 @@ const Favourite = () => {
     },
   });
 
-  // long press func
-  const onLongPressFood = () => {
-    console.log("longpress is triggered");
-    setIsHeadingFood(true);
-    setTimeout(() => setIsHeadingFood(false), 3000);
-  };
-  console.log("isHeadingFood", isHeadingFood);
-
-  //long onClick func
-  const onClickFood = () => {
-    console.log("click is triggered");
-  };
-
   // this is how I set data in Favourite Api by using explore state
   useEffect(() => {
     let favoriteNewData = {
@@ -67,19 +41,17 @@ const Favourite = () => {
     dispatch(favoriteByUserApi(favoriteNewData));
   }, []);
 
-  console.log("actionReducer", actionReducer);
-
   // this is how I get data from Reducer
   useEffect(() => {
     if (
-      actionReducer.favoriteListings !== null &&
-      actionReducer.favoriteListings !== undefined &&
-      actionReducer.favoriteListings.length !== 0
+      favoriteListings !== null &&
+      favoriteListings !== undefined &&
+      favoriteListings.length !== 0
     ) {
-      setFavoriteInformation(actionReducer.favoriteListings);
+      setFavoriteInformation(favoriteListings);
     }
-  }, [actionReducer.favoriteListings]);
-  console.log("favoriteInformationfavoriteInformation", favoriteInformation);
+  }, [favoriteListings]);
+
   return (
     <Container>
       <Row>
@@ -130,7 +102,7 @@ const Favourite = () => {
               </Fragment>
             );
           })}
-          {actionReducer.Loading ? <Loader /> : null}
+          {Loading ? <Loader /> : null}
         </Col>
       </Row>
     </Container>

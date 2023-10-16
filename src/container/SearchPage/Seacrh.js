@@ -10,7 +10,20 @@ import { searchBlancApi, filterData } from "../../store/Actions/Actions";
 import "./Search.css";
 
 const SearchPage = () => {
-  const { actionReducer } = useSelector((state) => state);
+  const locationLatitude = useSelector(
+    (state) => state.actionReducer.locationLatitude
+  );
+  const locationLongitude = useSelector(
+    (state) => state.actionReducer.locationLongitude
+  );
+  const searchListingCategory = useSelector(
+    (state) => state.actionReducer.searchListingCategory
+  );
+  const searchListing = useSelector(
+    (state) => state.actionReducer.searchListing
+  );
+  const filterData = useSelector((state) => state.actionReducer.filterData);
+  const Loading = useSelector((state) => state.actionReducer.Loading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchData, setSearchData] = useState([]);
@@ -48,12 +61,12 @@ const SearchPage = () => {
       errorStatus: false,
     },
     UserLatitude: {
-      value: actionReducer.locationLatitude,
+      value: locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
     UserLongitude: {
-      value: actionReducer.locationLongitude,
+      value: locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -78,8 +91,8 @@ const SearchPage = () => {
       let searchUser = {
         UserID: searchState.UserID.value,
         SearchText: searchState.SearchText.value,
-        UserLatitude: actionReducer.locationLatitude,
-        UserLongitude: actionReducer.locationLongitude,
+        UserLatitude: locationLatitude,
+        UserLongitude: locationLongitude,
         SearchBy: searchState.SearchBy.value,
       };
       dispatch(searchBlancApi(navigate, searchUser));
@@ -87,8 +100,8 @@ const SearchPage = () => {
       let newSearch = {
         UserID: "",
         SearchText: "",
-        UserLatitude: actionReducer.locationLatitude,
-        UserLongitude: actionReducer.locationLongitude,
+        UserLatitude: locationLatitude,
+        UserLongitude: locationLongitude,
         SearchBy: 0,
       };
 
@@ -111,20 +124,15 @@ const SearchPage = () => {
   // for another Reducer Listing Category for Seacrh
   useEffect(() => {
     if (
-      actionReducer.searchListingCategory !== null &&
-      actionReducer.searchListingCategory !== undefined &&
-      actionReducer.searchListingCategory.length > 0
+      searchListingCategory !== null &&
+      searchListingCategory !== undefined &&
+      searchListingCategory.length > 0
     ) {
-      setSearchListingData(actionReducer.searchListingCategory);
+      setSearchListingData(searchListingCategory);
     } else {
       setSearchListingData([]);
     }
-  }, [actionReducer.searchListingCategory]);
-
-  console.log(
-    actionReducer.searchListingCategory,
-    "actionReducersearchListingCategory"
-  );
+  }, [searchListingCategory]);
 
   //for close category and sort popup
   useEffect(() => {
@@ -153,30 +161,27 @@ const SearchPage = () => {
   // For another Reducer searchListing Api shown when user hit search Icon
   useEffect(() => {
     if (
-      actionReducer.searchListing !== null &&
-      actionReducer.searchListing !== undefined &&
-      actionReducer.searchListing.length > 0
+      searchListing !== null &&
+      searchListing !== undefined &&
+      searchListing.length > 0
     ) {
-      setSearchData(actionReducer.searchListing);
+      setSearchData(searchListing);
     } else {
       setSearchData([]);
     }
-  }, [actionReducer.searchListing]);
+  }, [searchListing]);
 
   // this is used for category dropdown filter
   useEffect(() => {
-    if (
-      actionReducer.filterData !== null &&
-      actionReducer.filterData !== undefined
-    ) {
-      let value = actionReducer.filterData;
-      let copyData = [...actionReducer.searchListing];
+    if (filterData !== null && filterData !== undefined) {
+      let value = filterData;
+      let copyData = [...searchListing];
       let newData = copyData.filter(
         (data, index) => data.parentCategoryName === value.categoryName
       );
       setSearchData(newData);
     }
-  }, [actionReducer.filterData]);
+  }, [filterData]);
 
   console.log({ searchData }, "searchDatasearchDatasearchDatasearchData");
   return (
@@ -336,9 +341,7 @@ const SearchPage = () => {
       <div className="Search-header-marginTop" />
       <Container>
         {searchData.map((newData, index) => {
-          let firstLetter = newData.businessListingName
-          .charAt(0)
-          .toUpperCase();
+          let firstLetter = newData.businessListingName.charAt(0).toUpperCase();
           console.log(newData, "newDatagagagagaga");
           return (
             <>
@@ -351,15 +354,15 @@ const SearchPage = () => {
                   className="d-flex justify-content-start"
                 >
                   <div className="Search-slide-box">
-                  {newData.businessListingIcon !== "" ? (
-                          <img
-                            src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
-                            alt="Icon"
-                            className="Swipper-slide-box-image"
-                          />
-                        ) : (
-                          <span>{firstLetter}</span>
-                        )}
+                    {newData.businessListingIcon !== "" ? (
+                      <img
+                        src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
+                        alt="Icon"
+                        className="Swipper-slide-box-image"
+                      />
+                    ) : (
+                      <span>{firstLetter}</span>
+                    )}
                   </div>
                 </Col>
                 <Col
@@ -436,7 +439,7 @@ const SearchPage = () => {
           <Loader />
         </div>
       )} */}
-      {actionReducer.Loading ? <Loader /> : null}
+      {Loading ? <Loader /> : null}
     </Fragment>
   );
 };

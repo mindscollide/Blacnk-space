@@ -1,29 +1,28 @@
 import { Fragment, useState, useEffect } from "react";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
-import { Swiper, SwiperSlide } from "swiper/react";
 import {
   ExploreSwiperLong,
-  Button,
   HeadingHoldPU,
   Loader,
 } from "../../components/Elements";
 import { exploreCategory } from "../../store/Actions/Actions";
-// import { useNavigate } from "react-router-dom";
-import {
-  Header,
-  UserInfo,
-  ExploreHeader,
-  ExploreUser,
-} from "../../components/Layout";
 import "swiper/css";
 import "./ExploreCategory.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { getRndomeNumber } from "../../common/Function/utils";
 
 const ExploreCategory = () => {
   const dispatch = useDispatch();
-  const { actionReducer } = useSelector((state) => state);
+  const locationLatitude = useSelector(
+    (state) => state.actionReducer.locationLatitude
+  );
+  const locationLongitude = useSelector(
+    (state) => state.actionReducer.locationLongitude
+  );
+  const subCategoryDashboardListing = useSelector(
+    (state) => state.actionReducer.subCategoryDashboardListing
+  );
+  const Loading = useSelector((state) => state.actionReducer.Loading);
   const [isHeadingFood, setIsHeadingFood] = useState(false);
   let categoryID = localStorage.getItem("categoryID");
   const [loadingAuto, seLoadingAuto] = useState(true);
@@ -56,29 +55,16 @@ const ExploreCategory = () => {
       errorStatus: false,
     },
     UserLatitude: {
-      value: actionReducer.locationLatitude,
+      value: locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
     UserLongitude: {
-      value: actionReducer.locationLongitude,
+      value: locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
   });
-
-  // long press func
-  const onLongPressFood = () => {
-    console.log("longpress is triggered");
-    setIsHeadingFood(true);
-    setTimeout(() => setIsHeadingFood(false), 3000);
-  };
-  console.log("isHeadingFood", isHeadingFood);
-
-  //long onClick func
-  const onClickFood = () => {
-    console.log("click is triggered");
-  };
 
   useEffect(() => {
     let exploreNewData = {
@@ -86,8 +72,8 @@ const ExploreCategory = () => {
       pageNumber: 1,
       isAutomatic: false,
       ParentCategoryID: categoryID,
-      UserLatitude: actionReducer.locationLatitude,
-      UserLongitude: actionReducer.locationLongitude,
+      UserLatitude: locationLatitude,
+      UserLongitude: locationLongitude,
     };
 
     setExploreData((prevState) => ({
@@ -113,12 +99,12 @@ const ExploreCategory = () => {
         errorStatus: false,
       },
       UserLatitude: {
-        value: actionReducer.locationLatitude,
+        value: locationLatitude,
         errorMessage: "",
         errorStatus: false,
       },
       UserLongitude: {
-        value: actionReducer.locationLongitude,
+        value: locationLongitude,
         errorMessage: "",
         errorStatus: false,
       },
@@ -126,25 +112,17 @@ const ExploreCategory = () => {
     if (categoryID !== undefined) {
       dispatch(exploreCategory(exploreNewData, seLoadingAuto));
     }
-    // Make the API call using exploreData
   }, []);
 
-  // ...
-
-  console.log("actionReducer", actionReducer);
-
   useEffect(() => {
-    if (
-      actionReducer.locationLatitude !== null &&
-      actionReducer.locationLongitude !== null
-    ) {
+    if (locationLatitude !== null && locationLongitude !== null) {
       setExploreData({
         ...exploreData,
         UserLatitude: {
-          value: actionReducer.locationLatitude,
+          value: locationLatitude,
         },
         UserLongitude: {
-          value: actionReducer.locationLongitude,
+          value: locationLongitude,
         },
       });
       let exploreNewData = {
@@ -152,18 +130,16 @@ const ExploreCategory = () => {
         pageNumber: 1,
         isAutomatic: false,
         ParentCategoryID: categoryID,
-        UserLatitude: actionReducer.locationLatitude,
-        UserLongitude: actionReducer.locationLongitude,
+        UserLatitude: locationLatitude,
+        UserLongitude: locationLongitude,
       };
 
       dispatch(exploreCategory(exploreNewData, seLoadingAuto));
     }
-  }, [actionReducer.locationLatitude, actionReducer.locationLongitude]);
-  console.log(exploreData, "dashboardDatadashboardDatadashboardData");
+  }, [locationLatitude, locationLongitude]);
 
   useEffect(() => {
     if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-      console.log("helloooooo");
       let latitudeValueLocal = localStorage.getItem("latitudeValue");
       let longitudeValueLocal = localStorage.getItem("longitudeValue");
       let exploreNewData = {
@@ -183,13 +159,13 @@ const ExploreCategory = () => {
   // this is how I get data from Reducer
   useEffect(() => {
     if (
-      actionReducer.subCategoryDashboardListing !== null &&
-      actionReducer.subCategoryDashboardListing !== undefined &&
-      actionReducer.subCategoryDashboardListing.length !== 0
+      subCategoryDashboardListing !== null &&
+      subCategoryDashboardListing !== undefined &&
+      subCategoryDashboardListing.length !== 0
     ) {
-      setExploreInformation(actionReducer.subCategoryDashboardListing);
+      setExploreInformation(subCategoryDashboardListing);
     }
-  }, [actionReducer.subCategoryDashboardListing]);
+  }, [subCategoryDashboardListing]);
 
   return (
     <Container>
@@ -246,7 +222,7 @@ const ExploreCategory = () => {
 
           {loadingAuto ? (
             <Loader />
-          ) : actionReducer.Loading ? (
+          ) : Loading ? (
             <Row>
               <Col className="d-flex justify-content-center align-Item-center">
                 <Spinner className="spinner-instead-Loader" />
