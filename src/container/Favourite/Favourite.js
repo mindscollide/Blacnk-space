@@ -87,7 +87,6 @@ const Favourite = () => {
                 <Row>
                   <Col lg={12} md={12} sm={12}>
                     {favoriteUserListing.favoriteByUserListings !== null &&
-                      favoriteUserListing.favoriteByUserListings !== null &&
                       favoriteUserListing.favoriteByUserListings.length > 0 && (
                         <FavoriteSwiperLong
                           favoriteListingData={
