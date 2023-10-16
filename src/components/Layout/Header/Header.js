@@ -60,13 +60,13 @@ const Header = () => {
     myFunction();
   }, []);
   function myFunction() {
-    setLatitude("24.503");
-    dispatch(latitudeData("24.503"));
-    setLongitude("54.388");
-    dispatch(longitudeData("54.388"));
-    localStorage.setItem("latitudeValue", "24.503");
+    setLatitude("24.89");
+    dispatch(latitudeData("24.89"));
+    setLongitude("67.0");
+    dispatch(longitudeData("67.0"));
+    localStorage.setItem("latitudeValue", "24.89");
 
-    localStorage.setItem("longitudeValue", "54.388");
+    localStorage.setItem("longitudeValue", "67.0");
   }
 
   // function myFunction() {

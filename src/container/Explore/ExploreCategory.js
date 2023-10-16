@@ -66,56 +66,60 @@ const ExploreCategory = () => {
     },
   });
 
-  useEffect(() => {
-    let exploreNewData = {
-      UserID: "PLU_1",
-      pageNumber: 1,
-      isAutomatic: false,
-      ParentCategoryID: categoryID,
-      UserLatitude: locationLatitude,
-      UserLongitude: locationLongitude,
-    };
+  // useEffect(() => {
+  //   let exploreNewData = {
+  //     UserID: "PLU_1",
+  //     pageNumber: 1,
+  //     isAutomatic: false,
+  //     ParentCategoryID: categoryID,
+  //     UserLatitude: locationLatitude,
+  //     UserLongitude: locationLongitude,
+  //   };
 
-    setExploreData((prevState) => ({
-      ...prevState,
-      ParentCategoryID: {
-        value: categoryID,
-        errorMessage: "",
-        errorStatus: false,
-      },
-      UserID: {
-        value: exploreNewData.UserID,
-        errorMessage: "",
-        errorStatus: false,
-      },
-      pageNumber: {
-        value: exploreNewData.pageNumber,
-        errorMessage: "",
-        errorStatus: false,
-      },
-      isAutomatic: {
-        value: exploreNewData.isAutomatic,
-        errorMessage: "",
-        errorStatus: false,
-      },
-      UserLatitude: {
-        value: locationLatitude,
-        errorMessage: "",
-        errorStatus: false,
-      },
-      UserLongitude: {
-        value: locationLongitude,
-        errorMessage: "",
-        errorStatus: false,
-      },
-    }));
-    if (categoryID !== undefined) {
-      dispatch(exploreCategory(exploreNewData, seLoadingAuto));
-    }
-  }, []);
+  //   setExploreData((prevState) => ({
+  //     ...prevState,
+  //     ParentCategoryID: {
+  //       value: categoryID,
+  //       errorMessage: "",
+  //       errorStatus: false,
+  //     },
+  //     UserID: {
+  //       value: exploreNewData.UserID,
+  //       errorMessage: "",
+  //       errorStatus: false,
+  //     },
+  //     pageNumber: {
+  //       value: exploreNewData.pageNumber,
+  //       errorMessage: "",
+  //       errorStatus: false,
+  //     },
+  //     isAutomatic: {
+  //       value: exploreNewData.isAutomatic,
+  //       errorMessage: "",
+  //       errorStatus: false,
+  //     },
+  //     UserLatitude: {
+  //       value: locationLatitude,
+  //       errorMessage: "",
+  //       errorStatus: false,
+  //     },
+  //     UserLongitude: {
+  //       value: locationLongitude,
+  //       errorMessage: "",
+  //       errorStatus: false,
+  //     },
+  //   }));
+  //   if (categoryID !== undefined) {
+  //     dispatch(exploreCategory(exploreNewData, seLoadingAuto));
+  //   }
+  // }, []);
 
   useEffect(() => {
-    if (locationLatitude !== null && locationLongitude !== null) {
+    if (
+      locationLatitude !== null &&
+      locationLongitude !== null &&
+      categoryID !== undefined
+    ) {
       setExploreData({
         ...exploreData,
         UserLatitude: {
@@ -133,13 +137,10 @@ const ExploreCategory = () => {
         UserLatitude: locationLatitude,
         UserLongitude: locationLongitude,
       };
-
       dispatch(exploreCategory(exploreNewData, seLoadingAuto));
-    }
-  }, [locationLatitude, locationLongitude]);
-
-  useEffect(() => {
-    if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+    } else if (
+      performance.navigation.type === performance.navigation.TYPE_RELOAD
+    ) {
       let latitudeValueLocal = localStorage.getItem("latitudeValue");
       let longitudeValueLocal = localStorage.getItem("longitudeValue");
       let exploreNewData = {
@@ -150,11 +151,27 @@ const ExploreCategory = () => {
         UserLatitude: latitudeValueLocal,
         UserLongitude: longitudeValueLocal,
       };
-
       dispatch(exploreCategory(exploreNewData, seLoadingAuto));
-    } else {
     }
-  }, []);
+  }, [locationLatitude, locationLongitude]);
+
+  // useEffect(() => {
+  //   if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+  //     let latitudeValueLocal = localStorage.getItem("latitudeValue");
+  //     let longitudeValueLocal = localStorage.getItem("longitudeValue");
+  //     let exploreNewData = {
+  //       UserID: "PLU_1",
+  //       pageNumber: 1,
+  //       isAutomatic: false,
+  //       ParentCategoryID: categoryID,
+  //       UserLatitude: latitudeValueLocal,
+  //       UserLongitude: longitudeValueLocal,
+  //     };
+
+  //     dispatch(exploreCategory(exploreNewData, seLoadingAuto));
+  //   } else {
+  //   }
+  // }, []);
 
   // this is how I get data from Reducer
   useEffect(() => {
