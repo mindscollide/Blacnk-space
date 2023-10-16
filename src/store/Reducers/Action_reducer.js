@@ -9,7 +9,7 @@ const initialState = {
   getAllCategoriesUser: [],
   getAllSubCategories: [],
   updateFavoriteList: "",
-  blockUnBlockCategory: "",
+  blockUnBlockCategory: null,
   getParentCategory: [],
   likeUnlikeBusiness: null,
   searchListing: [],
@@ -80,11 +80,8 @@ const actionReducer = (state = initialState, action) => {
       };
     }
     case actions.UPDATE_FAVORITE_BY_USER_SUCCESS: {
-      console.log(
-        action.response,
-        "checkedcheckedchecked UPDATE_FAVORITE_BY_USER_SUCCESS"
-      );
-      return {
+  console.log("favoriteListing UPDATE_FAVORITE_BY_USER_SUCCESS", action.response);
+  return {
         ...state,
         Loading: false,
         favoriteListing: action.response,
@@ -93,10 +90,6 @@ const actionReducer = (state = initialState, action) => {
     }
 
     case actions.FAVORITE_BY_USER_SUCCESS: {
-      console.log(
-        action.response,
-        "checkedcheckedchecked FAVORITE_BY_USER_SUCCESS"
-      );
       return {
         ...state,
         Loading: false,
@@ -106,10 +99,8 @@ const actionReducer = (state = initialState, action) => {
     }
 
     case actions.CLEARE_FAVORITE_BY_USER_SUCCESS: {
-      console.log(
-        action.response,
-        "checkedcheckedchecked CLEARE_FAVORITE_BY_USER_SUCCESS"
-      );
+      console.log("favoriteListing CLEARE_FAVORITE_BY_USER_SUCCESS");
+
       return {
         ...state,
         favoriteListing: null,
@@ -209,11 +200,19 @@ const actionReducer = (state = initialState, action) => {
     }
 
     case actions.BLOCK_UN_BLOCK_SUCCESS: {
+      console.log("block check",action.response)
       return {
         ...state,
         Loading: false,
         blockUnBlockCategory: action.response,
         ResponseMessage: action.message,
+      };
+    }
+    case actions.CLEARE_BLOCK_UN_BLOCK_SUCCESS: {
+      console.log("block check cleare")
+      return {
+        ...state,
+        blockUnBlockCategory: null,
       };
     }
 

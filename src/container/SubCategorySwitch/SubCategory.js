@@ -3,12 +3,6 @@ import { Col, Container, Row } from "react-bootstrap";
 // import { useNavigate } from "react-router-dom";
 import { Switch } from "antd";
 import {
-  Header,
-  UserInfo,
-  SubCategoryHeader,
-  SubCategoryUser,
-} from "../../components/Layout";
-import {
   getAllSubCategoriesApi,
   blockUnBlockCategoryApi,
   subCategoryParentApi,
@@ -23,8 +17,17 @@ import { getRndomeNumber } from "../../common/Function/utils";
 const SubCategories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { actionReducer } = useSelector((state) => state);
-  console.log(actionReducer, "actionReduceractionReducer");
+
+  const locationLatitude = useSelector(
+    (state) => state.actionReducer.locationLatitude
+  );
+  const locationLongitude = useSelector(
+    (state) => state.actionReducer.locationLongitude
+  );
+  const getParentCategory = useSelector(
+    (state) => state.actionReducer.getParentCategory
+  );
+  const Loading = useSelector((state) => state.actionReducer.Loading);
 
   //   const navigate = useNavigate();
 
@@ -32,10 +35,6 @@ const SubCategories = () => {
 
   // state for main sub category Information
   const [subCategoryInformation, setSubCategoryInformation] = useState([]);
-  console.log(
-    subCategoryInformation,
-    "subCategoryInformationsubCategoryInformation"
-  );
 
   //state for subCategory BlockUnBlockCategory
   const [blockUnblock, setBlockUnblock] = useState({
@@ -46,13 +45,13 @@ const SubCategories = () => {
     },
 
     Latitude: {
-      value: actionReducer.locationLatitude,
+      value: locationLatitude,
       errorMessage: "",
       errorStatus: false,
     },
 
     Longitude: {
-      value: actionReducer.locationLongitude,
+      value: locationLongitude,
       errorMessage: "",
       errorStatus: false,
     },
@@ -119,8 +118,8 @@ const SubCategories = () => {
         });
         let subCategoryUnblock = {
           UserID: blockUnblock.UserID.value,
-          Latitude: actionReducer.locationLatitude,
-          Longitude: actionReducer.locationLongitude,
+          Latitude: locationLatitude,
+          Longitude: locationLongitude,
           CategoryWithStatuses: newIds,
           OtherAvailableListings: [],
         };
@@ -142,8 +141,8 @@ const SubCategories = () => {
         });
         let subCategoryUnblock = {
           UserID: blockUnblock.UserID.value,
-          Latitude: actionReducer.locationLatitude,
-          Longitude: actionReducer.locationLongitude,
+          Latitude: locationLatitude,
+          Longitude: locationLongitude,
           CategoryWithStatuses: newIds,
           OtherAvailableListings: [],
         };
@@ -201,8 +200,8 @@ const SubCategories = () => {
     // this will send data to Api where we give the OtherAvailable array which is not selected
     let subCategoryUnblock = {
       UserID: blockUnblock.UserID.value,
-      Latitude: actionReducer.locationLatitude,
-      Longitude: actionReducer.locationLongitude,
+      Latitude: locationLatitude,
+      Longitude: locationLongitude,
       CategoryWithStatuses: newIds, // in this newIds we have selected categoryId and categoryName
       OtherAvailableListings: newArrOtherAvailableList, // this will send the other array in this list
     };
@@ -219,17 +218,16 @@ const SubCategories = () => {
       setEntertainmentMessage(false);
     }, 1000);
   };
-  console.log(actionReducer, "actionReduceractionReducer");
   // useEffect for getting data from reducers
   useEffect(() => {
     if (
-      actionReducer.getParentCategory !== null &&
-      actionReducer.getParentCategory !== undefined &&
-      actionReducer.getParentCategory.length > 0
+      getParentCategory !== null &&
+      getParentCategory !== undefined &&
+      getParentCategory.length > 0
     ) {
-      setSubCategoryInformation(actionReducer.getParentCategory);
+      setSubCategoryInformation(getParentCategory);
     }
-  }, [actionReducer.getParentCategory]);
+  }, [getParentCategory]);
 
   return (
     <Container>
@@ -337,7 +335,7 @@ const SubCategories = () => {
               : null}
           </Col>
         </Row>
-        {actionReducer.Loading ? <Loader /> : null}
+        {Loading ? <Loader /> : null}
       </Fragment>
     </Container>
   );

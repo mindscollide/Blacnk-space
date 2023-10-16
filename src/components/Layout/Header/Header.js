@@ -1,9 +1,9 @@
 import { Navbar, Nav } from "react-bootstrap";
 import "./Header.css";
 import BlancLogo from "./../../../assets/Images/logo-header.png";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { longitudeData } from "../../../store/Actions/Actions";
 import { latitudeData } from "../../../store/Actions/Actions";
 import { getRndomeNumber } from "../../../common/Function/utils";
@@ -13,7 +13,6 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { actionReducer } = useSelector((state) => state);
   // For Explore Page
   const [showExploreIcon, setShowExploreIcon] = useState(false);
   const [latitude, setLatitude] = useState("");
@@ -57,58 +56,55 @@ const Header = () => {
   };
 
   // Function to handle changes in the "longitude" input field
-  // useEffect(() => {
-  //   myFunction();
-  // }, []);
-  // function myFunction() {
-  //   setLatitude("24.503");
-  //   dispatch(latitudeData("24.503"));
-  //   setLongitude("54.388");
-  //   dispatch(longitudeData("54.388"));
-  //   localStorage.setItem("latitudeValue", "24.503");
-
-  //   localStorage.setItem("longitudeValue", "54.388");
-  // }
-
+  useEffect(() => {
+    myFunction();
+  }, []);
   function myFunction() {
-    const latitudeInput = document.getElementById("latitude");
-    const longitudeInput = document.getElementById("longitude");
-    // Check if the element exists
-    if (latitudeInput && latitude !== latitudeInput.value) {
-      // Access the value of the input element
-      const latitudeValue = latitudeInput.value;
-      setLatitude(latitudeValue);
-      localStorage.setItem("latitudeValue", latitudeValue);
-      dispatch(latitudeData(latitudeValue));
-    } else {
-      // console.log("Element with ID 'latitude' not found.");
-    }
-    if (longitudeInput && longitudeInput.value !== longitude) {
-      // Access the value of the input element
-      localStorage.setItem("longitudeValue", longitudeValue);
+    setLatitude("24.503");
+    dispatch(latitudeData("24.503"));
+    setLongitude("54.388");
+    dispatch(longitudeData("54.388"));
+    localStorage.setItem("latitudeValue", "24.503");
 
-      const longitudeValue = longitudeInput.value;
-      setLongitude(longitudeValue);
-      dispatch(longitudeData(longitudeValue));
-    } else {
-      // console.log("Element with ID 'longitude' not found.");
-    }
+    localStorage.setItem("longitudeValue", "54.388");
   }
-  const intervalId = setInterval(myFunction, 30000);
+
+  // function myFunction() {
+  //   const latitudeInput = document.getElementById("latitude");
+  //   const longitudeInput = document.getElementById("longitude");
+  //   // Check if the element exists
+  //   if (latitudeInput && latitude !== latitudeInput.value) {
+  //     // Access the value of the input element
+  //     const latitudeValue = latitudeInput.value;
+  //     setLatitude(latitudeValue);
+  //     localStorage.setItem("latitudeValue", latitudeValue);
+  //     dispatch(latitudeData(latitudeValue));
+  //   } else {
+  //     // console.log("Element with ID 'latitude' not found.");
+  //   }
+  //   if (longitudeInput && longitudeInput.value !== longitude) {
+  //     // Access the value of the input element
+  //     localStorage.setItem("longitudeValue", longitudeValue);
+
+  //     const longitudeValue = longitudeInput.value;
+  //     setLongitude(longitudeValue);
+  //     dispatch(longitudeData(longitudeValue));
+  //   } else {
+  //     // console.log("Element with ID 'longitude' not found.");
+  //   }
+  // }
+  // const intervalId = setInterval(myFunction, 30000);
   return (
     <>
       <input
         key={getRndomeNumber()}
         id="latitude"
         style={{ display: "none" }}
-        // value={latitude}
       />
       <input
         key={getRndomeNumber()}
         id="longitude"
         style={{ display: "none" }}
-        //
-        // value={longitude}
       />
       <Navbar>
         <Navbar.Brand to="Home">
