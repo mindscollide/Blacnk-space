@@ -57,12 +57,19 @@
     margin: 0% !important;
   }
 
+  .Days-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    letter-spacing: 0.2rem !important;
+  }
+
   .Operational-hour-heading {
     padding-right: 30px !important;
     color: #fff500 !important;
     text-transform: uppercase !important;
     font-family: "Bebas Neue", sans-serif;
-    font-size: calc(1.375rem + 1.5vw) !important;
+    font-size: 1rem !important;
   }
 
   .Weekdays-subtitles {
@@ -70,18 +77,18 @@
     flex-direction: column !important;
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400 !important;
-    font-size: calc(1.1rem + 0.6vw) !important;
+    font-size: 0.5rem !important;
     color: #ffffff !important;
   }
 
   .Weekdays-Time-Hours-subtitles {
-    padding: 2px 30px;
+    padding: 2px 20px;
     display: flex;
     gap: 10px;
     flex-direction: column !important;
-    font-family: "Bebas Neue", sans-serif !important;
+    font-family: "Inter", sans-serif !important;
     font-weight: 400 !important;
-    font-size: calc(1.1rem + 0.6vw) !important;
+    font-size: 0.6rem !important;
     color: #ffffff !important;
   }
 
@@ -89,5 +96,6 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    font-size: 0.8rem;
   }
 }

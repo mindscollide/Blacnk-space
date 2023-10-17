@@ -62,37 +62,35 @@ const CategoryDetails = () => {
         <>
           {Object.keys(businessDetails.listOfBase64Images).length > 0 ? (
             <div className="swiper-category-slider">
-              <Container>
-                <Row>
-                  <Col lg={12} md={12} sm={12}>
-                    <Swiper
-                      spaceBetween={30}
-                      centeredSlides={true}
-                      autoplay={{
-                        delay: 3000,
-                        disableOnInteraction: false,
-                      }}
-                      pagination={{
-                        clickable: true,
-                      }}
-                      modules={[Autoplay, Pagination]}
-                      className="carousel-swiper"
-                    >
-                      {Object.values(businessDetails.listOfBase64Images).map(
-                        (base64Image, index) => (
-                          <SwiperSlide key={getRndomeNumber()}>
-                            <img
-                              src={`data:image/jpeg;base64,${base64Image}`}
-                              alt={`Slide ${index}`}
-                              className="slide-Image"
-                            />
-                          </SwiperSlide>
-                        )
-                      )}
-                    </Swiper>
-                  </Col>
-                </Row>
-              </Container>
+              <Row>
+                <Col lg={12} md={12} sm={12}>
+                  <Swiper
+                    spaceBetween={30}
+                    centeredSlides={true}
+                    autoplay={{
+                      delay: 3000,
+                      disableOnInteraction: false,
+                    }}
+                    pagination={{
+                      clickable: true,
+                    }}
+                    modules={[Autoplay, Pagination]}
+                    className="carousel-swiper"
+                  >
+                    {Object.values(businessDetails.listOfBase64Images).map(
+                      (base64Image, index) => (
+                        <SwiperSlide key={getRndomeNumber()}>
+                          <img
+                            src={`data:image/jpeg;base64,${base64Image}`}
+                            alt={`Slide ${index}`}
+                            className="slide-Image"
+                          />
+                        </SwiperSlide>
+                      )
+                    )}
+                  </Swiper>
+                </Col>
+              </Row>
             </div>
           ) : (
             <></>
@@ -108,7 +106,7 @@ const CategoryDetails = () => {
             >
               <Col lg={6} md={6} sm={6} xs={6} className="mt-2">
                 <span className="title-emirates-heading">
-                  {businessDetails.name}
+                  {businessDetails.categoryName}
                 </span>
                 <Row className="mb-3">
                   <Col lg={6} md={6} sm={12} xs={12}>
@@ -120,7 +118,10 @@ const CategoryDetails = () => {
                 </Row>
                 <Row>
                   <Col lg={6} md={6} sm={6} xs={6}>
-                    <Button text="TOUR" className="Tour-button" />
+                    <Button
+                      text={businessDetails.name}
+                      className="Tour-button"
+                    />
                   </Col>
                 </Row>
               </Col>
@@ -154,18 +155,23 @@ const CategoryDetails = () => {
             <Row>
               <Col lg={12} md={12} sm={12} className="Grourp-btn-col">
                 <Button
+                  icon={<i className="icon-home call-etc-icons-sizes"></i>}
+                  onClick={clickHomeHandler}
+                  className="buttons-call-etc"
+                />
+                <Button
                   icon={<i className="icon-call call-etc-icons-sizes"></i>}
                   className="buttons-call-etc"
-                  onClick={() =>
-                    window.open(businessDetails.contactNumber, "_blank")
-                  }
+                  // onClick={() =>
+                  //   window.open(businessDetails.contactNumber, "_blank")
+                  // }
                 ></Button>
                 <Button
                   icon={<i className="icon-location  call-etc-icons-sizes"></i>}
                   className="buttons-call-etc"
-                  onClick={() =>
-                    window.open(businessDetails.location, "_blank")
-                  }
+                  // onClick={() =>
+                  //   window.open(businessDetails.location, "_blank")
+                  // }
                 >
                   {/* {businessDetails.location} */}
                 </Button>
@@ -174,11 +180,6 @@ const CategoryDetails = () => {
                   onClick={() => window.open(businessDetails.website, "_blank")}
                   className="buttons-call-etc"
                 />{" "}
-                <Button
-                  icon={<i className="icon-home call-etc-icons-sizes"></i>}
-                  onClick={clickHomeHandler}
-                  className="buttons-call-etc"
-                />
               </Col>
             </Row>
 
@@ -191,7 +192,19 @@ const CategoryDetails = () => {
                 sm={12}
                 className="d-flex justify-content-start"
               >
-                <span className="what-we-offer-heading">WHAT WE OFFER</span>
+                {businessDetails.offering !== null ? (
+                  <>
+                    <span className="what-we-offer-heading">WHAT WE OFFER</span>
+                  </>
+                ) : (
+                  <>
+                    <Row>
+                      <Col>
+                        <div style={{ diplay: "none" }}></div>
+                      </Col>
+                    </Row>
+                  </>
+                )}
               </Col>
             </Row>
 
@@ -203,7 +216,9 @@ const CategoryDetails = () => {
                 className="d-flex justify-content-start"
               >
                 <div className="what-we-offer-bullets">
-                  {businessDetails.offering}
+                  <span className="what-we-offer-subtitles">
+                    {businessDetails.offering}
+                  </span>
                 </div>
               </Col>
             </Row>
@@ -217,9 +232,17 @@ const CategoryDetails = () => {
                 sm={12}
                 className="d-flex justify-content-start"
               >
-                <span className="what-we-offer-heading">
-                  Here's what are customers have to say
-                </span>
+                {businessDetails.reviews !== null ? (
+                  <>
+                    <span className="what-we-offer-heading">
+                      Here's what are customers have to say
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ display: "none" }}></div>
+                  </>
+                )}
               </Col>
             </Row>
 

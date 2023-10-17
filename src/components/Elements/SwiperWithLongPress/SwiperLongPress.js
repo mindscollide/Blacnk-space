@@ -47,6 +47,13 @@ const SwiperLongpress = ({
   // Create a ref for the swiper-longpress-box element
   const swiperLongPressBoxRef = useRef(null);
 
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
+
   // state for update Favorite
   const [updateFavorite, setUpdateFavorite] = useState({
     AddRemoveFavoriteBusinessEnum: {
@@ -277,12 +284,12 @@ const SwiperLongpress = ({
                   spaceBetween: 0,
                 },
                 412: {
-                  slidesPerView: 5,
-                  spaceBetween: 0,
+                  slidesPerView: 4,
+                  spaceBetween: 7,
                 },
                 425: {
                   slidesPerView: 4,
-                  spaceBetween: 0,
+                  spaceBetween: 7,
                 },
                 667: {
                   slidesPerView: 5,
@@ -346,7 +353,9 @@ const SwiperLongpress = ({
                               className="Swipper-slide-box-image"
                             />
                           ) : (
-                            <span>{firstLetter}</span>
+                            <span className="tile-empty-letter">
+                              {firstLetter}
+                            </span>
                           )
                         }
                       ></Button>
@@ -368,7 +377,7 @@ const SwiperLongpress = ({
                                     }
                                   >
                                     <HandThumbsUpFill className="icon-class" />
-                                    <span className="main-options">Like</span>
+                                    <span className="main-options">UnLike</span>
                                   </span>
                                 </>
                               ) : (
@@ -438,7 +447,7 @@ const SwiperLongpress = ({
                                   >
                                     <StarFill className="icon-class" />
                                     <span className="main-options">
-                                      Favorite
+                                      UnFavorite
                                     </span>
                                   </span>
                                 </>
@@ -463,7 +472,9 @@ const SwiperLongpress = ({
                       </>
                     ) : null}
 
-                    <p className="para-color">{newData.businessListingName}</p>
+                    <p className="para-color">
+                      {truncateText(newData.businessListingName, 15)}
+                    </p>
                   </SwiperSlide>
                 );
               })}

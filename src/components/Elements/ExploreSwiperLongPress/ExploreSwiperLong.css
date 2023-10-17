@@ -39,11 +39,16 @@
   background-color: #d00510;
   border: 2.5px solid #ffffff;
   border-radius: 8px;
-  z-index: 3 !important;
+  z-index: 10 !important;
   padding: 0;
   margin: 0;
   display: flex;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+}
+.explore-tile-empty-letter {
+  position: absolute !important;
+  align-items: center !important;
+  bottom: 5px !important;
 }
 
 .options-main-div {
@@ -106,7 +111,7 @@
   vertical-align: middle;
 }
 
-.para-color {
+.explore-para-color {
   width: 77px;
   color: #ffffff;
   display: flex;
@@ -131,5 +136,11 @@
     margin-bottom: 10px;
     border: 1px solid #d00510;
     cursor: pointer;
+  }
+
+  .explore-tile-empty-letter {
+    position: absolute !important;
+    align-items: center !important;
+    bottom: 2.5px !important;
   }
 }

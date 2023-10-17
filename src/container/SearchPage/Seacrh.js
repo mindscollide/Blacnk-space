@@ -1,12 +1,22 @@
 import { Fragment, useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { Loader, StarRating, Button } from "./../../components/Elements";
+import {
+  Loader,
+  StarRating,
+  Button,
+  LongPress,
+} from "./../../components/Elements";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Highlighter from "react-highlight-words";
 import { Input } from "antd";
+
 // import { Header, UserInfo, SearchHeader } from "../../components/Layout";
-import { searchBlancApi, filterData } from "../../store/Actions/Actions";
+import {
+  searchBlancApi,
+  filterData,
+  businessDetailsMainApi,
+} from "../../store/Actions/Actions";
 import "./Search.css";
 
 const SearchPage = () => {
@@ -156,6 +166,28 @@ const SearchPage = () => {
     console.log(data, "newDataa");
     dispatch(filterData(data));
     setDropdownCategory(false);
+  };
+
+  const detailBusinessSearch = async (businessData) => {
+    if (businessData && businessData.businessListingId) {
+      let newBusinessIdData = {
+        BusinessListingID: businessData.businessListingId,
+      };
+      await localStorage.setItem(
+        "newBusinessIdData",
+        JSON.stringify(newBusinessIdData)
+      );
+      console.log(newBusinessIdData, "newBusinessIdDatanewBusinessIdData");
+      dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
+    } else {
+      // console.error("businessData or businessListingId is undefined.");
+    }
+  };
+
+  const handleClickIcon = (e, value) => {
+    // Handle short press here
+    e.preventDefault();
+    detailBusinessSearch(value);
   };
 
   // For another Reducer searchListing Api shown when user hit search Icon
@@ -353,17 +385,22 @@ const SearchPage = () => {
                   xs={2}
                   className="d-flex justify-content-start"
                 >
-                  <div className="Search-slide-box">
-                    {newData.businessListingIcon !== "" ? (
-                      <img
-                        src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
-                        alt="Icon"
-                        className="Swipper-slide-box-image"
-                      />
-                    ) : (
-                      <span>{firstLetter}</span>
-                    )}
-                  </div>
+                  <LongPress
+                    onPress={(e) => handleClickIcon(e, newData)}
+                    duration={500}
+                  >
+                    <div className="Search-slide-box">
+                      {newData.businessListingIcon !== "" ? (
+                        <img
+                          src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
+                          alt="Icon"
+                          className="Swipper-slide-box-image"
+                        />
+                      ) : (
+                        <span>{firstLetter}</span>
+                      )}
+                    </div>
+                  </LongPress>
                 </Col>
                 <Col
                   lg={9}
