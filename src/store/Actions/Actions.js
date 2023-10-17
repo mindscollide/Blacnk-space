@@ -235,7 +235,7 @@ const exploreCategory = (exploreNewData, seLoadingAuto) => {
         console.log("explore Category Api", response);
         if (response.data.responseCode === 417) {
           await dispatch(refreshTokenApi());
-          dispatch(exploreCategory(exploreNewData));
+          dispatch(exploreCategory(exploreNewData,seLoadingAuto));
         } else if (response.data.responseCode === 200) {
           if (response.data.responseResult.isExecuted === true) {
             if (
