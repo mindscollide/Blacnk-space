@@ -1,76 +1,50 @@
+import React, { useState, useEffect } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "./Header.css";
 import BlancLogo from "./../../../assets/Images/logo-header.png";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { longitudeData } from "../../../store/Actions/Actions";
-import { latitudeData } from "../../../store/Actions/Actions";
+import { longitudeData, latitudeData } from "../../../store/Actions/Actions";
 import { getRndomeNumber } from "../../../common/Function/utils";
-// import { Hidden } from "@material-ui/core";
 
-const Header = () => {
+const Header = React.memo(() => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  // For Explore Page
+
+  // State for displaying icons based on route
   const [showExploreIcon, setShowExploreIcon] = useState(false);
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  // For Favorite Page
   const [isFavorite, setIsFavorite] = useState(false);
-
-  // For MAinCategory Switch
   const [isSwitchCategory, setIsSwitchCategory] = useState(false);
-
-  // For SubCategory Switch
   const [isSubSwitchCategory, setIsSubSwitchCategory] = useState(false);
 
-  // To locate on Explore Category Page
+  // State for latitude and longitude
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+
   useEffect(() => {
-    // Check if the current location is the ExplorePage
+    // Check the current location to determine which icons to show
     setShowExploreIcon(location.pathname === "/BlankSpace/ExploreCategory");
-  }, [location.pathname]);
-
-  // To locate on Favorite Page
-  useEffect(() => {
     setIsFavorite(location.pathname === "/BlankSpace/Favourite");
-  }, [location.pathname]);
-
-  // To loacte on main category switch
-  useEffect(() => {
     setIsSwitchCategory(location.pathname === "/BlankSpace/Categories");
   }, [location.pathname]);
-  // To loacte on Sub category switch
 
-  const navigateCategories = () => {
-    navigate("/BlankSpace/Categories");
+  // Function to update latitude and longitude
+  const myFunction = () => {
+    const latitudeValue = getRandomNumberBetweenRangesLatitude();
+    const longitudeValue = getRandomNumberBetweenRangesLongitude();
+
+    localStorage.setItem("latitudeValue", latitudeValue);
+    localStorage.setItem("longitudeValue", longitudeValue);
+
+    setLatitude(latitudeValue);
+    setLongitude(longitudeValue);
+
+    dispatch(latitudeData(latitudeValue));
+    dispatch(longitudeData(longitudeValue));
   };
 
-  const onClickFavourite = () => {
-    navigate("/BlankSpace/Favourite");
-  };
-
-  const onCickSearchIcon = () => {
-    navigate("/BlankSpace/SearchPage");
-  };
-
-  // Function to handle changes in the "longitude" input field
-  useEffect(() => {
-    myFunction();
-  }, []);
-
-  function myFunction() {
-    setLatitude("24.502");
-    dispatch(latitudeData("24.502"));
-    setLongitude("54.388");
-    dispatch(longitudeData("54.388"));
-    localStorage.setItem("latitudeValue", "24.502");
-
-    localStorage.setItem("longitudeValue", "54.388");
-  }
-
-  // function myFunction() {
+  // const myFunction = () => {
   //   const latitudeInput = document.getElementById("latitude");
   //   const longitudeInput = document.getElementById("longitude");
   //   // Check if the element exists
@@ -85,16 +59,37 @@ const Header = () => {
   //   }
   //   if (longitudeInput && longitudeInput.value !== longitude) {
   //     // Access the value of the input element
-  //     localStorage.setItem("longitudeValue", longitudeValue);
-
   //     const longitudeValue = longitudeInput.value;
+  //     localStorage.setItem("longitudeValue", longitudeValue);
   //     setLongitude(longitudeValue);
   //     dispatch(longitudeData(longitudeValue));
   //   } else {
   //     // console.log("Element with ID 'longitude' not found.");
   //   }
-  // }
-  // const intervalId = setInterval(myFunction, 30000);
+  // };
+
+  useEffect(() => {
+    // Update location data initially and then every 10 seconds
+    myFunction();
+    const intervalId = setInterval(myFunction, 10000);
+
+    return () => {
+      clearInterval(intervalId); // Cleanup the interval
+    };
+  }, []);
+
+  const navigateCategories = () => {
+    navigate("/BlankSpace/Categories");
+  };
+
+  const onClickFavourite = () => {
+    navigate("/BlankSpace/Favourite");
+  };
+
+  const onCickSearchIcon = () => {
+    navigate("/BlankSpace/SearchPage");
+  };
+
   return (
     <>
       <input
@@ -109,47 +104,17 @@ const Header = () => {
       />
       <Navbar>
         <Navbar.Brand to="Home">
-          {showExploreIcon && (
-            <>
-              <i
-                className="icon-home home-icon-color"
-                onClick={() => navigate("/BlankSpace/")}
-              ></i>
-            </>
+          {(showExploreIcon ||
+            isFavorite ||
+            isSwitchCategory ||
+            isSubSwitchCategory) && (
+            <i
+              className="icon-home home-icon-color"
+              onClick={() => navigate("/BlankSpace/")}
+            ></i>
           )}
-
-          {isFavorite && (
-            <>
-              <i
-                key={getRndomeNumber()}
-                className="icon-home home-icon-color"
-                onClick={() => navigate("/BlankSpace/")}
-              ></i>
-            </>
-          )}
-
-          {isSwitchCategory && (
-            <>
-              <i
-                key={getRndomeNumber()}
-                className="icon-home home-icon-color"
-                onClick={() => navigate("/BlankSpace/")}
-              ></i>
-            </>
-          )}
-
-          {isSubSwitchCategory && (
-            <>
-              <i
-                key={getRndomeNumber()}
-                className="icon-home home-icon-color"
-                onClick={() => navigate("/BlankSpace/")}
-              ></i>
-            </>
-          )}
-
           <img
-            key={getRndomeNumber()}
+            key="header-logo"
             src={BlancLogo}
             className="Blancspace-Logo"
             alt="Blancspace-Logo"
@@ -185,6 +150,29 @@ const Header = () => {
       </Navbar>
     </>
   );
-};
+});
 
 export default Header;
+
+// Helper function to generate random latitude and longitude values
+function getRandomNumberBetweenRangesLatitude() {
+  const rangeNumber = Math.random();
+  if (rangeNumber < 0.3333) {
+    return "24.502";
+  } else if (rangeNumber < 0.6666) {
+    return "24.501";
+  } else {
+    return "24.503";
+  }
+}
+
+function getRandomNumberBetweenRangesLongitude() {
+  const rangeNumber = Math.random();
+  if (rangeNumber < 0.3333) {
+    return "54.388";
+  } else if (rangeNumber < 0.6666) {
+    return "54.389";
+  } else {
+    return "54.387";
+  }
+}

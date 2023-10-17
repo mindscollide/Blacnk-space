@@ -280,7 +280,7 @@ const SubCategories = () => {
             subCategoryInformation.length > 0
               ? subCategoryInformation.map((subCategoryListing, index) => {
                   return (
-                    <>
+                    <Fragment key={subCategoryListing.categoryID}>
                       <Row className="Sub-Btm-Line-category mt-3">
                         <Col
                           lg={6}
@@ -329,7 +329,7 @@ const SubCategories = () => {
                           )}
                         </Col>
                       </Row>
-                    </>
+                    </Fragment>
                   );
                 })
               : null}

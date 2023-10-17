@@ -41,55 +41,12 @@ const ExploreCategory = () => {
   // state for explore Category status
   const [exploreInformation, setExploreInformation] = useState([]);
 
-  //this state is for Explore Category
-  const [exploreData, setExploreData] = useState({
-    UserID: {
-      value: "PLU_1",
-      errorMessage: "",
-      errorStatus: false,
-    },
-    pageNumber: {
-      value: 0,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    isAutomatic: {
-      value: false,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    ParentCategoryID: {
-      value: categoryID ? categoryID : "",
-      errorMessage: "",
-      errorStatus: false,
-    },
-    UserLatitude: {
-      value: locationLatitude,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    UserLongitude: {
-      value: locationLongitude,
-      errorMessage: "",
-      errorStatus: false,
-    },
-  });
-
   useEffect(() => {
     if (
       locationLatitude !== null &&
       locationLongitude !== null &&
       categoryID !== undefined
     ) {
-      setExploreData({
-        ...exploreData,
-        UserLatitude: {
-          value: locationLatitude,
-        },
-        UserLongitude: {
-          value: locationLongitude,
-        },
-      });
       let exploreNewData = {
         UserID: "PLU_1",
         pageNumber: 1,
@@ -98,7 +55,7 @@ const ExploreCategory = () => {
         UserLatitude: locationLatitude,
         UserLongitude: locationLongitude,
       };
-      dispatch(exploreCategory(exploreNewData, seLoadingAuto));
+      dispatch(exploreCategory(exploreNewData,seLoadingAuto));
     } else if (
       performance.navigation.type === performance.navigation.TYPE_RELOAD
     ) {
@@ -112,7 +69,7 @@ const ExploreCategory = () => {
         UserLatitude: latitudeValueLocal,
         UserLongitude: longitudeValueLocal,
       };
-      dispatch(exploreCategory(exploreNewData, seLoadingAuto));
+      dispatch(exploreCategory(exploreNewData));
     }
   }, [locationLatitude, locationLongitude]);
 
@@ -164,7 +121,7 @@ const ExploreCategory = () => {
           exploreInformation.length > 0
             ? exploreInformation.map((exploreListing, index) => {
                 return (
-                  <Fragment key={getRndomeNumber()}>
+                  <Fragment key={exploreListing.subCategoryID}>
                     {/* Food Section */}
                     <Row className="mt-4">
                       <Col
