@@ -23,10 +23,20 @@
   overflow: hidden;
 }
 
+.star-rating {
+  font-size: 16px !important;
+}
+
 @-moz-document url-prefix() {
   /* Firefox Hack :( */
   .star-icon {
     font-size: 50px;
     line-height: 34px;
+  }
+}
+
+@media (max-width: 650px) {
+  .star-rating {
+    font-size: 10px !important;
   }
 }

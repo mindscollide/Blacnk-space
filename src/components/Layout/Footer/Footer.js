@@ -12,7 +12,56 @@ const Footer = ({ operationHours }) => {
     <Fragment>
       {/* section for Footer */}
       <div className="footer-background-color">
-        <Row className="mt-5">
+        <Row>
+          <Col lg={4} md={4} sm={4} xs={4} className="footer-main-col">
+            <span className="Operational-hour-heading">Operational Hours</span>
+          </Col>
+
+          <Col
+            lg={3}
+            md={3}
+            sm={3}
+            xs={3}
+            className="d-flex justify-content-center"
+          >
+            <span className="Days-bullets">
+              {days.map((day) => (
+                <span className="Weekdays-subtitles" key={day}>
+                  {day}
+                </span>
+              ))}
+            </span>
+          </Col>
+
+          <Col
+            lg={5}
+            md={5}
+            sm={5}
+            xs={5}
+            className="d-flex justify-content-center"
+          >
+            <span className="hours-bullets">
+              {days.map((day) => (
+                <span className="Weekdays-Time-Hours-subtitles" key={day}>
+                  {operationHours[day]}
+                </span>
+              ))}
+            </span>
+          </Col>
+
+          {/* <Col lg={2} md={2} sm={2} xs={2}>
+            <span className="Days-bullets">
+              <span className="hour-title">HOURS</span>
+              <span className="hour-title">HOURS</span>
+              <span className="hour-title">HOURS</span>
+              <span className="hour-title">HOURS</span>
+              <span className="hour-title">HOURS</span>
+              <span className="hour-title">HOURS</span>
+              <span className="hour-title">HOURS</span>
+            </span>
+          </Col> */}
+        </Row>
+        {/* <Row className="mt-5">
           <Col lg={4} md={4} sm={3} xs={3} className="footer-main-col">
             <span className="Operational-hour-heading">Operational Hours</span>
           </Col>
@@ -66,7 +115,7 @@ const Footer = ({ operationHours }) => {
               <span className="Weekdays-Time-Hours-subtitles">HOURS</span>
             </div>
           </Col>
-        </Row>
+        </Row> */}
       </div>
     </Fragment>
   );

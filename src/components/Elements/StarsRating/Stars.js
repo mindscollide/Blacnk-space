@@ -2,9 +2,10 @@ import React from "react";
 import "./Stars.css";
 
 const StarRating = ({ rating }) => {
-  // Calculate the number of full and half-filled stars
+  // Calculate the number of full stars and half-filled stars
   const fullStars = Math.floor(rating);
-  const halfStar = rating - fullStars >= 0.5;
+  const decimalPart = rating - fullStars;
+  const halfStar = decimalPart >= 0.25 && decimalPart < 0.75;
 
   // Create an array of stars to render
   const stars = [];

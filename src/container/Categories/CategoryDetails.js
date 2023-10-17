@@ -106,20 +106,25 @@ const CategoryDetails = () => {
             >
               <Col lg={6} md={6} sm={6} xs={6} className="mt-2">
                 <span className="title-emirates-heading">
-                  {businessDetails.categoryName}
+                  {businessDetails.name}
                 </span>
                 <Row className="mb-3">
                   <Col lg={6} md={6} sm={12} xs={12}>
                     <span className="show-inline-display">
-                      <StarRating rating={businessDetails.rating} />
-                      <span className="Reviews-after-star">(20 Reviews)</span>
+                      <StarRating
+                        className="star-font-size"
+                        rating={businessDetails.rating}
+                      />
+                      <span className="Reviews-after-star">
+                        ({businessDetails.reviewsCount} Reviews)
+                      </span>
                     </span>
                   </Col>
                 </Row>
                 <Row>
                   <Col lg={6} md={6} sm={6} xs={6}>
                     <Button
-                      text={businessDetails.name}
+                      text={businessDetails.categoryName}
                       className="Tour-button"
                     />
                   </Col>
@@ -132,16 +137,26 @@ const CategoryDetails = () => {
                 xs={6}
                 className="package-row-class flex-row"
               >
-                <span className="verticalline"></span>
-                <div className="line-height">
-                  <div className="package-start-heading">PACKAGES STARTS</div>
-                  <div className="package-start-heading">
-                    From{" "}
-                    <span className="five-dollar-title">
-                      ${businessDetails.packageStarts}
-                    </span>
-                  </div>
-                </div>
+                {businessDetails.packageStarts !== "" ? (
+                  <>
+                    <span className="verticalline"></span>
+                    <div className="line-height">
+                      <div className="package-start-heading">
+                        PACKAGES STARTS
+                      </div>
+                      <div className="package-start-heading">
+                        From{" "}
+                        <span className="five-dollar-title">
+                          ${businessDetails.packageStarts}
+                        </span>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ display: "none" }}></div>
+                  </>
+                )}
               </Col>
             </Row>
 
@@ -159,22 +174,48 @@ const CategoryDetails = () => {
                   onClick={clickHomeHandler}
                   className="buttons-call-etc"
                 />
-                <Button
-                  icon={<i className="icon-call call-etc-icons-sizes"></i>}
-                  className="buttons-call-etc"
-                  // onClick={() =>
-                  //   window.open(businessDetails.contactNumber, "_blank")
-                  // }
-                ></Button>
-                <Button
-                  icon={<i className="icon-location  call-etc-icons-sizes"></i>}
-                  className="buttons-call-etc"
-                  // onClick={() =>
-                  //   window.open(businessDetails.location, "_blank")
-                  // }
-                >
-                  {/* {businessDetails.location} */}
-                </Button>
+                {businessDetails.contactNumber !== "" ? (
+                  <>
+                    <Button
+                      icon={<i className="icon-call call-etc-icons-sizes"></i>}
+                      className="buttons-call-etc"
+                      // onClick={() =>
+                      //   window.open(businessDetails.contactNumber, "_blank")
+                      // }
+                    ></Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      icon={<i className="icon-call call-etc-icons-sizes"></i>}
+                      className="buttons-disable-etc"
+                    ></Button>
+                  </>
+                )}
+                {businessDetails.location !== "" ? (
+                  <>
+                    <Button
+                      icon={
+                        <i className="icon-location  call-etc-icons-sizes"></i>
+                      }
+                      className="buttons-call-etc"
+                      // onClick={() =>
+                      //   window.open(businessDetails.location, "_blank")
+                      // }
+                    >
+                      {/* {businessDetails.location} */}
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      icon={
+                        <i className="icon-location  call-etc-icons-sizes"></i>
+                      }
+                      className="buttons-disable-etc"
+                    ></Button>
+                  </>
+                )}
                 <Button
                   icon={<i className="icon-web call-etc-icons-sizes"></i>}
                   onClick={() => window.open(businessDetails.website, "_blank")}
