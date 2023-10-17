@@ -17,6 +17,8 @@ import {
   filterData,
   businessDetailsMainApi,
 } from "../../store/Actions/Actions";
+import { getRndomeNumber } from "../../common/Function/utils";
+
 import "./Search.css";
 
 const SearchPage = () => {
@@ -131,6 +133,29 @@ const SearchPage = () => {
     });
   };
 
+  const detailBusinessSearch = async (businessData) => {
+    if (businessData && businessData.businessListingID) {
+      let newBusinessIdData = {
+        BusinessListingID: businessData.businessListingID,
+      };
+      await localStorage.setItem(
+        "newBusinessIdData",
+        JSON.stringify(newBusinessIdData)
+      );
+      console.log(newBusinessIdData, "newBusinessIdDatanewBusinessIdData");
+      dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
+    } else {
+      console.error("businessData or businessListingId is undefined.");
+    }
+  };
+
+  const handleShortPress = (e, value) => {
+    // Handle short press here
+    e.preventDefault();
+    detailBusinessSearch(value);
+    console.log("clicked");
+  };
+
   // for another Reducer Listing Category for Seacrh
   useEffect(() => {
     if (
@@ -166,28 +191,6 @@ const SearchPage = () => {
     console.log(data, "newDataa");
     dispatch(filterData(data));
     setDropdownCategory(false);
-  };
-
-  const detailBusinessSearch = async (businessData) => {
-    if (businessData && businessData.businessListingId) {
-      let newBusinessIdData = {
-        BusinessListingID: businessData.businessListingId,
-      };
-      await localStorage.setItem(
-        "newBusinessIdData",
-        JSON.stringify(newBusinessIdData)
-      );
-      console.log(newBusinessIdData, "newBusinessIdDatanewBusinessIdData");
-      dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
-    } else {
-      // console.error("businessData or businessListingId is undefined.");
-    }
-  };
-
-  const handleClickIcon = (e, value) => {
-    // Handle short press here
-    e.preventDefault();
-    detailBusinessSearch(value);
   };
 
   // For another Reducer searchListing Api shown when user hit search Icon
@@ -338,32 +341,29 @@ const SearchPage = () => {
                 {/* {searchListingData.map((newDataa, index) => {
               console.log(newDataa, "newDatagagagagaga");
               return ( */}
-                <>
-                  <div className="dropdown-main-div-category">
-                    {searchListingData.map((newDataa, index) => {
-                      console.log(newDataa, "newwwwwwDataa");
-                      return (
-                        <>
-                          {dropdownCategory ? (
-                            <>
-                              <div
-                                className="dropdown-list-item"
-                                onClick={() => handleFilter(newDataa)}
-                              >
-                                <p
-                                  className="dropdown-menu-text"
-                                  // onClick={handleCategorySelect}
-                                >
-                                  {newDataa.categoryName}
-                                </p>
-                              </div>
-                            </>
-                          ) : null}
-                        </>
-                      );
-                    })}
-                  </div>
-                </>
+
+                <div className="dropdown-main-div-category">
+                  {searchListingData.map((newDataa, index) => {
+                    console.log(newDataa, "newwwwwwDataa");
+                    return (
+                      <div key={getRndomeNumber()}>
+                        {dropdownCategory ? (
+                          <div
+                            className="dropdown-list-item"
+                            onClick={() => handleFilter(newDataa)}
+                          >
+                            <p
+                              className="dropdown-menu-text"
+                              // onClick={handleCategorySelect}
+                            >
+                              {newDataa.categoryName}
+                            </p>
+                          </div>
+                        ) : null}
+                      </div>
+                    );
+                  })}
+                </div>
               </Col>
             </Row>
           </Col>
@@ -381,32 +381,50 @@ const SearchPage = () => {
                 <Col
                   lg={2}
                   md={2}
-                  sm={2}
-                  xs={2}
+                  sm={3}
+                  xs={3}
                   className="d-flex justify-content-start"
+                  key={getRndomeNumber()}
                 >
                   <LongPress
-                    onPress={(e) => handleClickIcon(e, newData)}
+                    onPress={(e) => handleShortPress(e, newData)}
                     duration={500}
                   >
-                    <div className="Search-slide-box">
-                      {newData.businessListingIcon !== "" ? (
-                        <img
-                          src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
-                          alt="Icon"
-                          className="Swipper-slide-box-image"
-                        />
-                      ) : (
-                        <span>{firstLetter}</span>
-                      )}
-                    </div>
+                    <Button
+                      key={getRndomeNumber()}
+                      id={`swiper-section ${newData.businessListingID}`}
+                      className="Search-slide-box"
+                      text={
+                        newData.businessListingIcon !== "" ? (
+                          <img
+                            src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
+                            alt="Icon"
+                            className="Swipper-slide-box-image-search"
+                          />
+                        ) : (
+                          <span>{firstLetter}</span>
+                        )
+                      }
+                    >
+                      {/* <div className="Search-slide-box">
+                        {newData.businessListingIcon !== "" ? (
+                          <img
+                            src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
+                            alt="Icon"
+                            className="Swipper-slide-box-image-search"
+                          />
+                        ) : (
+                          <span>{firstLetter}</span>
+                        )}
+                      </div> */}
+                    </Button>
                   </LongPress>
                 </Col>
                 <Col
                   lg={9}
                   md={9}
-                  sm={9}
-                  xs={9}
+                  sm={8}
+                  xs={7}
                   className="d-flex justify-content-start"
                 >
                   <div className="Container">
@@ -436,7 +454,7 @@ const SearchPage = () => {
                   lg={1}
                   md={1}
                   sm={1}
-                  xs={1}
+                  xs={2}
                   className="d-flex justify-content-start"
                 >
                   <div className="Container">
@@ -458,11 +476,15 @@ const SearchPage = () => {
                               rel="noopener noreferrer"
                               className="underLine_Text"
                             >
-                              <i className="icon-location icon-class"></i>
+                              <i className="icon-location icon-class-search"></i>
                             </a>
                           </span>
                         </>
-                      ) : null}
+                      ) : (
+                        <>
+                          <i className="icon-location icon-class-search-empty"></i>
+                        </>
+                      )}
                     </div>
                   </div>
                 </Col>

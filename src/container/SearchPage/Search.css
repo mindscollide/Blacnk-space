@@ -8,7 +8,6 @@
 }
 
 .Search-slide-box {
-  
   width: 77px;
   height: 77px;
   border-radius: 20px;
@@ -16,7 +15,7 @@
   justify-content: center !important;
   align-items: center !important;
   font-size: 3rem !important;
-  color: rgb(255, 255, 255)!important;
+  color: rgb(255, 255, 255) !important;
   /* margin: 50px auto; */
   margin-bottom: 10px;
   border: 1px solid #d00510;
@@ -100,6 +99,17 @@
   margin-top: 5px;
 }
 
+.icon-class-search {
+  font-size: 18px !important;
+  color: #d00510;
+}
+
+.icon-class-search-empty {
+  font-size: 18px !important;
+  color: #808080;
+  cursor: not-allowed !important;
+}
+
 .Review-Text {
   color: #ffffff !important;
 }
@@ -108,51 +118,7 @@
   text-decoration: none !important;
 }
 
-@media (max-width: 650px) {
-  .Search-slide-box {
-    width: 77px;
-    height: 77px;
-    border-radius: 20px;
-    background: #ffffff;
-    margin-bottom: 10px;
-    border: 1px solid #d00510;
-    cursor: pointer;
-  }
-
-  .User-name-highlighted {
-    background-color: transparent;
-    color: #ffffff;
-    padding: 0 2px;
-    font-family: "Bebas Neue", sans-serif;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-  }
-
-  .user-name-nonhighlight {
-    color: #ffffff;
-    font-family: "Bebas Neue", sans-serif;
-    font-size: 1.1rem;
-    padding: 0px 5px;
-  }
-
-  .span-Kilometer {
-    color: #ffffff;
-    font-size: 16px;
-    text-transform: uppercase;
-    font-family: "Bahnschrift", sans-serif;
-  }
-
-  .Search-header {
-    position: fixed !important;
-    top: 0 !important;
-    z-index: 3;
-    background-color: #000000;
-    width: 100% !important;
-    margin: 0px 0px;
-  }
-}
-
-.Swipper-slide-box-image {
+.Swipper-slide-box-image-search {
   position: absolute !important;
   top: 0 !important;
   left: 0;
@@ -167,4 +133,97 @@
   object-fit: cover !important;
   display: flex;
   z-index: 0 !important;
+}
+
+@media (max-width: 650px) {
+  .Search-slide-box {
+    width: 56px !important;
+    height: 60px !important;
+    border-radius: 20px;
+    background: #ffffff;
+    margin-bottom: 10px;
+    border: 1px solid #d00510;
+    cursor: pointer;
+  }
+
+  .User-name-highlighted {
+    background-color: transparent;
+    color: #ffffff;
+    padding: 0 2px;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .user-name-nonhighlight {
+    color: #ffffff;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem;
+    padding: 0px 5px;
+  }
+  .rating-icons {
+    color: #d00510 !important;
+    display: flex !important;
+    font-size: 10px !important;
+  }
+
+  .other-text-size {
+    font-family: "Bahnschrift", sans-serif;
+    color: #ffffff;
+    font-size: 0.6rem;
+    line-height: 1.9;
+    text-transform: uppercase;
+    /* text-align: right !important; */
+  }
+  .span-Kilometer {
+    color: #ffffff;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-family: "Bahnschrift", sans-serif;
+  }
+
+  .Search-header {
+    position: fixed !important;
+    top: 0 !important;
+    z-index: 3;
+    background-color: #000000;
+    width: 100% !important;
+    margin: 0px 0px;
+  }
+
+  .Swipper-slide-box-image-search {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0;
+    width: 56px !important;
+    height: 60px !important;
+    border-radius: 20px;
+    background: #ffffff;
+    margin: 0px auto;
+    border: 1px solid #d00510;
+    cursor: pointer;
+    pointer-events: none !important;
+    object-fit: cover !important;
+    display: flex;
+    z-index: 0 !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .Swipper-slide-box-image-search {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0;
+    width: 55px !important;
+    height: 59px !important;
+    border-radius: 20px;
+    background: #ffffff;
+    margin: 0px auto;
+    border: 1px solid #d00510;
+    cursor: pointer;
+    pointer-events: none !important;
+    object-fit: cover !important;
+    display: flex;
+    z-index: 0 !important;
+  }
 }
