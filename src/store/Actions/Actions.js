@@ -135,9 +135,9 @@ const getdashboardApi = (Data, seLoadingAuto, flag) => {
                 )
               );
               seLoadingAuto(false);
-              if (flag) {
-                dispatch(categoryRoute(false));
-              }
+              // if (flag && Data.UserLatitude && Data.UserLongitude) {
+              //   dispatch(categoryRoute(false));
+              // }
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
