@@ -70,13 +70,6 @@
   color: #ffffff !important;
 }
 
-.footer-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
 @media (max-width: 650px) {
   .footer-main-col {
     display: flex;
@@ -118,7 +111,7 @@
     font-family: "Bahnschrift", sans-serif;
     text-transform: capitalize !important;
     font-weight: 400 !important;
-    font-size: 10px !important;
+    font-size: 11px !important;
     color: #ffffff !important;
   }
 
@@ -169,7 +162,7 @@
     flex-direction: column !important;
     font-family: "Inter", sans-serif !important;
     font-weight: 400 !important;
-    font-size: 10px !important;
+    font-size: 11px !important;
     color: #ffffff !important;
   }
 }
