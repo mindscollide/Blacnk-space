@@ -4,7 +4,10 @@ import { Button, Loader, StarRating } from "./../../components/Elements";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import { businessDetailsMainApi } from "../../store/Actions/Actions";
+import {
+  businessDetailsMainApi,
+  businessDetailsSuccess,
+} from "../../store/Actions/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Footer } from "../../components/Layout";
 import "swiper/css";
@@ -22,6 +25,22 @@ const CategoryDetails = () => {
 
   const [businessDetails, setBusinessDetails] = useState({});
   const [showLoader, setShowLoader] = useState(true);
+  const [businessDetailsID, setBusinessDetailsID] = useState(true);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("newBusinessIdData");
+    if (storedData) {
+      const newBusinessIdData = JSON.parse(storedData);
+      console.log("helloooooo");
+      dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
+      setBusinessDetailsID(newBusinessIdData);
+      localStorage.removeItem("newBusinessIdData");
+    }
+    return () => {
+      // Clear the businessListing state when navigating to a different page
+      dispatch(businessDetailsSuccess([], "")); // Replace with your actual Redux action to clear the state
+    };
+  }, []);
 
   useEffect(() => {
     if (businessListing) {
@@ -34,15 +53,6 @@ const CategoryDetails = () => {
   const clickHomeHandler = () => {
     navigate("/BlankSpace/");
   };
-
-  useEffect(() => {
-    // if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-    const storedData = localStorage.getItem("newBusinessIdData");
-    const newBusinessIdData = JSON.parse(storedData);
-    console.log("helloooooo");
-    dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
-    // }
-  }, []);
 
   return (
     <Fragment>

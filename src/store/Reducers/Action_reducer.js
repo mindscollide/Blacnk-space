@@ -15,10 +15,11 @@ const initialState = {
   searchListing: [],
   searchListingCategory: [],
   filterData: null,
-  businessListing: "",
+  businessListing: [],
   locationLongitude: "",
   locationLatitude: "",
   favoriteListings: [],
+  LoadingCheck:true,
 };
 
 const actionReducer = (state = initialState, action) => {
@@ -80,8 +81,11 @@ const actionReducer = (state = initialState, action) => {
       };
     }
     case actions.UPDATE_FAVORITE_BY_USER_SUCCESS: {
-  console.log("favoriteListing UPDATE_FAVORITE_BY_USER_SUCCESS", action.response);
-  return {
+      console.log(
+        "favoriteListing UPDATE_FAVORITE_BY_USER_SUCCESS",
+        action.response
+      );
+      return {
         ...state,
         Loading: false,
         favoriteListing: action.response,
@@ -200,7 +204,7 @@ const actionReducer = (state = initialState, action) => {
     }
 
     case actions.BLOCK_UN_BLOCK_SUCCESS: {
-      console.log("block check",action.response)
+      console.log("block check", action.response);
       return {
         ...state,
         Loading: false,
@@ -209,7 +213,7 @@ const actionReducer = (state = initialState, action) => {
       };
     }
     case actions.CLEARE_BLOCK_UN_BLOCK_SUCCESS: {
-      console.log("block check cleare")
+      console.log("block check cleare");
       return {
         ...state,
         blockUnBlockCategory: null,
@@ -317,12 +321,17 @@ const actionReducer = (state = initialState, action) => {
         ResponseMessage: action.message,
       };
     }
-
+    case actions.CATEGORY_ROUTE_LOADER: {
+      return {
+        ...state,
+        LoadingCheck: action.response,
+      };
+    }
     case actions.BUSINESS_DETAIL_FAIL: {
       return {
         ...state,
         Loading: false,
-        businessListing: "",
+        businessListing: [],
         ResponseMessage: action.message,
       };
     }

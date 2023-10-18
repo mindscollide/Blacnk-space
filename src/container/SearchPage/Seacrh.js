@@ -150,8 +150,7 @@ const SearchPage = () => {
         "newBusinessIdData",
         JSON.stringify(newBusinessIdData)
       );
-      console.log(newBusinessIdData, "newBusinessIdDatanewBusinessIdData");
-      dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
+      navigate("/BlankSpace/Category");
     } else {
       console.error("businessData or businessListingId is undefined.");
     }

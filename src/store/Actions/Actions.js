@@ -103,7 +103,7 @@ const getDashboardFail = (message) => {
 };
 
 // get Dashboard Data Api
-const getdashboardApi = (Data, seLoadingAuto) => {
+const getdashboardApi = (Data, seLoadingAuto, flag) => {
   let Token = JSON.parse(localStorage.getItem("token"));
   return (dispatch) => {
     dispatch(getDashboardInit());
@@ -119,20 +119,15 @@ const getdashboardApi = (Data, seLoadingAuto) => {
       },
     })
       .then(async (response) => {
-        console.log("catergory Wise DashBoard Listings", response);
         if (response.data.responseCode === 417) {
           await dispatch(refreshTokenApi());
-          dispatch(getdashboardApi(Data));
+          dispatch(getdashboardApi(Data, seLoadingAuto, flag));
         } else if (response.data.responseCode === 200) {
           if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage.toLowerCase() ===
               "BlancSpace_AUTH_AuthManager_GetDashBoardData_01".toLowerCase()
             ) {
-              console.log(
-                "catergory Wise DashBoard Listings",
-                response.data.responseResult.catergoryWiseDashBoardListings
-              );
               dispatch(
                 getDashboardSuccess(
                   response.data.responseResult.catergoryWiseDashBoardListings,
@@ -140,6 +135,9 @@ const getdashboardApi = (Data, seLoadingAuto) => {
                 )
               );
               seLoadingAuto(false);
+              if (flag) {
+                dispatch(categoryRoute(false));
+              }
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -149,6 +147,7 @@ const getdashboardApi = (Data, seLoadingAuto) => {
             ) {
               dispatch(getDashboardFail("Could not find the data"));
               seLoadingAuto(false);
+              dispatch(categoryRoute(false));
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -160,6 +159,7 @@ const getdashboardApi = (Data, seLoadingAuto) => {
                 getDashboardFail("Provided userid was either null or empty")
               );
               seLoadingAuto(false);
+              dispatch(categoryRoute(false));
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -169,22 +169,22 @@ const getdashboardApi = (Data, seLoadingAuto) => {
             ) {
               dispatch(getDashboardFail("Exception Something went wrong"));
               seLoadingAuto(false);
+              dispatch(categoryRoute(false));
             }
           } else {
             dispatch(getDashboardFail("Something went wrong"));
             seLoadingAuto(false);
-
-            console.log("Exception Something went wrong");
+            dispatch(categoryRoute(false));
           }
         } else {
           dispatch(getDashboardFail("Something went wrong"));
           seLoadingAuto(false);
-
-          console.log("Exception Something went wrong");
+          dispatch(categoryRoute(false));
         }
       })
       .catch((response) => {
-        // seLoadingAuto(false);
+        seLoadingAuto(false);
+        dispatch(categoryRoute(false));
 
         dispatch(getDashboardFail("something went wrong"));
       });
@@ -235,7 +235,7 @@ const exploreCategory = (exploreNewData, seLoadingAuto) => {
         console.log("explore Category Api", response);
         if (response.data.responseCode === 417) {
           await dispatch(refreshTokenApi());
-          dispatch(exploreCategory(exploreNewData,seLoadingAuto));
+          dispatch(exploreCategory(exploreNewData, seLoadingAuto));
         } else if (response.data.responseCode === 200) {
           if (response.data.responseResult.isExecuted === true) {
             if (
@@ -1206,7 +1206,7 @@ const businessDetailsMainApi = (navigate, newBusinessIdData) => {
       .then(async (response) => {
         if (response.data.responseCode === 417) {
           await dispatch(refreshTokenApi());
-          dispatch(businessDetailsMainApi(navigate,newBusinessIdData));
+          dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
         } else if (response.data.responseCode === 200) {
           if (response.data.responseResult.isExecuted === true) {
             if (
@@ -1251,7 +1251,13 @@ const businessDetailsMainApi = (navigate, newBusinessIdData) => {
       });
   };
 };
-
+//Location data for latitude
+const categoryRoute = (response) => {
+  return {
+    type: actions.CATEGORY_ROUTE_LOADER,
+    response: response,
+  };
+};
 export {
   getdashboardApi,
   refreshTokenApi,
@@ -1271,4 +1277,6 @@ export {
   cleareLikeResponce,
   cleareFavResponce,
   CleareblockUnBlockSuccess,
+  businessDetailsSuccess,
+  categoryRoute,
 };
