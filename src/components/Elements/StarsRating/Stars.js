@@ -11,7 +11,7 @@ const StarRating = ({ rating }) => {
 
   if (decimalPart > 0.5 || (decimalPart === 0.5 && fullStars % 1 !== 0)) {
     fullStars += 1;
-  } else if (decimalPart < 0.5) {
+  } else if (decimalPart <= 0.5) {
     showHalfStar = true;
   }
 

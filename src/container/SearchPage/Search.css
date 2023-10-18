@@ -146,6 +146,10 @@
     cursor: pointer;
   }
 
+  .Search-header-marginTop {
+    margin-top: 50px !important;
+  }
+
   .User-name-highlighted {
     background-color: transparent;
     color: #ffffff;
