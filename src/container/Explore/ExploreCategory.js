@@ -55,7 +55,7 @@ const ExploreCategory = () => {
         UserLatitude: locationLatitude,
         UserLongitude: locationLongitude,
       };
-      dispatch(exploreCategory(exploreNewData,seLoadingAuto));
+      dispatch(exploreCategory(exploreNewData, seLoadingAuto));
     } else if (
       performance.navigation.type === performance.navigation.TYPE_RELOAD
     ) {
@@ -111,6 +111,18 @@ const ExploreCategory = () => {
       dispatch(CleareblockUnBlockSuccess());
     }
   }, [blockUnBlockCategory]);
+
+  useEffect(() => {
+    const handleOutsideClick = () => {
+      if (activeCategory !== null) {
+        setActiveCategory(null);
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [activeCategory]);
 
   return (
     <Container>

@@ -52,7 +52,7 @@ const CategoryDetails = () => {
         </div>
       )}
       {Object.keys(businessDetails).length > 0 && (
-        <Container>
+        <Container fluid>
           {Object.keys(businessDetails.listOfBase64Images).length > 0 && (
             <div className="swiper-category-slider">
               <Row>
@@ -89,7 +89,7 @@ const CategoryDetails = () => {
           <Row
             className={`${
               Object.keys(businessDetails.listOfBase64Images).length > 0
-                ? "mb-4 margin-top-403"
+                ? "mb-4 margin-top-after-image"
                 : "mb-4"
             }`}
           >
@@ -126,23 +126,20 @@ const CategoryDetails = () => {
               xs={6}
               className="package-row-class flex-row"
             >
-              {businessDetails.packageStarts &&
-                businessDetails.packageStarts !== "" && (
-                  <>
-                    <span className="verticalline"></span>
-                    <div className="line-height">
-                      <div className="package-start-heading">
-                        PACKAGES STARTS
-                      </div>
-                      <div className="package-start-heading">
-                        From{" "}
-                        <span className="five-dollar-title">
-                          ${businessDetails.packageStarts}
-                        </span>
-                      </div>
+              {businessDetails.packageStarts !== "" && (
+                <>
+                  <span className="verticalline"></span>
+                  <div className="line-height">
+                    <div className="package-start-heading">PACKAGES STARTS</div>
+                    <div className="package-start-heading">
+                      From{" "}
+                      <span className="five-dollar-title">
+                        ${businessDetails.packageStarts}
+                      </span>
                     </div>
-                  </>
-                )}
+                  </div>
+                </>
+              )}
             </Col>
           </Row>
 
@@ -162,9 +159,9 @@ const CategoryDetails = () => {
                 <Button
                   icon={<i className="icon-call call-etc-icons-sizes"></i>}
                   className="buttons-call-etc"
-                  onClick={() =>
-                    window.open(businessDetails.contactNumber, "_blank")
-                  }
+                  // onClick={() =>
+                  //   window.open(businessDetails.contactNumber, "_blank")
+                  // }
                 />
               ) : (
                 <Button
@@ -176,9 +173,9 @@ const CategoryDetails = () => {
                 <Button
                   icon={<i className="icon-location call-etc-icons-sizes"></i>}
                   className="buttons-call-etc"
-                  onClick={() =>
-                    window.open(businessDetails.location, "_blank")
-                  }
+                  // onClick={() =>
+                  //   window.open(businessDetails.location, "_blank")
+                  // }
                 />
               ) : (
                 <Button

@@ -20,8 +20,8 @@ const Footer = ({ operationHours }) => {
           <Col
             lg={3}
             md={3}
-            sm={3}
-            xs={3}
+            sm={2}
+            xs={2}
             className="d-flex justify-content-center"
           >
             <span className="Days-bullets">
@@ -36,8 +36,8 @@ const Footer = ({ operationHours }) => {
           <Col
             lg={5}
             md={5}
-            sm={5}
-            xs={5}
+            sm={6}
+            xs={6}
             className="d-flex justify-content-center"
           >
             <span className="hours-bullets">

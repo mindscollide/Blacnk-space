@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Button } from "./../../../components/Elements";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -42,6 +42,8 @@ const FavoriteSwiperLong = ({
   const [activeCategory, setActiveCategory] = useState(0);
 
   const [clickCount, setClickCount] = useState(0);
+
+  const FavoriteLongBoxRef = useRef(null);
 
   const truncateFavText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -255,6 +257,22 @@ const FavoriteSwiperLong = ({
     }
   }, [favoriteListingData]);
 
+  // Add a click event listener to the document to handle clicks outside of swiper-longpress-box
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        FavoriteLongBoxRef.current &&
+        !FavoriteLongBoxRef.current.contains(event.target)
+      ) {
+        setActiveCategory(0);
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
   return (
     <Container>
       <Row>
@@ -348,7 +366,7 @@ const FavoriteSwiperLong = ({
                   </LongPress>
                   {activeCategory === newData.businessListingId ? (
                     <>
-                      <div className="longpress-box">
+                      <div ref={FavoriteLongBoxRef} className="longpress-box">
                         <div className="options-main-div">
                           <span className="icn-display-block">
                             {newData.isLiked ? (
@@ -384,7 +402,7 @@ const FavoriteSwiperLong = ({
                             ) : (
                               <>
                                 <i className="icon-call icon-class"></i>
-                                <span className="main-options">NoCall</span>
+                                <span className="main-options">Call</span>
                               </>
                             )}
                           </span>
@@ -397,9 +415,7 @@ const FavoriteSwiperLong = ({
                             ) : (
                               <>
                                 <i className="icon-location icon-class"></i>
-                                <span className="main-options">
-                                  No Direction
-                                </span>
+                                <span className="main-options">Direction</span>
                               </>
                             )}
                           </span>

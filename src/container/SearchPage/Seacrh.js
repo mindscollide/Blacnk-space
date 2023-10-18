@@ -60,6 +60,14 @@ const SearchPage = () => {
   console.log(sortByValues, "sortByValuessortByValuessortByValues");
   const [dropdownCategory, setDropdownCategory] = useState(false);
 
+  // for ellipses the data in search
+  const searchTruncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
+
   // state for search
   const [searchState, setSearchState] = useState({
     UserID: {
@@ -433,7 +441,10 @@ const SearchPage = () => {
                         highlightClassName="Search-Highlighted-text"
                         searchWords={[searchState.SearchText.value]}
                         autoEscape={true}
-                        textToHighlight={newData.businessListingName}
+                        textToHighlight={searchTruncateText(
+                          newData.businessListingName,
+                          30
+                        )}
                       />
                       {/* {newData.businessListingName} */}
                     </div>
