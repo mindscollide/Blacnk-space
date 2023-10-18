@@ -337,6 +337,18 @@ img {
     margin: auto;
     object-fit: cover;
   }
+  .carousel-swiper {
+    position: relative; /* Ensure relative positioning for the container */
+  }
+
+  .carousel-swiper .swiper-pagination {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    text-align: center; /* Center align the bullets */
+  }
 
   .carousel-swiper .swiper-pagination-bullet {
     background-color: #ffffff !important;
@@ -345,6 +357,7 @@ img {
     height: 10px;
     width: 10px;
     opacity: 1;
+    margin: 0 5px; /* Adjust the horizontal spacing between bullets */
   }
 
   .carousel-swiper .swiper-pagination-bullet-active {
