@@ -124,7 +124,6 @@ const Home = () => {
           value: locationLongitude,
         },
       });
-      seFlagCheck(true);
     }
   }, [locationLatitude, locationLongitude]);
 
@@ -146,7 +145,7 @@ const Home = () => {
       };
 
       console.log("helloooooo dashboardData auto");
-      dispatch(getdashboardApi(Data, seLoadingAuto));
+      dispatch(getdashboardApi(Data, seLoadingAuto, false));
       setAutoCheck(true);
       setDashboardData({
         ...dashboardData,
@@ -187,12 +186,15 @@ const Home = () => {
       if (autoCheck) {
         // for auto hit
         setDashboardInformation(dashBoardListings);
+        console.log("helloooooo");
+        dispatch(categoryRoute(false));
       } else if (flagCheck) {
         // for lazy loading
         let newData = [...dashboardInformation, dashBoardListings];
         setDashboardInformation(newData);
+        console.log("helloooooo");
       } else {
-        console.log("dashboardInformation");
+        console.log("helloooooo");
         // for comming from different page
         setDashboardInformation(dashBoardListings);
       }
