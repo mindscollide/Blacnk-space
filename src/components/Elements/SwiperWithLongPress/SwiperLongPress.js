@@ -54,74 +54,6 @@ const SwiperLongpress = ({
     return text;
   };
 
-  // state for update Favorite
-  const [updateFavorite, setUpdateFavorite] = useState({
-    AddRemoveFavoriteBusinessEnum: {
-      value: 1,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    UserID: {
-      value: "PLU_1",
-      errorMessage: "",
-      errorStatus: false,
-    },
-    Latitude: {
-      value: locationLatitude,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    Longitude: {
-      value: locationLongitude,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    BusinessListingId: {
-      value: "BUL_0x3eb33eb25e826edb:0xf8830cefa06c2a7d",
-      errorMessage: "",
-      errorStatus: false,
-    },
-    OtherAvailableListings: {
-      value: ["BUL_0x3eb33f7b8bf5d8d3:0x828884303c4824cf"],
-      errorMessage: "",
-      errorStatus: false,
-    },
-  });
-
-  // state for like and dislike
-  const [likeState, setLikeState] = useState({
-    LikeUnLikeBusinessListingsEnum: {
-      value: 2,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    UserID: {
-      value: "PLU_1",
-      errorMessage: "",
-      errorStatus: false,
-    },
-    Latitude: {
-      value: locationLatitude,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    Longitude: {
-      value: locationLongitude,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    BusinessListingId: {
-      value: "",
-      errorMessage: "",
-      errorStatus: false,
-    },
-    OtherAvailableListings: {
-      value: [""],
-      errorMessage: "",
-      errorStatus: false,
-    },
-  });
-
   const detailBusiness = async (businessData) => {
     if (businessData && businessData.businessListingId) {
       let newBusinessIdData = {
@@ -131,10 +63,9 @@ const SwiperLongpress = ({
         "newBusinessIdData",
         JSON.stringify(newBusinessIdData)
       );
-      console.log(newBusinessIdData, "newBusinessIdDatanewBusinessIdData");
-      dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
+      navigate("/BlankSpace/Category");
+      // dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
     } else {
-      // console.error("businessData or businessListingId is undefined.");
     }
   };
 
@@ -148,7 +79,7 @@ const SwiperLongpress = ({
     );
     let newLike = {
       AddRemoveFavoriteBusinessEnum: checked === true ? 1 : 2,
-      UserID: likeState.UserID.value,
+      UserID: "PLU_1",
       Latitude: locationLatitude,
       Longitude: locationLongitude,
       BusinessListingId: likeItem,
@@ -180,7 +111,6 @@ const SwiperLongpress = ({
       return updatedData;
     });
   };
-
   // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
   useEffect(() => {
     if (favoriteListing != null) {
@@ -199,7 +129,7 @@ const SwiperLongpress = ({
     );
     let newLike = {
       LikeUnLikeBusinessListingsEnum: checked === true ? 1 : 2,
-      UserID: likeState.UserID.value,
+      UserID: "PLU_1",
       Latitude: locationLatitude,
       Longitude: locationLongitude,
       BusinessListingId: likeItem,

@@ -1204,28 +1204,22 @@ const businessDetailsMainApi = (navigate, newBusinessIdData) => {
       },
     })
       .then(async (response) => {
-        console.log("explore Category Api", response);
         if (response.data.responseCode === 417) {
           await dispatch(refreshTokenApi());
-          dispatch(businessDetailsMainApi(newBusinessIdData));
+          dispatch(businessDetailsMainApi(navigate,newBusinessIdData));
         } else if (response.data.responseCode === 200) {
           if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage.toLowerCase() ===
               "BlancSpace_AUTH_AuthManager_BusinessListingByBusinessListingID_01".toLowerCase()
             ) {
-              console.log(
-                "Explore Category Api",
-                response.data.responseResult.responseMessage
-              );
               dispatch(
                 businessDetailsSuccess(
                   response.data.responseResult.businessListing,
                   "Updated successfully"
                 )
               );
-              navigate("/BlankSpace/Category");
-              console.log(businessDetailsSuccess, "SearchSuccessssss");
+              // navigate("/BlankSpace/Category");
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -1247,11 +1241,9 @@ const businessDetailsMainApi = (navigate, newBusinessIdData) => {
             }
           } else {
             dispatch(businessDetailsFail("Something went wrong"));
-            console.log("Exception Something went wrong");
           }
         } else {
           dispatch(businessDetailsFail("Something went wrong"));
-          console.log("Exception Something went wrong");
         }
       })
       .catch((response) => {
