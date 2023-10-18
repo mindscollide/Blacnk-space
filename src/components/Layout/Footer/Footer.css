@@ -20,14 +20,26 @@
 .Days-bullets {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  letter-spacing: 0.2rem !important;
 }
 
 .hours-bullets {
   display: flex;
   flex-direction: column;
-  gap: 11px;
+}
+
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.weekdays-time-container {
+  flex: 1; /* Make this container take up all available space */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .Weekdays-subtitles {
@@ -42,6 +54,7 @@
 .Weekdays-Time-Hours-subtitles {
   /* display: flex;
   gap: 10px; */
+  padding: 3px 0px;
   flex-direction: column !important;
   font-family: "Inter", sans-serif !important;
   font-weight: 400 !important;
@@ -57,19 +70,38 @@
   color: #ffffff !important;
 }
 
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 @media (max-width: 650px) {
   .footer-main-col {
     display: flex;
     align-items: center !important;
     justify-content: center !important;
-    margin: 0% !important;
+  }
+
+  .footer-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .weekdays-time-container {
+    flex: 1; /* Make this container take up all available space */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
   }
 
   .Days-bullets {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    letter-spacing: 0.2rem !important;
   }
 
   .Operational-hour-heading {
@@ -86,7 +118,7 @@
     font-family: "Bahnschrift", sans-serif;
     text-transform: capitalize !important;
     font-weight: 400 !important;
-    font-size: 0.8rem !important;
+    font-size: 10px !important;
     color: #ffffff !important;
   }
 
@@ -97,7 +129,7 @@
     flex-direction: column !important;
     font-family: "Inter", sans-serif !important;
     font-weight: 400 !important;
-    font-size: 0.8rem !important;
+    font-size: 10px !important;
     color: #ffffff !important;
   }
 
@@ -112,12 +144,24 @@
   .hours-bullets {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    font-size: 0.8rem;
   }
 }
 
 @media (max-width: 320px) {
+  .footer-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .weekdays-time-container {
+    flex: 1; /* Make this container take up all available space */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
   .Weekdays-Time-Hours-subtitles {
     padding: 0px 0px !important;
     display: flex;
@@ -125,7 +169,7 @@
     flex-direction: column !important;
     font-family: "Inter", sans-serif !important;
     font-weight: 400 !important;
-    font-size: 0.8rem !important;
+    font-size: 10px !important;
     color: #ffffff !important;
   }
 }

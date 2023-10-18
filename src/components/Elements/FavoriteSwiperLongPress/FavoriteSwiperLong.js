@@ -304,12 +304,12 @@ const FavoriteSwiperLong = ({
                 spaceBetween: 0,
               },
               734: {
-                slidesPerView: 7,
-                spaceBetween: 4,
+                slidesPerView: 5,
+                spaceBetween: 0,
               },
               768: {
-                slidesPerView: 7,
-                spaceBetween: 5,
+                slidesPerView: 5,
+                spaceBetween: 0,
               },
               1024: {
                 slidesPerView: 8,

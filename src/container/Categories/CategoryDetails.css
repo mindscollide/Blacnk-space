@@ -202,11 +202,16 @@ img {
     color: #fff500;
     font-family: "Bebas Neue", sans-serif;
   }
+  .margin-top-after-image {
+    /* padding: 20px 15px; */
+    margin-top: 0px !important;
+    width: auto !important;
+  }
 
   .slide-Image {
     display: block !important;
     width: 100% !important;
-    height: 340px !important;
+    height: 320px !important;
     padding: 0px 50px !important;
     margin: auto;
     object-fit: cover;
@@ -244,6 +249,20 @@ img {
     gap: 10px;
     margin-top: 0px;
   }
+  .swiper-category-slider {
+    position: relative !important; /* Change to relative positioning */
+    top: auto !important; /* Reset top property */
+    z-index: 0; /* Lower z-index or adjust as needed */
+    background-color: transparent; /* Make background transparent or adjust as needed */
+    width: auto; /* Adjust the width as needed */
+  }
+
+  .slide-Image {
+    /* Adjust the styles for the images in this mode */
+    /* Example: */
+    height: 250px !important;
+    padding: 0 !important;
+  }
 }
 
 @media (max-width: 650px) {
@@ -254,7 +273,7 @@ img {
 
   .margin-top-after-image {
     /* padding: 20px 15px; */
-    margin-top: 370px !important;
+    margin-top: 0px !important;
     width: auto !important;
   }
 
@@ -313,7 +332,7 @@ img {
   .slide-Image {
     display: block !important;
     width: 100% !important;
-    height: 340px !important;
+    height: 320px !important;
     padding: 0px 30px !important;
     margin: auto;
     object-fit: cover;

@@ -229,24 +229,6 @@ const SearchPage = () => {
   console.log({ searchData }, "searchDatasearchDatasearchDatasearchData");
   return (
     <Fragment>
-      {/* <Row>
-        <Col>
-          {isHome ? (
-            <>
-              <Header />
-              <UserInfo />
-            </>
-          ) : (
-            <>
-              <div className="Search-header">
-                <Container>
-                  <SearchHeader />
-                </Container>
-              </div>
-            </>
-          )}
-        </Col>
-      </Row> */}
       <Container className="Search-header">
         <Row className="d-flex justify-content-end">
           <Col lg={12} md={12} sm={12}>
@@ -385,14 +367,13 @@ const SearchPage = () => {
           console.log(newData, "newDatagagagagaga");
           return (
             <>
-              <Row>
+              <Row key={getRndomeNumber()}>
                 <Col
                   lg={2}
                   md={2}
                   sm={3}
                   xs={3}
                   className="d-flex justify-content-start"
-                  key={getRndomeNumber()}
                 >
                   <LongPress
                     onPress={(e) => handleShortPress(e, newData)}
@@ -413,19 +394,7 @@ const SearchPage = () => {
                           <span>{firstLetter}</span>
                         )
                       }
-                    >
-                      {/* <div className="Search-slide-box">
-                        {newData.businessListingIcon !== "" ? (
-                          <img
-                            src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
-                            alt="Icon"
-                            className="Swipper-slide-box-image-search"
-                          />
-                        ) : (
-                          <span>{firstLetter}</span>
-                        )}
-                      </div> */}
-                    </Button>
+                    ></Button>
                   </LongPress>
                 </Col>
                 <Col
