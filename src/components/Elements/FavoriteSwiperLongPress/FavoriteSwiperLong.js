@@ -123,15 +123,18 @@ const FavoriteSwiperLong = ({
     },
   });
 
-  const detailBusinessFav = (favoriteData) => {
+  const detailBusinessFav = async (favoriteData) => {
     console.log("click is triggered");
     setClickCount(clickCount + 1);
     if (favoriteData && favoriteData.businessListingId) {
       let newBusinessIdData = {
         BusinessListingID: favoriteData.businessListingId,
       };
-      console.log(newBusinessIdData, "newBusinessIdDatanewBusinessIdData");
-      dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
+      await localStorage.setItem(
+        "newBusinessIdData",
+        JSON.stringify(newBusinessIdData)
+      );
+      navigate("/BlankSpace/Category");
     } else {
       console.error("businessData or businessListingId is undefined.");
     }

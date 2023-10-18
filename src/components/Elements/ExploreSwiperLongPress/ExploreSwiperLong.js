@@ -152,7 +152,7 @@ const ExploreSwiperLong = ({ exploreListingData, setExploreInformation }) => {
         "newBusinessIdData",
         JSON.stringify(newBusinessIdData)
       );
-      dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
+      navigate("/BlankSpace/Category");
     } else {
       console.error("exploreDatabusinessListingId");
     }

@@ -80,3 +80,6 @@ export const LONGITUTDE_LOCATION_DATA = "LONGITUTDE_LOCATION_DATA";
 
 // for hidden Inputs for latitude and Latitude
 export const LATITUDE_LOCATION_DATA = "LATITUDE_LOCATION_DATA";
+
+// for LOADER CHECK
+export const CATEGORY_ROUTE_LOADER = "CATEGORY_ROUTE_LOADER";
