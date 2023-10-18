@@ -64,7 +64,6 @@ const SwiperLongpress = ({
         JSON.stringify(newBusinessIdData)
       );
       navigate("/BlankSpace/Category");
-      // dispatch(businessDetailsMainApi(navigate, newBusinessIdData));
     } else {
     }
   };
