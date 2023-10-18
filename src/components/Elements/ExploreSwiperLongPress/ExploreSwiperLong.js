@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Button } from "./../../../components/Elements";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -32,6 +32,8 @@ const ExploreSwiperLong = ({ exploreListingData, setExploreInformation }) => {
   const likeUnlikeBusiness = useSelector(
     (state) => state.actionReducer.likeUnlikeBusiness
   );
+
+  const ExploreLongBoxRef = useRef(null);
 
   const [longData, setLongData] = useState([]);
   const [activeCategory, setActiveCategory] = useState(0);
@@ -166,6 +168,22 @@ const ExploreSwiperLong = ({ exploreListingData, setExploreInformation }) => {
     onExploreCat(value);
   };
 
+  // Add a click event listener to the document to handle clicks outside of swiper-longpress-box
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        ExploreLongBoxRef.current &&
+        !ExploreLongBoxRef.current.contains(event.target)
+      ) {
+        setActiveCategory(0);
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
   return (
     <Container>
       <Row>
@@ -224,7 +242,10 @@ const ExploreSwiperLong = ({ exploreListingData, setExploreInformation }) => {
                       />
                     </LongPress>
                     {activeCategory === newData.subCategoryListingId ? (
-                      <div className="Explore-longpress-box">
+                      <div
+                        ref={ExploreLongBoxRef}
+                        className="Explore-longpress-box"
+                      >
                         <div className="options-main-div">
                           <span className="icn-display-block">
                             {newData.isLiked ? (

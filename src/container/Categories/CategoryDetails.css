@@ -99,11 +99,11 @@ img {
 }
 
 .para-text {
-  margin-top: 10px !important;
-  text-transform: uppercase !important;
+  /* margin-top: 10px !important; */
+  text-transform: capitalize !important;
   color: #ffffff;
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 1.3rem;
+  font-family: "Bahnschrift", sans-serif;
+  font-size: 1.2rem;
 }
 
 .Grourp-btn-col {
@@ -159,12 +159,12 @@ img {
 
 .what-we-offer-subtitles {
   flex-direction: column !important;
-  font-family: "Bebas Neue", sans-serif;
+  font-family: "Bahnschrift", sans-serif;
   font-size: 1.3rem;
   color: #ffffff !important;
 }
-.margin-top-403 {
-  margin-top: 240px !important;
+.margin-top-after-image {
+  margin-top: 380px !important;
   width: auto !important;
 }
 .line-height {
@@ -252,9 +252,9 @@ img {
     margin: 0 !important;
   }
 
-  .margin-top-403 {
-    padding: 20px 15px;
-    margin-top: 280px !important;
+  .margin-top-after-image {
+    /* padding: 20px 15px; */
+    margin-top: 370px !important;
     width: auto !important;
   }
 
@@ -264,13 +264,14 @@ img {
   }
 
   .para-text {
-    padding: 10px 15px;
+    padding: 10px 0px;
     margin-top: 10px !important;
     line-height: 22px !important;
-    text-transform: uppercase !important;
+    text-transform: capitalize !important;
     color: #ffffff;
-    font-family: "Bebas Neue", sans-serif;
-    font-size: 1rem;
+    font-weight: 500 !important;
+    font-family: "Bahnschrift", sans-serif;
+    font-size: 0.8rem;
   }
 
   .star-font-size {
@@ -278,23 +279,21 @@ img {
   }
 
   .Grourp-btn-col {
-    padding: 0px 30px;
     display: flex;
     justify-content: center !important;
     gap: 20px !important;
   }
   .what-we-offer-heading {
-    padding: 0px 15px;
     font-family: "Bebas Neue", sans-serif;
     font-size: calc(1.375rem + 1.5vw) !important;
     color: #fff500 !important;
   }
 
   .what-we-offer-subtitles {
-    padding: 0px 15px;
+    padding: 4px 0px;
     flex-direction: column !important;
-    font-family: "Bebas Neue", sans-serif;
-    font-size: 1rem;
+    font-family: "Bahnschrift", sans-serif;
+    font-size: 0.8rem;
     color: #ffffff !important;
   }
   .what-we-offer-bullets {

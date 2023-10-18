@@ -19,6 +19,16 @@ const CategoryDetails = () => {
     (state) => state.actionReducer.businessListing
   );
 
+  // for capitilize first word function
+  const capitalizeWords = (text) => {
+    return text
+      .split(" ")
+      .map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      })
+      .join(" ");
+  };
+
   const dispatch = useDispatch();
   //state for businessDetails
   const [businessDetails, setBusinessDetails] = useState([]);
@@ -100,7 +110,7 @@ const CategoryDetails = () => {
             <Row
               className={`${
                 Object.keys(businessDetails.listOfBase64Images).length > 0
-                  ? "mb-4 margin-top-403"
+                  ? "mb-4 margin-top-after-image"
                   : "mb-4"
               }`}
             >
@@ -163,8 +173,8 @@ const CategoryDetails = () => {
             {/* section for detail contact and location */}
 
             <Row>
-              <Col lg={12} md={12} sm={12}>
-                <p className="para-text">{businessDetails.aboutUs}</p>
+              <Col lg={12} md={12} sm={12} className="mb-3">
+                <span className="para-text">{businessDetails.aboutUs}</span>
               </Col>
             </Row>
             <Row>

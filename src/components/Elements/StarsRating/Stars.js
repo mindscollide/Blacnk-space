@@ -2,10 +2,18 @@ import React from "react";
 import "./Stars.css";
 
 const StarRating = ({ rating }) => {
-  // Calculate the number of full stars and half-filled stars
-  const fullStars = Math.floor(rating);
-  const decimalPart = rating - fullStars;
-  const halfStar = decimalPart >= 0.25 && decimalPart < 0.75;
+  // Calculate the number of full stars, half-filled stars, and empty stars
+  let fullStars = Math.floor(rating);
+  let decimalPart = rating - fullStars;
+
+  // Determine whether to show a full or half-filled star
+  let showHalfStar = false;
+
+  if (decimalPart > 0.5 || (decimalPart === 0.5 && fullStars % 1 !== 0)) {
+    fullStars += 1;
+  } else if (decimalPart < 0.5) {
+    showHalfStar = true;
+  }
 
   // Create an array of stars to render
   const stars = [];
@@ -16,7 +24,7 @@ const StarRating = ({ rating }) => {
       </span>
     );
   }
-  if (halfStar) {
+  if (showHalfStar) {
     stars.push(
       <span key="half" className="star-icon half">
         ☆
