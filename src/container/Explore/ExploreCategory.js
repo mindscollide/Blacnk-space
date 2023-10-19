@@ -191,7 +191,7 @@ const ExploreCategory = () => {
             <Loader />
           ) : Loading ? (
             <Row>
-              <Col className="d-flex justify-content-center align-Item-center">
+              <Col className="d-flex justify-content-center align-Item-center mt-4">
                 <Spinner className="spinner-instead-Loader" />
               </Col>
             </Row>

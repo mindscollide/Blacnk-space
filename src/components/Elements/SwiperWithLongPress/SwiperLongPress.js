@@ -212,6 +212,7 @@ const SwiperLongpress = ({ listingData, setDashboardInformation }) => {
         <Row>
           <Col lg={12} md={12} sm={12}>
             <Swiper
+              // className="swiper-centralized-slider"
               breakpoints={{
                 320: {
                   slidesPerView: 3,

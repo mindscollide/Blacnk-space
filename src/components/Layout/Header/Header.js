@@ -8,7 +8,6 @@ import {
   longitudeData,
   latitudeData,
   categoryRoute,
-  getdashboardApi,
 } from "../../../store/Actions/Actions";
 import { getRndomeNumber } from "../../../common/Function/utils";
 
@@ -82,10 +81,9 @@ const Header = React.memo(() => {
       clearInterval(intervalId); // Cleanup the interval
     };
   }, []);
-  const [loadingAuto, seLoadingAuto] = useState(true);
 
-  const navigateCategories =async () => {
-   await dispatch(categoryRoute(true));
+  const navigateCategories = () => {
+    dispatch(categoryRoute(true));
     navigate("/BlankSpace/Categories");
   };
 

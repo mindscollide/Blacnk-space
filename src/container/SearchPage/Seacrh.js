@@ -233,8 +233,8 @@ const SearchPage = () => {
       <Container className="Search-header">
         <Row className="d-flex justify-content-end">
           <Col lg={12} md={12} sm={12}>
-            <Row className="mt-3">
-              <Col lg={12} md={12} sm={12}>
+            <Row className="mt-4">
+              <Col lg={10} md={10} sm={9} xs={9}>
                 <Input
                   size="large"
                   placeholder="SEARCH FOR A FOOD, TOURS, EVENT, ENTERTAIN..."
@@ -249,9 +249,22 @@ const SearchPage = () => {
                   // className="search-bar-ant"
                 />
               </Col>
+              <Col
+                lg={2}
+                md={2}
+                sm={3}
+                xs={3}
+                className="d-flex justify-content-end"
+              >
+                <Button
+                  text="Go Back"
+                  className="Go-Back-Button-Search"
+                  onClick={() => navigate("/BlankSpace/")}
+                />
+              </Col>
             </Row>
 
-            <Row>
+            {/* <Row>
               <Col
                 lg={12}
                 md={12}
@@ -264,9 +277,9 @@ const SearchPage = () => {
                   onClick={() => navigate("/BlankSpace/")}
                 />
               </Col>
-            </Row>
+            </Row> */}
 
-            <Row className="mt-3">
+            <Row className="mt-4">
               <Col
                 lg={4}
                 md={4}
