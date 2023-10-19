@@ -6,28 +6,17 @@ import { useNavigate } from "react-router-dom";
 import {
   updateFavoriteApi,
   likeUnlikeApi,
-  businessDetailsMainApi,
-  getdashboardApi,
   cleareLikeResponce,
   cleareFavResponce,
 } from "../../../store/Actions/Actions";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  StarFill,
-  HandThumbsUpFill,
-  TelephoneXFill,
-} from "react-bootstrap-icons";
+import { StarFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import "swiper/css";
 import "./SwiperLongPress.css";
 import { getRndomeNumber } from "../../../common/Function/utils";
 import LongPress from "../LonPress/LongPress";
 
-const SwiperLongpress = ({
-  listingData,
-  dashboardData,
-  setDashboardInformation,
-  dashboardInformation,
-}) => {
+const SwiperLongpress = ({ listingData, setDashboardInformation }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const likeUnlikeBusiness = useSelector(
@@ -46,6 +35,8 @@ const SwiperLongpress = ({
   const [activeCategory, setActiveCategory] = useState(0);
   // Create a ref for the swiper-longpress-box element
   const swiperLongPressBoxRef = useRef(null);
+  const [clicks, setClicks] = useState(0);
+  const [dataCheck, setDataCheck] = useState([]);
 
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -175,10 +166,28 @@ const SwiperLongpress = ({
     setActiveCategory(value);
   };
 
-  const handleShortPress = (e, value) => {
+  const handleShortPress = (e, data) => {
     // Handle short press here
     e.preventDefault();
-    detailBusiness(value);
+    if (clicks === 1) {
+      if (dataCheck === data) {
+        // Perform the action you want to happen on the double-click here
+        detailBusiness(data);
+      } else {
+        setDataCheck(data);
+      }
+      // Reset the click count
+      setClicks(0);
+    } else {
+      // Increment the click count
+      setClicks(clicks + 1);
+      setDataCheck(data);
+      // You can add a delay here to reset the click count after a certain time if needed
+      setTimeout(() => {
+        setClicks(0);
+        setDataCheck([]);
+      }, 300); // Reset after 300 milliseconds (adjust as needed)
+    }
   };
 
   // Add a click event listener to the document to handle clicks outside of swiper-longpress-box
