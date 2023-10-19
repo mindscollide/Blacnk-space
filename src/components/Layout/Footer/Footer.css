@@ -7,6 +7,8 @@
 }
 
 .footer-background-color {
+  position: relative !important;
+  bottom: 0 !important;
   background-color: #777777 !important;
   padding: 5px 10px !important;
 }
@@ -71,6 +73,12 @@
 }
 
 @media (max-width: 650px) {
+  .footer-background-color {
+    position: relative !important;
+    bottom: 0 !important;
+    background-color: #777777 !important;
+    padding: 5px 10px !important;
+  }
   .footer-main-col {
     display: flex;
     align-items: center !important;
@@ -141,6 +149,12 @@
 }
 
 @media (max-width: 320px) {
+  .footer-background-color {
+    position: relative !important;
+    bottom: 0 !important;
+    background-color: #777777 !important;
+    padding: 5px 10px !important;
+  }
   .footer-row {
     display: flex;
     flex-wrap: wrap;
