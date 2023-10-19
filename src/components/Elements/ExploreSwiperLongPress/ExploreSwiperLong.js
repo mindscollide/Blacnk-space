@@ -37,7 +37,8 @@ const ExploreSwiperLong = ({ exploreListingData, setExploreInformation }) => {
 
   const [longData, setLongData] = useState([]);
   const [activeCategory, setActiveCategory] = useState(0);
-
+  const [clicks, setClicks] = useState(0);
+  const [dataCheck, setDataCheck] = useState([]);
   useEffect(() => {
     if (exploreListingData) {
       setLongData(exploreListingData);
@@ -163,9 +164,27 @@ const ExploreSwiperLong = ({ exploreListingData, setExploreInformation }) => {
     setActiveCategory(value);
   };
 
-  const handleShortPress = (e, value) => {
+  const handleShortPress = (e, data) => {
     e.preventDefault();
-    onExploreCat(value);
+    if (clicks === 1) {
+      if (dataCheck === data) {
+        // Perform the action you want to happen on the double-click here
+        onExploreCat(data);
+      } else {
+        setDataCheck(data);
+      }
+      // Reset the click count
+      setClicks(0);
+    } else {
+      // Increment the click count
+      setClicks(clicks + 1);
+      setDataCheck(data);
+      // You can add a delay here to reset the click count after a certain time if needed
+      setTimeout(() => {
+        setClicks(0);
+        setDataCheck([]);
+      }, 300); // Reset after 300 milliseconds (adjust as needed)
+    }
   };
 
   // Add a click event listener to the document to handle clicks outside of swiper-longpress-box

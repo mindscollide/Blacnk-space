@@ -45,6 +45,10 @@ const FavoriteSwiperLong = ({
 
   const FavoriteLongBoxRef = useRef(null);
 
+  const [clicks, setClicks] = useState(0);
+
+  const [dataCheck, setDataCheck] = useState([]);
+
   const truncateFavText = (text, maxLength) => {
     if (text.length > maxLength) {
       return text.substring(0, maxLength) + "...";
@@ -244,10 +248,28 @@ const FavoriteSwiperLong = ({
     setActiveCategory(value);
   };
 
-  const handleShortPress = (e, value) => {
+  const handleShortPress = (e, data) => {
     // Handle short press here
     e.preventDefault();
-    detailBusinessFav(value);
+    if (clicks === 1) {
+      if (dataCheck === data) {
+        // Perform the action you want to happen on the double-click here
+        detailBusinessFav(data);
+      } else {
+        setDataCheck(data);
+      }
+      // Reset the click count
+      setClicks(0);
+    } else {
+      // Increment the click count
+      setClicks(clicks + 1);
+      setDataCheck(data);
+      // You can add a delay here to reset the click count after a certain time if needed
+      setTimeout(() => {
+        setClicks(0);
+        setDataCheck([]);
+      }, 300); // Reset after 300 milliseconds (adjust as needed)
+    }
   };
 
   useEffect(() => {
