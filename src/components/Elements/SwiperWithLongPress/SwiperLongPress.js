@@ -207,7 +207,7 @@ const SwiperLongpress = ({ listingData, setDashboardInformation }) => {
   }, []);
 
   return (
-    <Container>
+    <Container className="backgroundBody">
       <Fragment>
         <Row>
           <Col lg={12} md={12} sm={12}>

@@ -125,7 +125,7 @@ const ExploreCategory = () => {
   }, [activeCategory]);
 
   return (
-    <Container>
+    <Container  className="backgroundBody">
       <Row>
         <Col>
           {exploreInformation !== null &&

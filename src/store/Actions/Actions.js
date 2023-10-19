@@ -1055,7 +1055,11 @@ const searchSuccess = (response, response2, message) => {
     message: message,
   };
 };
-
+const cleareSearchSuccess = (response, response2, message) => {
+  return {
+    type: actions.CLEARE_SEARCH_BLANCSPACE_SUCCESS,
+  };
+};
 // For blancspace Search Fail
 const searchFail = (message) => {
   return {
@@ -1081,7 +1085,6 @@ const searchBlancApi = (navigate, searchUser, newSearchData, newSearch) => {
       },
     })
       .then(async (response) => {
-        console.log("explore Category Api", response);
         if (response.data.responseCode === 417) {
           await dispatch(refreshTokenApi());
           dispatch(
@@ -1093,10 +1096,6 @@ const searchBlancApi = (navigate, searchUser, newSearchData, newSearch) => {
               response.data.responseResult.responseMessage.toLowerCase() ===
               "BlancSpace_AUTH_AuthManager_Search_01".toLowerCase()
             ) {
-              console.log(
-                "Explore Category Api",
-                response.data.responseResult.responseMessage
-              );
               dispatch(
                 searchSuccess(
                   response.data.responseResult.listing,
@@ -1104,7 +1103,6 @@ const searchBlancApi = (navigate, searchUser, newSearchData, newSearch) => {
                   "Updated successfully"
                 )
               );
-              console.log(searchSuccess, "SearchSuccessssss");
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -1120,11 +1118,9 @@ const searchBlancApi = (navigate, searchUser, newSearchData, newSearch) => {
             }
           } else {
             dispatch(searchFail("Something went wrong"));
-            console.log("Exception Something went wrong");
           }
         } else {
           dispatch(searchFail("Something went wrong"));
-          console.log("Exception Something went wrong");
         }
       })
       .catch((response) => {
@@ -1279,4 +1275,5 @@ export {
   CleareblockUnBlockSuccess,
   businessDetailsSuccess,
   categoryRoute,
+  cleareSearchSuccess
 };

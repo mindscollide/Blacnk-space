@@ -154,7 +154,7 @@ const Categories = () => {
   }, [getAllCategoriesUser]);
 
   return (
-    <Container>
+    <Container  className="backgroundBody">
       <Row>
         <Col>
           {categoriesInformation !== null &&

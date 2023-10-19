@@ -75,11 +75,11 @@
 
 .dropdown-main-div-category {
   position: absolute;
-  /* inset: 0px auto auto 0px; */
-  transform: translate(0px, 20px);
   background-color: #d00510;
   border: 1px solid #5b5a5a;
   border-radius: 8px;
+  border: 0;
+  right: 0;
 }
 
 .dropdown-list-item {

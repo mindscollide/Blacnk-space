@@ -62,7 +62,7 @@ const CategoryDetails = () => {
         </div>
       )}
       {Object.keys(businessDetails).length > 0 && (
-        <Container fluid>
+        <Container  className="backgroundBody" fluid>
           {Object.keys(businessDetails.listOfBase64Images).length > 0 && (
             <div className="swiper-category-slider">
               <Row>

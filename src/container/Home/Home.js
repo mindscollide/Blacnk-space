@@ -203,7 +203,7 @@ const Home = () => {
   };
 
   return (
-    <Container>
+    <Container className="backgroundBody">
       {dashboardInformation.map((listing, index) => {
         return (
           <Fragment key={getRndomeNumber()}>

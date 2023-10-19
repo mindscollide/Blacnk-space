@@ -10,13 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Highlighter from "react-highlight-words";
 import { Input } from "antd";
-
-// import { Header, UserInfo, SearchHeader } from "../../components/Layout";
-import {
-  searchBlancApi,
-  filterData,
-  businessDetailsMainApi,
-} from "../../store/Actions/Actions";
+import { searchBlancApi, filterData, cleareSearchSuccess } from "../../store/Actions/Actions";
 import { getRndomeNumber } from "../../common/Function/utils";
 
 import "./Search.css";
@@ -42,9 +36,6 @@ const SearchPage = () => {
   const navigate = useNavigate();
   const [searchData, setSearchData] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-
-  const [isHome, setIsHome] = useState(false);
-
   const [ratingValue, setRatingValue] = useState(1);
   // search Listing Category new State
   const [searchListingData, setSearchListingData] = useState([]);
@@ -118,16 +109,6 @@ const SearchPage = () => {
         SearchBy: searchState.SearchBy.value,
       };
       dispatch(searchBlancApi(navigate, searchUser));
-    } else if (searchState.SearchText.value === "") {
-      let newSearch = {
-        UserID: "",
-        SearchText: "",
-        UserLatitude: locationLatitude,
-        UserLongitude: locationLongitude,
-        SearchBy: 0,
-      };
-
-      // dispatch(searchBlancApi(navigate, newSearch));
     } else {
       console.log("Nothing To Show");
     }
@@ -178,6 +159,12 @@ const SearchPage = () => {
     }
   }, [searchListingCategory]);
 
+  useEffect(() => {
+   return()=>{
+    dispatch(cleareSearchSuccess())
+   }
+  }, []);
+  
   //for close category and sort popup
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -226,274 +213,211 @@ const SearchPage = () => {
       setSearchData(newData);
     }
   }, [filterDataValue]);
-
-  console.log({ searchData }, "searchDatasearchDatasearchDatasearchData");
   return (
-    <Fragment>
-      <Container className="Search-header">
-        <Row className="d-flex justify-content-end">
-          <Col lg={12} md={12} sm={12}>
-            <Row className="mt-4">
-              <Col lg={10} md={10} sm={9} xs={9}>
-                <Input
-                  size="large"
-                  placeholder="SEARCH FOR A FOOD, TOURS, EVENT, ENTERTAIN..."
-                  value={searchState.SearchText.value}
-                  onChange={handleSearchInputChange}
-                  prefix={
-                    <i
-                      className="icon-search seacrh-icon-size"
-                      onClick={onClickSearchIcon}
-                    ></i>
-                  }
-                  // className="search-bar-ant"
-                />
-              </Col>
-              <Col
-                lg={2}
-                md={2}
-                sm={3}
-                xs={3}
-                className="d-flex justify-content-end"
-              >
-                <Button
-                  text="Go Back"
-                  className="Go-Back-Button-Search"
-                  onClick={() => navigate("/BlankSpace/")}
-                />
-              </Col>
-            </Row>
+    <Container className="backgroundBody" fluid>
+      <Fragment>
+        <div className="serach-header-class">
+          <Row className="mt-4">
+            <Col lg={11} md={10} sm={10} xs={9}>
+              <Input
+                size="default"
+                placeholder="SEARCH FOR A FOOD, TOURS, EVENT, ENTERTAIN..."
+                value={searchState.SearchText.value}
+                onChange={handleSearchInputChange}
+                prefix={
+                  <i
+                    className="icon-search seacrh-icon-size"
+                    onClick={onClickSearchIcon}
+                  ></i>
+                }
+              />
+            </Col>
+            <Col lg={1} md={2} sm={1} xs={2}>
+              <Button
+                text="Go Back"
+                className="Go-Back-Button-Search"
+                onClick={() => navigate("/BlankSpace/")}
+              />
+            </Col>
+          </Row>
+          <Row className="mt-4">
+            <Col lg={2} md={2} sm={2} xs={3}>
+              <span className="top-result-heading">TOP RESULTS</span>
+            </Col>
 
-            {/* <Row>
-              <Col
-                lg={12}
-                md={12}
-                sm={12}
-                className="d-flex justify-content-end mt-3"
-              >
-                <Button
-                  text="Go Back"
-                  className="Go-Back-Button"
-                  onClick={() => navigate("/BlankSpace/")}
-                />
-              </Col>
-            </Row> */}
-
-            <Row className="mt-4">
-              <Col
-                lg={4}
-                md={4}
-                sm={4}
-                xs={4}
-                className="d-flex justify-content-start"
-              >
-                <span className="top-result-heading">TOP RESULTS</span>
-              </Col>
-
-              <Col
-                lg={4}
-                md={4}
-                sm={4}
-                xs={4}
-                className="d-flex justify-content-center"
-              >
-                <span className="sortby-heading" onClick={onClickDropdown}>
-                  SORT BY:{" "}
-                  {ratingValue === 1
-                    ? "RATING"
-                    : ratingValue === 2
-                    ? "LOCATION"
-                    : null}{" "}
-                  <span className="dropdown-icon"></span>
-                </span>
-                <div>
-                  {showDropdown ? (
-                    <>
-                      <div className="dropdown-main-div">
-                        {sortByValues.map((data, index) => {
-                          console.log(
-                            data,
-                            "sortByValuessortByValuessortByValues"
-                          );
-                          return (
-                            <div className="dropdown-list-item">
-                              <p
-                                className="dropdown-menu-text"
-                                onChange={() => setRatingValue(data.value)}
-                              >
-                                {data.label}
-                              </p>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </>
-                  ) : null}
-                </div>
-              </Col>
-
-              <Col
-                lg={4}
-                md={4}
-                sm={4}
-                xs={4}
-                className="d-flex justify-content-end"
-              >
-                <span className="sortby-heading" onClick={onClickCategory}>
-                  CATEGORIES<span className="dropdown-icon"></span>
-                </span>
-                {/* {searchListingData.map((newDataa, index) => {
-              console.log(newDataa, "newDatagagagagaga");
-              return ( */}
-
-                <div className="dropdown-main-div-category">
-                  {searchListingData.map((newDataa, index) => {
-                    console.log(newDataa, "newwwwwwDataa");
-                    return (
-                      <div key={getRndomeNumber()}>
-                        {dropdownCategory ? (
-                          <div
-                            className="dropdown-list-item"
-                            onClick={() => handleFilter(newDataa)}
-                          >
+            <Col lg={8} md={8} sm={7} xs={5}>
+              <span className="sortby-heading" onClick={onClickDropdown}>
+                SORT BY:{" "}
+                {ratingValue === 1
+                  ? "RATING"
+                  : ratingValue === 2
+                  ? "LOCATION"
+                  : null}{" "}
+                <span className="dropdown-icon"></span>
+              </span>
+              <div>
+                {showDropdown ? (
+                  <>
+                    <div className="dropdown-main-div">
+                      {sortByValues.map((data, index) => {
+                        console.log(
+                          data,
+                          "sortByValuessortByValuessortByValues"
+                        );
+                        return (
+                          <div className="dropdown-list-item">
                             <p
                               className="dropdown-menu-text"
-                              // onClick={handleCategorySelect}
+                              onChange={() => setRatingValue(data.value)}
                             >
-                              {newDataa.categoryName}
+                              {data.label}
                             </p>
                           </div>
-                        ) : null}
-                      </div>
-                    );
-                  })}
-                </div>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Container>
-
-      <div className="Search-header-marginTop" />
-      <Container>
-        {searchData.map((newData, index) => {
-          let firstLetter = newData.businessListingName.charAt(0).toUpperCase();
-          console.log(newData, "newDatagagagagaga");
-          return (
-            <>
-              <Row key={getRndomeNumber()}>
-                <Col
-                  lg={2}
-                  md={2}
-                  sm={3}
-                  xs={3}
-                  className="d-flex justify-content-start"
-                >
-                  <LongPress
-                    onPress={(e) => handleShortPress(e, newData)}
-                    duration={500}
-                  >
-                    <Button
-                      key={getRndomeNumber()}
-                      id={`swiper-section ${newData.businessListingID}`}
-                      className="Search-slide-box"
-                      text={
-                        newData.businessListingIcon !== "" ? (
-                          <img
-                            src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
-                            alt="Icon"
-                            className="Swipper-slide-box-image-search"
-                          />
-                        ) : (
-                          <span>{firstLetter}</span>
-                        )
-                      }
-                    ></Button>
-                  </LongPress>
-                </Col>
-                <Col
-                  lg={9}
-                  md={9}
-                  sm={8}
-                  xs={7}
-                  className="d-flex justify-content-start"
-                >
-                  <div className="Container">
-                    <div className="User-name-highlighted">
-                      <Highlighter
-                        highlightClassName="Search-Highlighted-text"
-                        searchWords={[searchState.SearchText.value]}
-                        autoEscape={true}
-                        textToHighlight={searchTruncateText(
-                          newData.businessListingName,
-                          30
-                        )}
-                      />
-                      {/* {newData.businessListingName} */}
+                        );
+                      })}
                     </div>
-                    <div className="rating-icons">
-                      <StarRating rating={newData.businessListingRatings} />
-                      <span className="listing-Review">
-                        (<span>{newData.businessListingReview}</span>
-                        <span style={{ marginLeft: "5px" }}>Reviews</span>)
+                  </>
+                ) : null}
+              </div>
+            </Col>
+
+            <Col lg={2} md={2} sm={3} xs={4}>
+              <span className="sortby-heading" onClick={onClickCategory}>
+                CATEGORIES<span className="dropdown-icon"></span>
+              </span>
+              <div className="dropdown-main-div-category">
+                {searchListingData.map((newDataa, index) => {
+                  return (
+                    <div key={getRndomeNumber()}>
+                      {dropdownCategory ? (
+                        <div
+                          className="dropdown-list-item"
+                          onClick={() => handleFilter(newDataa)}
+                        >
+                          <p
+                            className="dropdown-menu-text"
+                            // onClick={handleCategorySelect}
+                          >
+                            {newDataa.categoryName}
+                          </p>
+                        </div>
+                      ) : null}
+                    </div>
+                  );
+                })}
+              </div>
+            </Col>
+          </Row>
+        </div>
+
+        <div className="scrollData">
+          {searchData.map((newData, index) => {
+            let firstLetter = newData.businessListingName
+              .charAt(0)
+              .toUpperCase();
+            console.log(newData, "newDatagagagagaga");
+            return (
+              <>
+                <Row key={getRndomeNumber()}>
+                  <Col
+                    lg={2} md={2} sm={2} xs={3}
+                    className="d-flex justify-content-start"
+                  >
+                    <LongPress
+                      onPress={(e) => handleShortPress(e, newData)}
+                      duration={500}
+                    >
+                      <Button
+                        key={newData.businessListingID}
+                        id={`swiper-section ${newData.businessListingID}`}
+                        className="Search-slide-box"
+                        text={
+                          newData.businessListingIcon !== "" ? (
+                            <img
+                              src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
+                              alt="Icon"
+                              className="Swipper-slide-box-image-search"
+                            />
+                          ) : (
+                            <span>{firstLetter}</span>
+                          )
+                        }
+                      ></Button>
+                    </LongPress>
+                  </Col>
+                  <Col
+                    lg={8} md={8} sm={7} xs={5}
+                    className="d-flex justify-content-start"
+                  >
+                    <div className="Container">
+                      <div className="User-name-highlighted">
+                        <Highlighter
+                          highlightClassName="Search-Highlighted-text"
+                          searchWords={[searchState.SearchText.value]}
+                          autoEscape={true}
+                          textToHighlight={searchTruncateText(
+                            newData.businessListingName,
+                            30
+                          )}
+                        />
+                        {/* {newData.businessListingName} */}
+                      </div>
+                      <div className="rating-icons">
+                        <StarRating rating={newData.businessListingRatings} />
+                        <span className="listing-Review">
+                          (<span>{newData.businessListingReview}</span>
+                          <span style={{ marginLeft: "5px" }}>Reviews</span>)
+                        </span>
+                      </div>
+                      <span className="span-Kilometer">
+                        {newData.distance} KM
                       </span>
                     </div>
-                    <span className="span-Kilometer">
-                      {newData.distance} KM
-                    </span>
-                  </div>
-                </Col>
+                  </Col>
 
-                <Col
-                  lg={1}
-                  md={1}
-                  sm={1}
-                  xs={2}
-                  className="d-flex justify-content-start"
-                >
-                  <div className="Container">
-                    <div className="other-text-size">
-                      {newData.parentCategoryName}
-                    </div>
-                    <div className="other-text-size">
-                      {newData.childCategoryName}
-                    </div>
-                    <div>
-                      {newData.businessListingLocation ? (
-                        <>
-                          <span className="other-text-size">
-                            {/* Location */}
+                  <Col
+                    lg={2} md={2} sm={3} xs={4}
+                    className="d-flex justify-content-start"
+                  >
+                    <div className="Container">
+                      <div className="other-text-size">
+                        {newData.parentCategoryName}
+                      </div>
+                      <div className="other-text-size">
+                        {newData.childCategoryName}
+                      </div>
+                      <div>
+                        {newData.businessListingLocation ? (
+                          <>
+                            <span className="other-text-size">
+                              {/* Location */}
 
-                            <a
-                              href={newData.businessListingLocation}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="underLine_Text"
-                            >
-                              <i className="icon-location icon-class-search"></i>
-                            </a>
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <i className="icon-location icon-class-search-empty"></i>
-                        </>
-                      )}
+                              <a
+                                href={newData.businessListingLocation}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underLine_Text"
+                              >
+                                <i className="icon-location icon-class-search"></i>
+                              </a>
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            <i className="icon-location icon-class-search-empty"></i>
+                          </>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </Col>
-              </Row>
-            </>
-          );
-        })}
-      </Container>
-      {/* {showLoader && (
-        <div className="loader-overlay">
-          <Loader />
+                  </Col>
+                </Row>
+              </>
+            );
+          })}
         </div>
-      )} */}
+      </Fragment>
       {Loading ? <Loader /> : null}
-    </Fragment>
+    </Container>
   );
 };
 
