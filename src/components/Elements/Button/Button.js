@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 const CustomButton = ({
   text,
   icon,
+  onDoubleClick,
   onClick,
   className,
   icon2,
@@ -35,6 +36,7 @@ const CustomButton = ({
         align={align}
         style={style}
         id={id}
+        onDoubleClick={onDoubleClick}
       >
         <span className={iconClass}>{icon}</span>
         {text}
