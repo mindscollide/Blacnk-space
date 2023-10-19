@@ -34,7 +34,9 @@ const SearchPage = () => {
   const searchListing = useSelector(
     (state) => state.actionReducer.searchListing
   );
-  const filterData = useSelector((state) => state.actionReducer.filterData);
+  const filterDataValue = useSelector(
+    (state) => state.actionReducer.filterDataValue
+  );
   const Loading = useSelector((state) => state.actionReducer.Loading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -215,15 +217,15 @@ const SearchPage = () => {
 
   // this is used for category dropdown filter
   useEffect(() => {
-    if (filterData !== null && filterData !== undefined) {
-      let value = filterData;
+    if (filterDataValue !== null && filterDataValue !== undefined) {
+      let value = filterDataValue;
       let copyData = [...searchListing];
       let newData = copyData.filter(
         (data, index) => data.parentCategoryName === value.categoryName
       );
       setSearchData(newData);
     }
-  }, [filterData]);
+  }, [filterDataValue]);
 
   console.log({ searchData }, "searchDatasearchDatasearchDatasearchData");
   return (
