@@ -14,12 +14,12 @@ const initialState = {
   likeUnlikeBusiness: null,
   searchListing: [],
   searchListingCategory: [],
-  filterData: null,
+  filterDataValue: null,
   businessListing: [],
   locationLongitude: "",
   locationLatitude: "",
   favoriteListings: [],
-  LoadingCheck:true,
+  LoadingCheck: true,
 };
 
 const actionReducer = (state = initialState, action) => {
@@ -340,7 +340,7 @@ const actionReducer = (state = initialState, action) => {
     case actions.FILTER_DATA: {
       return {
         ...state,
-        filterData: action.payload,
+        filterDataValue: action.payload,
       };
     }
 

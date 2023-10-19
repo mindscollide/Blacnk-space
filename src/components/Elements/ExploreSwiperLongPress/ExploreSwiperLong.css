@@ -34,7 +34,7 @@
 }
 
 .Explore-longpress-box {
-  position: fixed;
+  position: absolute !important;
   top: 0px !important;
   background-color: #d00510;
   border: 2.5px solid #ffffff;
@@ -53,6 +53,7 @@
 
 .options-main-div {
   display: flex;
+  flex-direction: row;
 }
 
 .main-options {
@@ -128,7 +129,7 @@
 
 @media (max-width: 650px) {
   .Explore-longpress-box {
-    position: fixed;
+    position: absolute !important;
     top: 0px !important;
     background-color: #d00510;
     border: 2.5px solid #ffffff;

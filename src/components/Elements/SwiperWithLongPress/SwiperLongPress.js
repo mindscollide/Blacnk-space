@@ -401,7 +401,11 @@ const SwiperLongpress = ({
                       </>
                     ) : null}
 
-                    <p className="para-color">
+                    <p
+                      className={`para-color`}
+                      title={newData.businessListingName}
+                      data-fulltext={newData.businessListingName}
+                    >
                       {truncateText(newData.businessListingName, 15)}
                     </p>
                   </SwiperSlide>

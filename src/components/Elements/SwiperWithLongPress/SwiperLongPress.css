@@ -113,7 +113,6 @@
 
 .icn-display-block-share {
   padding: 4px 10px;
-  z-index: 1050 !important;
   text-align: center;
   text-transform: uppercase;
   font-weight: normal;
@@ -136,6 +135,13 @@
   text-overflow: ellipsis !important;
   line-height: 1.1 !important;
   margin: 0 auto;
+  transition: all 0.3s;
+}
+
+.para-color:hover {
+  content: attr(data-fulltext) !important;
+  color: white !important;
+  white-space: normal !important;
 }
 
 @media (max-width: 650px) {
