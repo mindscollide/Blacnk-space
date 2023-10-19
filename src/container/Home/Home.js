@@ -22,27 +22,21 @@ const Home = () => {
   const dispatch = useDispatch();
 
   // Redux state variables
-  const locationLatitude = useSelector(
-    (state) => state.actionReducer.locationLatitude
-  );
-  const locationLongitude = useSelector(
-    (state) => state.actionReducer.locationLongitude
-  );
-  const blockUnBlockCategory = useSelector(
-    (state) => state.actionReducer.blockUnBlockCategory
-  );
-  const dashBoardListings = useSelector(
-    (state) => state.actionReducer.dashBoardListings
-  );
-  const LoadingCheck = useSelector((state) => state.actionReducer.LoadingCheck);
-  const Loading = useSelector((state) => state.actionReducer.Loading);
+  const {
+    locationLatitude,
+    locationLongitude,
+    blockUnBlockCategory,
+    dashBoardListings,
+    LoadingCheck,
+    Loading,
+  } = useSelector((state) => state.actionReducer);
 
   // Local state
-  const [loadingAuto, seLoadingAuto] = useState(true);
-  const [autoCheck, setAutoCheck] = useState(false);
+  const [loadingAuto, setLoadingAuto] = useState(true);
+  const [autoApiCallCheck, setAutoApiCallCheck] = useState(false);
   const [dashboardInformation, setDashboardInformation] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
-  const [flagCheck, seFlagCheck] = useState(false);
+  const [lazyLoadingCheck, setLazyLoadingCheck] = useState(false);
 
   const [dashboardData, setDashboardData] = useState({
     userID: {
@@ -78,9 +72,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    return () => {
-      setDashboardInformation([]);
-    };
+    setDashboardInformation([]);
   }, []);
 
   useEffect(() => {
@@ -97,105 +89,81 @@ const Home = () => {
     };
   }, [activeCategory]);
 
-  useEffect(() => {
-    if (
-      (Object.keys(dashBoardListings).length === 0 &&
-        locationLatitude &&
-        locationLongitude) ||
-      LoadingCheck
-    ) {
-      console.log("helloooooo dashboardData first", LoadingCheck);
-      let Data = {
-        UserID: "PLU_1",
-        pageNumber: dashboardData.pageNumber.value,
-        isAutomatic: dashboardData.isAutomatic.value,
-        UserLatitude: locationLatitude,
-        UserLongitude: locationLongitude,
-      };
+  const apiCallingForFirstTime = async () => {
+    await dispatch(categoryRoute(true));
+    console.log("Hello, dashboardData first", LoadingCheck);
+    let Data = {
+      UserID: "PLU_1",
+      pageNumber: dashboardData.pageNumber.value,
+      isAutomatic: dashboardData.isAutomatic.value,
+      UserLatitude: locationLatitude,
+      UserLongitude: locationLongitude,
+    };
+    setAutoApiCallCheck(false);
+    await setDashboardData({
+      ...dashboardData,
+      UserLatitude: {
+        value: locationLatitude,
+      },
+      UserLongitude: {
+        value: locationLongitude,
+      },
+    });
+    await dispatch(getdashboardApi(Data, setLoadingAuto, true));
+  };
 
-      dispatch(getdashboardApi(Data, seLoadingAuto, true));
-      setAutoCheck(true);
-      setDashboardData({
-        ...dashboardData,
-        UserLatitude: {
-          value: locationLatitude,
-        },
-        UserLongitude: {
-          value: locationLongitude,
-        },
-      });
+  useEffect(() => {
+    if (LoadingCheck && locationLatitude && locationLongitude) {
+      apiCallingForFirstTime();
     }
   }, [locationLatitude, locationLongitude]);
 
-  useEffect(() => {
-    if (
-      locationLatitude &&
-      locationLongitude &&
-      Object.keys(dashBoardListings).length > 0 &&
-      flagCheck &&
-      LoadingCheck === false
-    ) {
-      console.log("helloooooo LoadingCheck", LoadingCheck);
-      let Data = {
-        UserID: "PLU_1",
-        pageNumber: dashboardData.pageNumber.value,
-        isAutomatic: dashboardData.isAutomatic.value,
-        UserLatitude: locationLatitude,
-        UserLongitude: locationLongitude,
-      };
+  const apiCallingForAuto = async () => {
+    console.log("Hello, LoadingCheck auto", LoadingCheck);
+    let Data = {
+      UserID: "PLU_1",
+      pageNumber: dashboardData.pageNumber.value,
+      isAutomatic: dashboardData.isAutomatic.value,
+      UserLatitude: locationLatitude,
+      UserLongitude: locationLongitude,
+    };
 
-      console.log("helloooooo dashboardData auto");
-      dispatch(getdashboardApi(Data, seLoadingAuto, false));
-      setAutoCheck(true);
-      setDashboardData({
-        ...dashboardData,
-        UserLatitude: {
-          value: locationLatitude,
-        },
-        UserLongitude: {
-          value: locationLongitude,
-        },
-      });
-    } else {
-      seFlagCheck(true);
-    }
-  }, [locationLatitude, locationLongitude]);
-
-  // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF Block
-  const blockCategory = (categoryID) => {
-    setDashboardInformation((prevDashboardInfo) => {
-      const updatedDashboardInformation = prevDashboardInfo.filter(
-        (item) => item.categoryID !== categoryID
-      );
-      return updatedDashboardInformation;
+    console.log("Hello, dashboardData auto");
+    await setAutoApiCallCheck(true);
+    await setLazyLoadingCheck(true);
+    await dispatch(getdashboardApi(Data, setLoadingAuto, false));
+    await setDashboardData({
+      ...dashboardData,
+      UserLatitude: {
+        value: locationLatitude,
+      },
+      UserLongitude: {
+        value: locationLongitude,
+      },
     });
   };
 
-  // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF Block
   useEffect(() => {
-    if (blockUnBlockCategory) {
-      console.log("block check home cleare", blockUnBlockCategory);
-      blockCategory(blockUnBlockCategory);
-      dispatch(CleareblockUnBlockSuccess());
+    if (locationLatitude && locationLongitude && !LoadingCheck) {
+      apiCallingForAuto();
     }
-  }, [blockUnBlockCategory]);
+  }, [locationLatitude, locationLongitude]);
 
-  // this is how I set data from reducer
+  // Update data from reducer
   useEffect(() => {
     if (dashBoardListings) {
-      if (autoCheck) {
-        // for auto hit
+      if (autoApiCallCheck) {
+        // For auto hit
         setDashboardInformation(dashBoardListings);
-        console.log("helloooooo");
-        dispatch(categoryRoute(false));
-      } else if (flagCheck) {
-        // for lazy loading
+        console.log("Hello");
+      } else if (lazyLoadingCheck) {
+        // For lazy loading
         let newData = [...dashboardInformation, dashBoardListings];
         setDashboardInformation(newData);
-        console.log("helloooooo");
+        console.log("Hello");
       } else {
-        console.log("helloooooo");
-        // for comming from different page
+        console.log("Hello");
+        // For coming from a different page
         setDashboardInformation(dashBoardListings);
       }
     }
@@ -203,9 +171,27 @@ const Home = () => {
 
   useEffect(() => {
     if (loadingAuto) {
-      seLoadingAuto(false);
+      setLoadingAuto(false);
+      console.log("Hello, loadingAuto");
+      // dispatch(categoryRoute(false));
     }
   }, [dashboardInformation]);
+
+  // UPDATE REAL TIME DATA IF API IS GOING TO SUCCESS OF Block
+  const blockCategory = (categoryID) => {
+    setDashboardInformation((prevDashboardInfo) => {
+      return prevDashboardInfo.filter((item) => item.categoryID !== categoryID);
+    });
+  };
+
+  // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCCESS OF Block
+  useEffect(() => {
+    if (blockUnBlockCategory) {
+      console.log("Block check home clear", blockUnBlockCategory);
+      blockCategory(blockUnBlockCategory);
+      dispatch(CleareblockUnBlockSuccess());
+    }
+  }, [blockUnBlockCategory]);
 
   const handleLongPress = (e, index) => {
     e.preventDefault();
@@ -256,14 +242,12 @@ const Home = () => {
                 ) : null}
 
                 {listing.categoryID && (
-                  <>
-                    <Button
-                      id={listing.categoryID}
-                      text="Explore Category"
-                      className="Explore-Home-Button"
-                      onClick={() => onClickExploreCategory(listing.categoryID)}
-                    />
-                  </>
+                  <Button
+                    id={listing.categoryID}
+                    text="Explore Category"
+                    className="Explore-Home-Button"
+                    onClick={() => onClickExploreCategory(listing.categoryID)}
+                  />
                 )}
               </Col>
             </Row>
