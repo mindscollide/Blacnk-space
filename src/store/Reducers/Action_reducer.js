@@ -37,6 +37,7 @@ const actionReducer = (state = initialState, action) => {
         Loading: false,
         dashBoardListings: action.response,
         ResponseMessage: action.message,
+        LoadingCheck:false
       };
     }
 

@@ -8,6 +8,7 @@ import {
   longitudeData,
   latitudeData,
   categoryRoute,
+  getdashboardApi,
 } from "../../../store/Actions/Actions";
 import { getRndomeNumber } from "../../../common/Function/utils";
 
@@ -34,43 +35,43 @@ const Header = React.memo(() => {
   }, [location.pathname]);
 
   // Function to update latitude and longitude
-  // const myFunction = () => {
-  //   const latitudeValue = getRandomNumberBetweenRangesLatitude();
-  //   const longitudeValue = getRandomNumberBetweenRangesLongitude();
-
-  //   localStorage.setItem("latitudeValue", latitudeValue);
-  //   localStorage.setItem("longitudeValue", longitudeValue);
-
-  //   setLatitude(latitudeValue);
-  //   setLongitude(longitudeValue);
-
-  //   dispatch(latitudeData(latitudeValue));
-  //   dispatch(longitudeData(longitudeValue));
-  // };
-
   const myFunction = () => {
-    const latitudeInput = document.getElementById("latitude");
-    const longitudeInput = document.getElementById("longitude");
-    // Check if the element exists
-    if (latitudeInput && latitude !== latitudeInput.value) {
-      // Access the value of the input element
-      const latitudeValue = latitudeInput.value;
-      setLatitude(latitudeValue);
-      localStorage.setItem("latitudeValue", latitudeValue);
-      dispatch(latitudeData(latitudeValue));
-    } else {
-      // console.log("Element with ID 'latitude' not found.");
-    }
-    if (longitudeInput && longitudeInput.value !== longitude) {
-      // Access the value of the input element
-      const longitudeValue = longitudeInput.value;
-      localStorage.setItem("longitudeValue", longitudeValue);
-      setLongitude(longitudeValue);
-      dispatch(longitudeData(longitudeValue));
-    } else {
-      // console.log("Element with ID 'longitude' not found.");
-    }
+    const latitudeValue = getRandomNumberBetweenRangesLatitude();
+    const longitudeValue = getRandomNumberBetweenRangesLongitude();
+
+    localStorage.setItem("latitudeValue", latitudeValue);
+    localStorage.setItem("longitudeValue", longitudeValue);
+
+    setLatitude(latitudeValue);
+    setLongitude(longitudeValue);
+
+    dispatch(latitudeData(latitudeValue));
+    dispatch(longitudeData(longitudeValue));
   };
+
+  // const myFunction = () => {
+  //   const latitudeInput = document.getElementById("latitude");
+  //   const longitudeInput = document.getElementById("longitude");
+  //   // Check if the element exists
+  //   if (latitudeInput && latitude !== latitudeInput.value) {
+  //     // Access the value of the input element
+  //     const latitudeValue = latitudeInput.value;
+  //     setLatitude(latitudeValue);
+  //     localStorage.setItem("latitudeValue", latitudeValue);
+  //     dispatch(latitudeData(latitudeValue));
+  //   } else {
+  //     // console.log("Element with ID 'latitude' not found.");
+  //   }
+  //   if (longitudeInput && longitudeInput.value !== longitude) {
+  //     // Access the value of the input element
+  //     const longitudeValue = longitudeInput.value;
+  //     localStorage.setItem("longitudeValue", longitudeValue);
+  //     setLongitude(longitudeValue);
+  //     dispatch(longitudeData(longitudeValue));
+  //   } else {
+  //     // console.log("Element with ID 'longitude' not found.");
+  //   }
+  // };
 
   useEffect(() => {
     // Update location data initially and then every 10 seconds
@@ -81,9 +82,10 @@ const Header = React.memo(() => {
       clearInterval(intervalId); // Cleanup the interval
     };
   }, []);
+  const [loadingAuto, seLoadingAuto] = useState(true);
 
-  const navigateCategories = () => {
-    dispatch(categoryRoute(true));
+  const navigateCategories =async () => {
+   await dispatch(categoryRoute(true));
     navigate("/BlankSpace/Categories");
   };
 

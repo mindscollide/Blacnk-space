@@ -147,7 +147,7 @@ const getdashboardApi = (Data, seLoadingAuto, flag) => {
             ) {
               dispatch(getDashboardFail("Could not find the data"));
               seLoadingAuto(false);
-              dispatch(categoryRoute(false));
+              // dispatch(categoryRoute(false));
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -159,7 +159,7 @@ const getdashboardApi = (Data, seLoadingAuto, flag) => {
                 getDashboardFail("Provided userid was either null or empty")
               );
               seLoadingAuto(false);
-              dispatch(categoryRoute(false));
+              // dispatch(categoryRoute(false));
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -169,22 +169,22 @@ const getdashboardApi = (Data, seLoadingAuto, flag) => {
             ) {
               dispatch(getDashboardFail("Exception Something went wrong"));
               seLoadingAuto(false);
-              dispatch(categoryRoute(false));
+              // dispatch(categoryRoute(false));
             }
           } else {
             dispatch(getDashboardFail("Something went wrong"));
             seLoadingAuto(false);
-            dispatch(categoryRoute(false));
+            // dispatch(categoryRoute(false));
           }
         } else {
           dispatch(getDashboardFail("Something went wrong"));
           seLoadingAuto(false);
-          dispatch(categoryRoute(false));
+          // dispatch(categoryRoute(false));
         }
       })
       .catch((response) => {
         seLoadingAuto(false);
-        dispatch(categoryRoute(false));
+        // dispatch(categoryRoute(false));
 
         dispatch(getDashboardFail("something went wrong"));
       });
