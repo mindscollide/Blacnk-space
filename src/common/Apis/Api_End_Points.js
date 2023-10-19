@@ -1,8 +1,8 @@
 // our base url or machine api For Blancspace
-const baseURL = "http://192.168.18.241";
+const baseURL = "https://app.blancspace.net";
 
 // our service URLs
-const authenticationPort = ":12000/AUTH";
+const authenticationPort = "/DAuth/";
 //our Final Api
 const authenticationAPI = baseURL + authenticationPort;
 
