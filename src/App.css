@@ -31,11 +31,23 @@
     U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191,
     U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+/* * {
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+} */
 
 body {
   background-color: #000 !important;
   background: #000 !important;
   overflow-x: hidden;
+}
+
+.custom-background {
+  background-color: #000 !important;
+  background: #000 !important;
+  overflow-x: hidden !important;
 }
 
 .header {
@@ -354,4 +366,14 @@ body {
   flex-direction: column;
   min-height: 0;
   background: #000000 !important;
+}
+
+/* for landscpae mobile view issue */
+@media (min-width: 634px) and (max-width: 834px) {
+  .backgroundBody {
+    background-color: #000000 !important;
+    display: contents;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }
