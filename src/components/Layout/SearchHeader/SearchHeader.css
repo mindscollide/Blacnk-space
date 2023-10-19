@@ -52,7 +52,7 @@
 
 .top-result-heading {
   font-family: "Bebas Neue", sans-serif;
-  font-size: 1.3rem;
+  font-size: 20px;
   color: #fff500;
 }
 
@@ -60,7 +60,7 @@
   user-select: none;
   cursor: pointer;
   color: #fff500;
-  font-size: 12px;
+  font-size: 14px;
   font-family: "Bahnschrift", sans-serif;
 }
 
@@ -130,13 +130,13 @@
 @media (max-width: 650px) {
   .top-result-heading {
     font-family: "Bebas Neue", sans-serif;
-    font-size: 1rem;
+    font-size: 14px;
     color: #fff500;
   }
 
   .sortby-heading {
     color: #fff500;
-    font-size: 10px;
+    font-size: 12px;
     margin-top: 2px !important;
     font-family: "Bahnschrift", sans-serif;
   }
