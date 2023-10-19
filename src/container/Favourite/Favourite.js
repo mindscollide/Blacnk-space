@@ -47,7 +47,7 @@ const Favourite = () => {
   }, [favoriteListings]);
 
   return (
-    <Container>
+    <Container  className="backgroundBody">
       <Row>
         <Col>
           {favoriteInformation.map((favoriteUserListing, index) => {

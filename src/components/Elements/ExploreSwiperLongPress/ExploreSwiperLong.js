@@ -204,7 +204,7 @@ const ExploreSwiperLong = ({ exploreListingData, setExploreInformation }) => {
   }, []);
 
   return (
-    <Container>
+    <Container className="backgroundBody">
       <Row>
         <Col lg={12} md={12} sm={12}>
           <Swiper

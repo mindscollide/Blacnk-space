@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import "./Header.css";
 import BlancLogo from "./../../../assets/Images/logo-header.png";
 import { useDispatch } from "react-redux";
@@ -96,7 +96,7 @@ const Header = React.memo(() => {
   };
 
   return (
-    <>
+    <Container className="backgroundBody">
       <input
         key={getRndomeNumber()}
         id="latitude"
@@ -153,7 +153,7 @@ const Header = React.memo(() => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-    </>
+    </Container>
   );
 });
 

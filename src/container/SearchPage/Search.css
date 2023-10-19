@@ -54,10 +54,20 @@
 
 .Search-header-marginTop {
   margin-top: 30px !important;
+  background-color: #000000 !important;
 }
 
 .icon-color-star {
   color: #d00510;
+}
+
+.serach-header-class {
+  position: fixed !important;
+  /* width: calc(100% - 15px); */
+  width: 100%;
+  z-index: 4 !important;
+  background-color: #000000 !important;
+  height: 140px !important;
 }
 
 .span-Kilometer {
@@ -181,6 +191,7 @@
     font-size: 1.1rem;
     padding: 0px 5px;
   }
+
   .rating-icons {
     color: #d00510 !important;
     display: flex !important;
@@ -195,6 +206,7 @@
     text-transform: uppercase;
     /* text-align: right !important; */
   }
+
   .span-Kilometer {
     color: #ffffff;
     font-size: 12px;
@@ -278,4 +290,8 @@
     background-color: transparent !important;
     border: 1px solid #d00510 !important;
   }
+}
+
+.scrollData {
+  margin-top: 140px !important;
 }

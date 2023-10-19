@@ -100,10 +100,6 @@ const SearchHeader = () => {
     }
   }, [actionReducer.searchListingCategory]);
 
-  console.log(
-    actionReducer.searchListingCategory,
-    "actionReducersearchListingCategory"
-  );
 
   //for close category and sort popup
   useEffect(() => {
@@ -121,6 +117,7 @@ const SearchHeader = () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [showDropdown, dropdownCategory]);
+
   const handleFilter = (data) => {
     console.log(data, "newDataa");
     dispatch(filterData(data));

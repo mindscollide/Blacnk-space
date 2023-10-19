@@ -230,7 +230,7 @@ const SubCategories = () => {
   }, [getParentCategory]);
 
   return (
-    <Container>
+    <Container className="backgroundBody">
       <Fragment key={getRndomeNumber()}>
         <Row className="Sub-Category-margintop">
           <Col

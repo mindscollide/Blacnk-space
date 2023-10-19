@@ -5,7 +5,8 @@ import { Container, Col, Row } from "react-bootstrap";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Header from "./../../components/Layout/Header/Header";
 import UserInfo from "./../../components/Layout/User/UserInfo";
-import Home from "./../../container/Home/Home";
+import { ConfigProvider } from "antd";
+
 // import "./App.css";
 
 const Dashboard = () => {
@@ -15,10 +16,12 @@ const Dashboard = () => {
 
   // For category Detail page
   const [isCategoryDetail, setIsCategoryDetail] = useState(false);
+  const [isSearch, setIsSearch] = useState(false);
 
   // To locate category Details
   useEffect(() => {
     setIsCategoryDetail(location.pathname === "/BlankSpace/Category");
+    setIsSearch(location.pathname === "/BlankSpace/SearchPage");
   }, [location.pathname]);
 
   // To locate on Explore Category Page
@@ -27,55 +30,17 @@ const Dashboard = () => {
     setExploreHeaderUser(location.pathname === "/BlankSpace/ExploreCategory");
   }, [location.pathname]);
   return (
-    <>
+    <ConfigProvider>
       <Layout>
-        <div className="header">
-          <Container>
-            {isCategoryDetail ? (
-              <>
-                <Row>
-                  <Col>
-                    <div style={{ display: "none" }}></div>
-                  </Col>
-                </Row>
-              </>
-            ) : (
-              <>
-                <Header />
-                <UserInfo />
-              </>
-            )}
-          </Container>
-        </div>
-        {isCategoryDetail ? (
+        {!isCategoryDetail && !isSearch && (
           <>
-            <div className="category-Detail-page">
-              <Outlet />
-            </div>
+            <Header />
+            <UserInfo />
           </>
-        ) : (
-          <div className="home_Container">
-            <Outlet />
-          </div>
         )}
+        <Outlet />
       </Layout>
-
-      {/* <Row>
-        <Col>
-          <div className="header">
-            <Container>
-              <Header />
-              <UserInfo />
-            </Container>
-          </div>
-          <Row>
-            <Col className="home_Container">
-              <Home />
-            </Col>
-          </Row>
-        </Col>
-      </Row> */}
-    </>
+    </ConfigProvider>
   );
 };
 

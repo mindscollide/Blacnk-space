@@ -37,7 +37,7 @@ const actionReducer = (state = initialState, action) => {
         Loading: false,
         dashBoardListings: action.response,
         ResponseMessage: action.message,
-        LoadingCheck:false
+        LoadingCheck: false,
       };
     }
 
@@ -300,6 +300,14 @@ const actionReducer = (state = initialState, action) => {
       };
     }
 
+    case actions.CLEARE_SEARCH_BLANCSPACE_SUCCESS: {
+      return {
+        ...state,
+        searchListing: [],
+        searchListingCategory: [],
+      };
+    }
+    
     case actions.SEARCH_BLANCSPACE_FAIL: {
       return {
         ...state,
