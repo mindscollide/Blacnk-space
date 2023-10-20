@@ -10,7 +10,11 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Highlighter from "react-highlight-words";
 import { Input } from "antd";
-import { searchBlancApi, filterData, cleareSearchSuccess } from "../../store/Actions/Actions";
+import {
+  searchBlancApi,
+  filterData,
+  cleareSearchSuccess,
+} from "../../store/Actions/Actions";
 import { getRndomeNumber } from "../../common/Function/utils";
 
 import "./Search.css";
@@ -160,11 +164,11 @@ const SearchPage = () => {
   }, [searchListingCategory]);
 
   useEffect(() => {
-   return()=>{
-    dispatch(cleareSearchSuccess())
-   }
+    return () => {
+      dispatch(cleareSearchSuccess());
+    };
   }, []);
-  
+
   //for close category and sort popup
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -320,7 +324,10 @@ const SearchPage = () => {
               <>
                 <Row key={getRndomeNumber()}>
                   <Col
-                    lg={2} md={2} sm={2} xs={3}
+                    lg={2}
+                    md={2}
+                    sm={2}
+                    xs={3}
                     className="d-flex justify-content-start"
                   >
                     <LongPress
@@ -346,7 +353,10 @@ const SearchPage = () => {
                     </LongPress>
                   </Col>
                   <Col
-                    lg={8} md={8} sm={7} xs={5}
+                    lg={8}
+                    md={8}
+                    sm={7}
+                    xs={5}
                     className="d-flex justify-content-start"
                   >
                     <div className="Container">
@@ -376,7 +386,10 @@ const SearchPage = () => {
                   </Col>
 
                   <Col
-                    lg={2} md={2} sm={3} xs={4}
+                    lg={2}
+                    md={2}
+                    sm={3}
+                    xs={4}
                     className="d-flex justify-content-start"
                   >
                     <div className="Container">

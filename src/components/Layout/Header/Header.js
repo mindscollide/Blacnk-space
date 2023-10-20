@@ -96,64 +96,66 @@ const Header = React.memo(() => {
   };
 
   return (
-    <Container className="backgroundBody">
-      <input
-        key={getRndomeNumber()}
-        id="latitude"
-        style={{ display: "none" }}
-      />
-      <input
-        key={getRndomeNumber()}
-        id="longitude"
-        style={{ display: "none" }}
-      />
-      <Navbar>
-        <Navbar.Brand to="Home">
-          {(showExploreIcon ||
-            isFavorite ||
-            isSwitchCategory ||
-            isSubSwitchCategory) && (
-            <i
-              className="icon-home home-icon-color"
-              onClick={() => navigate("/BlankSpace/")}
-            ></i>
-          )}
-          <img
-            key="header-logo"
-            src={BlancLogo}
-            className="Blancspace-Logo"
-            alt="Blancspace-Logo"
-          />
-        </Navbar.Brand>
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="nav-rfq-calculator ms-auto">
-            <Nav.Link>
-              <span
-                className="navlink_text"
+    <>
+      <Container className="backgroundBody">
+        <input
+          key={getRndomeNumber()}
+          id="latitude"
+          style={{ display: "none" }}
+        />
+        <input
+          key={getRndomeNumber()}
+          id="longitude"
+          style={{ display: "none" }}
+        />
+        <Navbar>
+          <Navbar.Brand to="Home">
+            {(showExploreIcon ||
+              isFavorite ||
+              isSwitchCategory ||
+              isSubSwitchCategory) && (
+              <i
+                className="icon-home home-icon-color"
+                onClick={() => navigate("/BlankSpace/")}
+              ></i>
+            )}
+            <img
+              key="header-logo"
+              src={BlancLogo}
+              className="Blancspace-Logo"
+              alt="Blancspace-Logo"
+            />
+          </Navbar.Brand>
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="nav-rfq-calculator ms-auto">
+              <Nav.Link>
+                <span
+                  className="navlink_text"
+                  key={getRndomeNumber()}
+                  onClick={onClickFavourite}
+                >
+                  FAVOURITES
+                </span>
+              </Nav.Link>
+              <Nav.Link>
+                <span
+                  className="navlink_text"
+                  key={getRndomeNumber()}
+                  onClick={navigateCategories}
+                >
+                  CATEGORIES
+                </span>
+              </Nav.Link>
+              <i
                 key={getRndomeNumber()}
-                onClick={onClickFavourite}
-              >
-                FAVOURITES
-              </span>
-            </Nav.Link>
-            <Nav.Link>
-              <span
-                className="navlink_text"
-                key={getRndomeNumber()}
-                onClick={navigateCategories}
-              >
-                CATEGORIES
-              </span>
-            </Nav.Link>
-            <i
-              key={getRndomeNumber()}
-              className="icon-search icon-search-color"
-              onClick={onCickSearchIcon}
-            ></i>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-    </Container>
+                className="icon-search icon-search-color"
+                onClick={onCickSearchIcon}
+              ></i>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+      </Container>
+    </>
   );
 });
 
