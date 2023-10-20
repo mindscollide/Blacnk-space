@@ -6,6 +6,7 @@ import {
   getAllSubCategoriesApi,
   blockUnBlockCategoryApi,
   subCategoryParentApi,
+  cleareSubCategoryParentSuccess,
 } from "../../store/Actions/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "./../../components/Elements";
@@ -92,15 +93,22 @@ const SubCategories = () => {
   const [switchBlockAll, setSwitchBlockAll] = useState(false);
 
   useEffect(() => {
-    if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-      let newHandlerClick = {
-        UserID: "PLU_1",
-        CategoryID: CategoryId,
-      };
-      dispatch(subCategoryParentApi(navigate, newHandlerClick));
-    } else {
-      console.info("This page is not reloaded");
-    }
+    // if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+    //   // let newHandlerClick = {
+    //   //   UserID: "PLU_1",
+    //   //   CategoryID: CategoryId,
+    //   // };
+    //   const storedData = localStorage.getItem("subCAtParentID");
+    //     const newHandlerClick = JSON.parse(storedData);
+    //   dispatch(subCategoryParentApi(navigate, newHandlerClick));
+    //   console.info("subCategoryParentApisubCategoryParentApisubCategoryParentApi");
+    // } else {
+    //   console.info("This page is not reloaded");
+    // }
+    return () => {
+      dispatch(cleareSubCategoryParentSuccess());
+      setSubCategoryInformation([]);
+    };
   }, []);
 
   const handleBlockAllChange = async (checked) => {
@@ -164,10 +172,7 @@ const SubCategories = () => {
       setShowMessage(false);
     }, 1000);
   };
-  console.log(
-    subCategoryInformation,
-    "subCategoryInformationsubCategoryInformation"
-  );
+
   // handler for single category block and unblock
   const handlerEntertainmentChange = async (checked, subCategoryIndex) => {
     console.log(checked, subCategoryIndex, "checkedchecked");
@@ -231,112 +236,116 @@ const SubCategories = () => {
 
   return (
     <Container className="backgroundBody">
-      <Fragment key={getRndomeNumber()}>
-        <Row className="Sub-Category-margintop">
-          <Col
-            lg={6}
-            md={6}
-            sm={6}
-            xs={6}
-            className="d-flex justify-content-start"
-          >
-            <span
-              className={
-                switchBlockAll
-                  ? "sub-category-BlockAll-switch"
-                  : "sub-category-BlockAll-switch"
-              }
+      {Loading ? (
+        <Loader />
+      ) : (
+        <Fragment key={getRndomeNumber()}>
+          <Row className="Sub-Category-margintop">
+            <Col
+              lg={6}
+              md={6}
+              sm={6}
+              xs={6}
+              className="d-flex justify-content-start"
             >
-              {switchBlockAll ? "unBlock all" : "Block All"}
-            </span>
-          </Col>
-          <Col
-            lg={6}
-            md={6}
-            sm={6}
-            xs={6}
-            className="d-flex justify-content-end"
-          >
-            <span>
-              <Switch
-                checked={switchBlockAll}
-                onChange={handleBlockAllChange}
-                className="Sub-switch-color"
-              />
-            </span>
-            {showMessage && (
-              <div className="message-item-Sub-category">
-                {switchBlockAll
-                  ? "All sub Category Blocked"
-                  : "All sub Category UnBlocked"}
-              </div>
-            )}
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            {subCategoryInformation !== null &&
-            subCategoryInformation !== undefined &&
-            subCategoryInformation.length > 0
-              ? subCategoryInformation.map((subCategoryListing, index) => {
-                  return (
-                    <Fragment key={subCategoryListing.categoryID}>
-                      <Row className="Sub-Btm-Line-category mt-3">
-                        <Col
-                          lg={6}
-                          md={6}
-                          sm={6}
-                          xs={6}
-                          className="d-flex justify-content-start"
-                        >
-                          <span
-                            id={subCategoryListing.categoryID}
-                            className={
-                              switchBlockAll
-                                ? "SitchOn-Category-Title"
-                                : subCategoryListing.isBlocked
-                                ? "SitchOn-Category-Title"
-                                : "Switch-Category-Title"
-                            }
+              <span
+                className={
+                  switchBlockAll
+                    ? "sub-category-BlockAll-switch"
+                    : "sub-category-BlockAll-switch"
+                }
+              >
+                {switchBlockAll ? "unBlock all" : "Block All"}
+              </span>
+            </Col>
+            <Col
+              lg={6}
+              md={6}
+              sm={6}
+              xs={6}
+              className="d-flex justify-content-end"
+            >
+              <span>
+                <Switch
+                  checked={switchBlockAll}
+                  onChange={handleBlockAllChange}
+                  className="Sub-switch-color"
+                  size="default"
+                />
+              </span>
+              {showMessage && (
+                <div className="message-item-Sub-category">
+                  {switchBlockAll
+                    ? "All sub Category Blocked"
+                    : "All sub Category UnBlocked"}
+                </div>
+              )}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {subCategoryInformation !== null &&
+              subCategoryInformation !== undefined &&
+              subCategoryInformation.length > 0
+                ? subCategoryInformation.map((subCategoryListing, index) => {
+                    return (
+                      <Fragment key={subCategoryListing.categoryID}>
+                        <Row className="Sub-Btm-Line-category mt-3">
+                          <Col
+                            lg={6}
+                            md={6}
+                            sm={6}
+                            xs={6}
+                            className="d-flex justify-content-start"
                           >
-                            {subCategoryListing.categoryName}
-                          </span>
-                        </Col>
-                        <Col
-                          lg={6}
-                          md={6}
-                          sm={6}
-                          xs={6}
-                          className="d-flex justify-content-end"
-                        >
-                          <span>
-                            <Switch
-                              checked={
-                                switchBlockAll || subCategoryListing.isBlocked
+                            <span
+                              id={subCategoryListing.categoryID}
+                              className={
+                                switchBlockAll
+                                  ? "SitchOn-Category-Title"
+                                  : subCategoryListing.isBlocked
+                                  ? "SitchOn-Category-Title"
+                                  : "Switch-Category-Title"
                               }
-                              onChange={(checked) =>
-                                handlerEntertainmentChange(checked, index)
-                              }
-                              className="Sub-switch-color"
-                            />
-                          </span>
-                          {entertainmentMessage && (
-                            <div className="message-item-Sub-category">
-                              {subCategoryListing.isBlocked
-                                ? "sub Category Blocked"
-                                : "sub Category UnBlocked"}
-                            </div>
-                          )}
-                        </Col>
-                      </Row>
-                    </Fragment>
-                  );
-                })
-              : null}
-          </Col>
-        </Row>
-        {Loading ? <Loader /> : null}
-      </Fragment>
+                            >
+                              {subCategoryListing.categoryName}
+                            </span>
+                          </Col>
+                          <Col
+                            lg={6}
+                            md={6}
+                            sm={6}
+                            xs={6}
+                            className="d-flex justify-content-end"
+                          >
+                            <span>
+                              <Switch
+                                checked={
+                                  switchBlockAll || subCategoryListing.isBlocked
+                                }
+                                onChange={(checked) =>
+                                  handlerEntertainmentChange(checked, index)
+                                }
+                                className="Sub-switch-color"
+                              />
+                            </span>
+                            {entertainmentMessage && (
+                              <div className="message-item-Sub-category">
+                                {subCategoryListing.isBlocked
+                                  ? "sub Category Blocked"
+                                  : "sub Category UnBlocked"}
+                              </div>
+                            )}
+                          </Col>
+                        </Row>
+                      </Fragment>
+                    );
+                  })
+                : null}
+            </Col>
+          </Row>
+        </Fragment>
+      )}
     </Container>
   );
 };

@@ -206,7 +206,7 @@ const Home = () => {
     <Container className="backgroundBody">
       {dashboardInformation.map((listing, index) => {
         return (
-          <Fragment key={getRndomeNumber()}>
+          <Fragment key={listing.categoryID}>
             {/* Food Section */}
             <Row className="mt-5">
               <Col

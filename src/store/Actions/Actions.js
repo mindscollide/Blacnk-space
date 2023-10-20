@@ -422,6 +422,13 @@ const getAllCategoriesSuccess = (response, message) => {
   };
 };
 
+// get All Categories For User Success
+const cleareAllCategoriesSuccess = (response, message) => {
+  return {
+    type: actions.CLEARE_ALL_CATEGORIES_USER_SUCCESS,
+  };
+};
+
 // get All Categories For User Fail
 const getAllCategoriesFail = (message) => {
   return {
@@ -447,7 +454,6 @@ const getAllCategoriesApi = (mainCategories) => {
       },
     })
       .then(async (response) => {
-        console.log("explore Category Api", response);
         if (response.data.responseCode === 417) {
           await dispatch(refreshTokenApi());
           dispatch(getAllCategoriesApi(mainCategories));
@@ -457,10 +463,6 @@ const getAllCategoriesApi = (mainCategories) => {
               response.data.responseResult.responseMessage.toLowerCase() ===
               "BlancSpace_AUTH_AuthManager_GetAllCategoriesForUser_01".toLowerCase()
             ) {
-              console.log(
-                "Explore Category Api",
-                response.data.responseResult.responseMessage
-              );
               dispatch(
                 getAllCategoriesSuccess(
                   response.data.responseResult.categoriesForUsers,
@@ -496,11 +498,9 @@ const getAllCategoriesApi = (mainCategories) => {
             }
           } else {
             dispatch(getAllCategoriesFail("Something went wrong"));
-            console.log("Exception Something went wrong");
           }
         } else {
           dispatch(getAllCategoriesFail("Something went wrong"));
-          console.log("Exception Something went wrong");
         }
       })
       .catch((response) => {
@@ -858,6 +858,12 @@ const subCategoryParentSuccess = (response, message) => {
   };
 };
 
+const cleareSubCategoryParentSuccess = () => {
+  return {
+    type: actions.CLEARE_ALL_SUB_CATEGORY_PARENT_SUCCESS,
+  };
+};
+
 //Get All Sub Category Parent Fail
 const subCategoryParentFail = (message) => {
   return {
@@ -893,10 +899,6 @@ const subCategoryParentApi = (navigate, newHandlerClick) => {
               response.data.responseResult.responseMessage.toLowerCase() ===
               "BlancSpace_AUTH_AuthManager_GetAllSubCategoriesForUserByParentCategoryID_01".toLowerCase()
             ) {
-              console.log(
-                "Explore Category Api",
-                response.data.responseResult.responseMessage
-              );
               await dispatch(
                 subCategoryParentSuccess(
                   response.data.responseResult.categoriesForUsers,
@@ -1275,5 +1277,7 @@ export {
   CleareblockUnBlockSuccess,
   businessDetailsSuccess,
   categoryRoute,
-  cleareSearchSuccess
+  cleareSearchSuccess,
+  cleareAllCategoriesSuccess,
+  cleareSubCategoryParentSuccess
 };

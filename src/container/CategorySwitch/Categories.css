@@ -18,16 +18,18 @@
 }
 
 .switch-color {
-  width: 4em;
-  height: 1.8rem;
-  background-size: contain;
-  margin-top: 0.25em;
-  vertical-align: top;
+  /* width: 4em; */
+  /* height: 1.8rem; */
+  /* background-size: contain; */
+  /* margin-top: 0.25em; */
+  /* vertical-align: top; */
   border: 1px solid #dee2e6;
 }
+
 :where(.css-fpg3f5).ant-switch.ant-switch-checked {
   background-color: #d00510 !important;
 }
+
 :where(.css-dev-only-do-not-override-fpg3f5).ant-switch.ant-switch-checked {
   background-color: #d00510 !important;
   border: 1px solid #d00510 !important;
@@ -40,15 +42,14 @@ button.ant-switch.switch-color.css-dev-only-do-not-override-fpg3f5.ant-switch-ch
 
 :where(.css-dev-only-do-not-override-fpg3f5).ant-switch .ant-switch-handle {
   position: absolute;
-  top: 3px;
+  top: 0px !important;
   inset-inline-start: 2px;
   width: 19px;
   height: 19px;
   transition: all 0.2s ease-in-out;
 }
 
-:where(.css-dev-only-do-not-override-fpg3f5).ant-switch.ant-switch-checked
-  .ant-switch-handle {
+:where(.css-dev-only-do-not-override-fpg3f5).ant-switch.ant-switch-checked .ant-switch-handle {
   inset-inline-start: calc(100% - 23px);
 }
 

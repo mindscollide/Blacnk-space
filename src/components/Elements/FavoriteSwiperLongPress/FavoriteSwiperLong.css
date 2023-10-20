@@ -48,6 +48,7 @@
 
 .fav-tile-empty-letter {
   display: flex;
+  pointer-events: none !important;
   justify-content: center !important;
   align-items: center !important;
   position: absolute !important;
@@ -71,6 +72,7 @@
   font-family: "Bahnschrift", sans-serif;
   font-weight: 500;
 }
+
 .icn-display-block {
   padding: 4px 10px;
   text-align: center;
@@ -125,6 +127,7 @@
     border: 1px solid #d00510;
     cursor: pointer;
   }
+
   .longpress-box {
     position: absolute !important;
     top: 0px !important;
@@ -140,6 +143,7 @@
 
   .fav-tile-empty-letter {
     display: flex;
+    pointer-events: none !important;
     justify-content: center !important;
     align-items: center !important;
     position: absolute !important;
@@ -155,6 +159,7 @@
 @media (max-width: 320px) {
   .fav-tile-empty-letter {
     display: flex;
+    pointer-events: none !important;
     justify-content: center !important;
     align-items: center !important;
     position: absolute !important;
