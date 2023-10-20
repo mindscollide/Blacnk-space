@@ -170,11 +170,10 @@ const UserInfo = () => {
               >
                 <i
                   className="icon-setting setting-icon-size"
-                  // onClick={onClickSettingIcon}
                 ></i>
               </Col>
             </Row>
-            <Row className="mb-3">
+            <Row className="my-3 ">
               <Col
                 lg={12}
                 md={12}

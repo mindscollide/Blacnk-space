@@ -22,7 +22,7 @@ const CategoryDetails = () => {
   const businessListing = useSelector(
     (state) => state.actionReducer.businessListing
   );
-
+  const Loading = useSelector((state) => state.actionReducer.Loading);
   const [businessDetails, setBusinessDetails] = useState({});
   const [showLoader, setShowLoader] = useState(true);
   const [businessDetailsID, setBusinessDetailsID] = useState(true);
@@ -56,13 +56,9 @@ const CategoryDetails = () => {
 
   return (
     <Fragment>
-      {showLoader && (
-        <div className="loader-overlay">
-          <Loader />
-        </div>
-      )}
+      {showLoader || (Loading && <Loader />)}
       {Object.keys(businessDetails).length > 0 && (
-        <Container  className="backgroundBody" fluid>
+        <Container className="backgroundBody" fluid>
           {Object.keys(businessDetails.listOfBase64Images).length > 0 && (
             <div className="swiper-category-slider">
               <Row>

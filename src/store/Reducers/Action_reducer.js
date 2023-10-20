@@ -138,6 +138,13 @@ const actionReducer = (state = initialState, action) => {
       };
     }
 
+    case actions.CLEARE_ALL_CATEGORIES_USER_SUCCESS: {
+      return {
+        ...state,
+        getAllCategoriesUser: [],
+      };
+    }
+
     case actions.GET_ALL_CATEGORIES_USER_FAIL: {
       return {
         ...state,
@@ -243,6 +250,13 @@ const actionReducer = (state = initialState, action) => {
       };
     }
 
+    case actions.CLEARE_ALL_SUB_CATEGORY_PARENT_SUCCESS: {
+      return {
+        ...state,
+        getParentCategory: [],
+      };
+    }
+
     case actions.GET_ALL_SUB_CATEGORY_PARENT_FAIL: {
       return {
         ...state,
@@ -307,7 +321,7 @@ const actionReducer = (state = initialState, action) => {
         searchListingCategory: [],
       };
     }
-    
+
     case actions.SEARCH_BLANCSPACE_FAIL: {
       return {
         ...state,

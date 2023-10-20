@@ -7,6 +7,7 @@ import {
   getAllCategoriesApi,
   subCategoryParentApi,
   blockUnBlockCategoryApi,
+  cleareAllCategoriesSuccess,
 } from "../../store/Actions/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "./../../components/Elements";
@@ -28,7 +29,8 @@ const Categories = () => {
   const getAllCategoriesUser = useSelector(
     (state) => state.actionReducer.getAllCategoriesUser
   );
-  const Loading = useSelector((state) => state.Loading);
+  const Loading = useSelector((state) => state.actionReducer.Loading);
+  const [loderShow, setLoderShow] = useState(true);
 
   //state for main Categories Information
   const [categoriesInformation, setCategoriesInformation] = useState([]);
@@ -126,11 +128,16 @@ const Categories = () => {
   };
 
   //onClick handler in Title
-  const clickTitleHandler = (categoryData) => {
+  const clickTitleHandler = async (categoryData) => {
     let newHandlerClick = {
       UserID: "PLU_1",
       CategoryID: categoryData.categoryID,
     };
+    // await localStorage.setItem(
+    //   "subCAtParentID",
+    //   JSON.stringify(newHandlerClick)
+    // );
+    // navigate("/BlankSpace/SubCategories");
     dispatch(subCategoryParentApi(navigate, newHandlerClick));
   };
 
@@ -140,6 +147,11 @@ const Categories = () => {
       UserID: "PLU_1",
     };
     dispatch(getAllCategoriesApi(mainCategories));
+    return () => {
+      dispatch(cleareAllCategoriesSuccess());
+      setCategoriesInformation([]);
+      setLoderShow(true);
+    };
   }, []);
 
   // useEffect for getting data from reducers
@@ -150,74 +162,81 @@ const Categories = () => {
       getAllCategoriesUser.length !== 0
     ) {
       setCategoriesInformation(getAllCategoriesUser);
+      setLoderShow(false);
     }
   }, [getAllCategoriesUser]);
-
   return (
-    <Container  className="backgroundBody">
-      <Row>
-        <Col>
-          {categoriesInformation !== null &&
-          categoriesInformation !== undefined &&
-          categoriesInformation.length > 0
-            ? categoriesInformation.map((categoriesListing, index) => {
-                return (
-                  <Row className="category-bottom" key={getRndomeNumber()}>
-                    <Col
-                      lg={6}
-                      md={6}
-                      sm={6}
-                      xs={6}
-                      className="d-flex justify-content-start"
+    <Container className="backgroundBody">
+      {Loading && loderShow ? (
+        <Loader />
+      ) : (
+        <Row>
+          <Col>
+            {categoriesInformation !== null &&
+            categoriesInformation !== undefined &&
+            categoriesInformation.length > 0
+              ? categoriesInformation.map((categoriesListing, index) => {
+                  return (
+                    <Row
+                      className="category-bottom"
+                      key={categoriesListing.categoryID}
                     >
-                      <span
-                        id={categoriesListing.categoryID}
-                        className={
-                          categoriesListing.isBlocked
-                            ? "SitchOn-Category-Title"
-                            : "Switch-Category-Title"
-                        }
-                        onClick={() =>
-                          !categoriesListing.isBlocked &&
-                          clickTitleHandler(categoriesListing)
-                        }
+                      <Col
+                        lg={6}
+                        md={6}
+                        sm={6}
+                        xs={6}
+                        className="d-flex justify-content-start"
                       >
-                        {categoriesListing.categoryName}
-
-                        <i className="icon-link"></i>
-                      </span>
-                    </Col>
-                    <Col
-                      lg={6}
-                      md={6}
-                      sm={6}
-                      xs={6}
-                      className="d-flex justify-content-end"
-                    >
-                      <span>
-                        <Switch
-                          checked={categoriesListing.isBlocked}
-                          onChange={(checked) =>
-                            handleSwitchChange(checked, index)
+                        <span
+                          id={categoriesListing.categoryID}
+                          className={
+                            categoriesListing.isBlocked
+                              ? "SitchOn-Category-Title"
+                              : "Switch-Category-Title"
                           }
-                          className="switch-color"
-                        />
-                      </span>
-                      {showMessage && (
-                        <div className="message-item-category">
-                          {categoriesListing.isBlocked
-                            ? "Category Blocked"
-                            : "Category UnBlocked"}
-                        </div>
-                      )}
-                    </Col>
-                  </Row>
-                );
-              })
-            : null}
-          {Loading ? <Loader /> : null}
-        </Col>
-      </Row>
+                          onClick={() =>
+                            !categoriesListing.isBlocked &&
+                            clickTitleHandler(categoriesListing)
+                          }
+                        >
+                          {categoriesListing.categoryName}
+
+                          <i className="icon-link"></i>
+                        </span>
+                      </Col>
+                      <Col
+                        lg={6}
+                        md={6}
+                        sm={6}
+                        xs={6}
+                        className="d-flex justify-content-end"
+                      >
+                        <span>
+                          <Switch
+                            checked={categoriesListing.isBlocked}
+                            onChange={(checked) =>
+                              handleSwitchChange(checked, index)
+                            }
+                            size="default"
+                            className="switch-color"
+                          />
+                        </span>
+                        {showMessage && (
+                          <div className="message-item-category">
+                            {categoriesListing.isBlocked
+                              ? "Category Blocked"
+                              : "Category UnBlocked"}
+                          </div>
+                        )}
+                      </Col>
+                    </Row>
+                  );
+                })
+              : null}
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 };

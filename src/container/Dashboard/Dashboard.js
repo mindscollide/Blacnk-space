@@ -31,7 +31,7 @@ const Dashboard = () => {
   }, [location.pathname]);
   return (
     <ConfigProvider>
-      <Layout>
+      <Layout className="backgroundBody">
         {!isCategoryDetail && !isSearch && (
           <>
             <Header />
