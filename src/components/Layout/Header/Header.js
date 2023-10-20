@@ -75,11 +75,11 @@ const Header = React.memo(() => {
   useEffect(() => {
     // Update location data initially and then every 10 seconds
     myFunction();
-    const intervalId = setInterval(myFunction, 10000);
+    // const intervalId = setInterval(myFunction, 10000);
 
-    return () => {
-      clearInterval(intervalId); // Cleanup the interval
-    };
+    // return () => {
+    //   clearInterval(intervalId); // Cleanup the interval
+    // };
   }, []);
 
   const navigateCategories = () => {
@@ -96,66 +96,64 @@ const Header = React.memo(() => {
   };
 
   return (
-    <>
-      <Container className="backgroundBody">
-        <input
-          key={getRndomeNumber()}
-          id="latitude"
-          style={{ display: "none" }}
-        />
-        <input
-          key={getRndomeNumber()}
-          id="longitude"
-          style={{ display: "none" }}
-        />
-        <Navbar>
-          <Navbar.Brand to="Home">
-            {(showExploreIcon ||
-              isFavorite ||
-              isSwitchCategory ||
-              isSubSwitchCategory) && (
-              <i
-                className="icon-home home-icon-color"
-                onClick={() => navigate("/BlankSpace/")}
-              ></i>
-            )}
-            <img
-              key="header-logo"
-              src={BlancLogo}
-              className="Blancspace-Logo"
-              alt="Blancspace-Logo"
-            />
-          </Navbar.Brand>
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="nav-rfq-calculator ms-auto">
-              <Nav.Link>
-                <span
-                  className="navlink_text"
-                  key={getRndomeNumber()}
-                  onClick={onClickFavourite}
-                >
-                  FAVOURITES
-                </span>
-              </Nav.Link>
-              <Nav.Link>
-                <span
-                  className="navlink_text"
-                  key={getRndomeNumber()}
-                  onClick={navigateCategories}
-                >
-                  CATEGORIES
-                </span>
-              </Nav.Link>
-              <i
+    <Container className="backgroundBody">
+      <input
+        key={getRndomeNumber()}
+        id="latitude"
+        style={{ display: "none" }}
+      />
+      <input
+        key={getRndomeNumber()}
+        id="longitude"
+        style={{ display: "none" }}
+      />
+      <Navbar>
+        <Navbar.Brand to="Home">
+          {(showExploreIcon ||
+            isFavorite ||
+            isSwitchCategory ||
+            isSubSwitchCategory) && (
+            <i
+              className="icon-home home-icon-color"
+              onClick={() => navigate("/BlankSpace/")}
+            ></i>
+          )}
+          <img
+            key="header-logo"
+            src={BlancLogo}
+            className="Blancspace-Logo"
+            alt="Blancspace-Logo"
+          />
+        </Navbar.Brand>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="nav-rfq-calculator ms-auto">
+            <Nav.Link>
+              <span
+                className="navlink_text"
                 key={getRndomeNumber()}
-                className="icon-search icon-search-color"
-                onClick={onCickSearchIcon}
-              ></i>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-      </Container>
-    </>
+                onClick={onClickFavourite}
+              >
+                FAVOURITES
+              </span>
+            </Nav.Link>
+            <Nav.Link>
+              <span
+                className="navlink_text"
+                key={getRndomeNumber()}
+                onClick={navigateCategories}
+              >
+                CATEGORIES
+              </span>
+            </Nav.Link>
+            <i
+              key={getRndomeNumber()}
+              className="icon-search icon-search-color"
+              onClick={onCickSearchIcon}
+            ></i>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    </Container>
   );
 });
 
@@ -165,21 +163,21 @@ export default Header;
 function getRandomNumberBetweenRangesLatitude() {
   const rangeNumber = Math.random();
   if (rangeNumber < 0.3333) {
-    return "24.502";
+    return "24.9057";
   } else if (rangeNumber < 0.6666) {
-    return "24.501";
+    return "24.9058";
   } else {
-    return "24.503";
+    return "24.9059";
   }
 }
 
 function getRandomNumberBetweenRangesLongitude() {
   const rangeNumber = Math.random();
   if (rangeNumber < 0.3333) {
-    return "54.388";
+    return "67.0652";
   } else if (rangeNumber < 0.6666) {
-    return "54.389";
+    return "67.0653";
   } else {
-    return "54.387";
+    return "67.0654";
   }
 }

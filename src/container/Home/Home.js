@@ -10,7 +10,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Spinner } from "react-bootstrap";
-import { getRndomeNumber } from "../../common/Function/utils";
 import {
   getdashboardApi,
   CleareblockUnBlockSuccess,
@@ -169,14 +168,6 @@ const Home = () => {
     }
   }, [dashBoardListings]);
 
-  useEffect(() => {
-    if (loadingAuto) {
-      setLoadingAuto(false);
-      console.log("Hello, loadingAuto");
-      // dispatch(categoryRoute(false));
-    }
-  }, [dashboardInformation]);
-
   // UPDATE REAL TIME DATA IF API IS GOING TO SUCCESS OF Block
   const blockCategory = (categoryID) => {
     setDashboardInformation((prevDashboardInfo) => {
@@ -201,6 +192,12 @@ const Home = () => {
   const handleShortPress = (e) => {
     // e.preventDefault();
   };
+
+  useEffect(() => {
+    if (loadingAuto) {
+      setLoadingAuto(false);
+    }
+  }, [dashboardInformation]);
 
   return (
     <Container className="backgroundBody">
@@ -258,7 +255,7 @@ const Home = () => {
                   listing.dashBoardListings.length > 0 && (
                     <SwiperLongpress
                       dashboardData={dashboardData}
-                      listingData={listing.dashBoardListings}
+                      listingDataIndex={index}
                       setDashboardInformation={setDashboardInformation}
                       dashboardInformation={dashboardInformation}
                     />
