@@ -8,21 +8,13 @@ import LongPress from "../LonPress/LongPress";
 import {
   updateFavoriteApi,
   likeUnlikeApi,
-  businessDetailsMainApi,
-  cleareLikeResponce,
-  cleareFavResponce,
 } from "../../../store/Actions/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import "./FavoriteSwiperLong.css";
 import { getRndomeNumber } from "../../../common/Function/utils";
 
-const FavoriteSwiperLong = ({
-  favoriteListingData,
-  favoriteInformation,
-  setFavoriteInformation,
-}) => {
-  console.log(favoriteListingData, "listingDatalistingData");
+const FavoriteSwiperLong = ({ favoriteListingData }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const locationLatitude = useSelector(
@@ -31,12 +23,7 @@ const FavoriteSwiperLong = ({
   const locationLongitude = useSelector(
     (state) => state.actionReducer.locationLongitude
   );
-  const favoriteListing = useSelector(
-    (state) => state.actionReducer.favoriteListing
-  );
-  const likeUnlikeBusiness = useSelector(
-    (state) => state.actionReducer.likeUnlikeBusiness
-  );
+
   const [longData, setLongData] = useState([]);
 
   const [activeCategory, setActiveCategory] = useState(0);
@@ -163,34 +150,6 @@ const FavoriteSwiperLong = ({
     dispatch(updateFavoriteApi(newLike, likeItem));
   };
 
-  // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
-  const toggleIsFavriote = (businessListingId) => {
-    setFavoriteInformation((prevDashboardInfo) => {
-      const updatedData = prevDashboardInfo
-        .map((category) => {
-          const updatedListings = category.favoriteByUserListings.filter(
-            (listing) => listing.businessListingId !== businessListingId
-          );
-
-          return {
-            ...category,
-            favoriteByUserListings: updatedListings,
-          };
-        })
-        .filter((category) => category.favoriteByUserListings.length > 0);
-
-      return updatedData;
-    });
-  };
-
-  // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
-  useEffect(() => {
-    if (favoriteListing != null) {
-      toggleIsFavriote(favoriteListing);
-      dispatch(cleareFavResponce());
-    }
-  }, [favoriteListing]);
-
   const toggleLike = (checked, LikeData, dataIndex) => {
     let likeItem = LikeData.businessListingId;
     let filterData = [...longData];
@@ -210,37 +169,6 @@ const FavoriteSwiperLong = ({
 
     dispatch(likeUnlikeApi(newLike, likeItem));
   };
-
-  // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF LIKE
-  const toggleIsLiked = (businessListingId) => {
-    const updatedData = favoriteInformation.map((category) => {
-      const updatedListings = category.favoriteByUserListings.map((listing) => {
-        if (listing.businessListingId === businessListingId) {
-          // Toggle isLiked value
-          return {
-            ...listing,
-            isLiked: !listing.isLiked,
-          };
-        }
-        return listing;
-      });
-
-      return {
-        ...category,
-        favoriteByUserListings: updatedListings,
-      };
-    });
-
-    setFavoriteInformation(updatedData);
-  };
-
-  // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF LIKE
-  useEffect(() => {
-    if (likeUnlikeBusiness != null) {
-      toggleIsLiked(likeUnlikeBusiness);
-      dispatch(cleareLikeResponce());
-    }
-  }, [likeUnlikeBusiness]);
 
   const handleLongPress = (e, value) => {
     // Handle long press here
@@ -394,11 +322,7 @@ const FavoriteSwiperLong = ({
                       <>
                         <div
                           ref={FavoriteLongBoxRef}
-                          className={
-                            longData.length > index + 1
-                              ? "longpress-box"
-                              : "longpress-box-last"
-                          }
+                          className={"longpress-box"}
                         >
                           <div className="options-main-div">
                             <span className="icn-display-block">

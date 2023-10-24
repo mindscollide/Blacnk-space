@@ -1,7 +1,11 @@
 import { Fragment, useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Loader, FavoriteSwiperLong } from "../../components/Elements";
-import { favoriteByUserApi } from "../../store/Actions/Actions";
+import {
+  cleareFavResponce,
+  cleareLikeResponce,
+  favoriteByUserApi,
+} from "../../store/Actions/Actions";
 import "swiper/css";
 import "./Favourite.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +18,12 @@ const Favourite = () => {
   const favoriteListings = useSelector(
     (state) => state.actionReducer.favoriteListings
   );
-
+  const favoriteListing = useSelector(
+    (state) => state.actionReducer.favoriteListing
+  );
+  const likeUnlikeBusiness = useSelector(
+    (state) => state.actionReducer.likeUnlikeBusiness
+  );
   // state for explore Favourite status
   const [favoriteInformation, setFavoriteInformation] = useState([]);
 
@@ -45,9 +54,68 @@ const Favourite = () => {
       setFavoriteInformation(favoriteListings);
     }
   }, [favoriteListings]);
+  // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF LIKE
+  const toggleIsLiked = (businessListingId) => {
+    const updatedData = favoriteInformation.map((category) => {
+      const updatedListings = category.favoriteByUserListings.map((listing) => {
+        if (listing.businessListingId === businessListingId) {
+          // Toggle isLiked value
+          return {
+            ...listing,
+            isLiked: !listing.isLiked,
+          };
+        }
+        return listing;
+      });
+
+      return {
+        ...category,
+        favoriteByUserListings: updatedListings,
+      };
+    });
+
+    setFavoriteInformation(updatedData);
+  };
+
+  // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF LIKE
+  useEffect(() => {
+    if (likeUnlikeBusiness) {
+      console.log("toggleIsLiked");
+      toggleIsLiked(likeUnlikeBusiness);
+      dispatch(cleareLikeResponce());
+    }
+  }, [likeUnlikeBusiness]);
+
+  // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
+  const toggleIsFavriote = (businessListingId) => {
+    setFavoriteInformation((prevDashboardInfo) => {
+      const updatedData = prevDashboardInfo
+        .map((category) => {
+          const updatedListings = category.favoriteByUserListings.filter(
+            (listing) => listing.businessListingId !== businessListingId
+          );
+
+          return {
+            ...category,
+            favoriteByUserListings: updatedListings,
+          };
+        })
+        .filter((category) => category.favoriteByUserListings.length > 0);
+
+      return updatedData;
+    });
+  };
+
+  // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
+  useEffect(() => {
+    if (favoriteListing) {
+      toggleIsFavriote(favoriteListing);
+      dispatch(cleareFavResponce());
+    }
+  }, [favoriteListing]);
 
   return (
-    <Container  className="backgroundBody">
+    <Container className="backgroundBody">
       <Row>
         <Col>
           {favoriteInformation.map((favoriteUserListing, index) => {

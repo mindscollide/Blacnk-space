@@ -271,7 +271,7 @@ const actionReducer = (state = initialState, action) => {
     }
 
     case actions.LIKE_UNLIKE_BUSINESS_SUCCESS: {
-      console.log(action.response, "checkedcheckedchecked likeUnlikeSuccess");
+      console.log("toggleIsLiked")
       return {
         ...state,
         Loading: false,

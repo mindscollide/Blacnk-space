@@ -7,6 +7,8 @@ import {
 } from "../../components/Elements";
 import {
   CleareblockUnBlockSuccess,
+  cleareFavResponce,
+  cleareLikeResponce,
   exploreCategory,
 } from "../../store/Actions/Actions";
 import "swiper/css";
@@ -30,6 +32,14 @@ const ExploreCategory = () => {
   const blockUnBlockCategory = useSelector(
     (state) => state.actionReducer.blockUnBlockCategory
   );
+  const likeUnlikeBusiness = useSelector(
+    (state) => state.actionReducer.likeUnlikeBusiness
+  );
+  
+  const favoriteListing = useSelector(
+    (state) => state.actionReducer.favoriteListing
+  );
+
 
   let categoryID = localStorage.getItem("categoryID");
 
@@ -124,6 +134,62 @@ const ExploreCategory = () => {
     };
   }, [activeCategory]);
 
+  const toggleIsLiked = (businessListingId) => {
+    setExploreInformation((prevDashboardInfo) => {
+      return prevDashboardInfo.map((category) => {
+        const updatedListings = category.subCategoryListings.map((listing) => {
+          if (listing.subCategoryListingId === businessListingId) {
+            return {
+              ...listing,
+              isLiked: !listing.isLiked,
+            };
+          }
+          return listing;
+        });
+        return {
+          ...category,
+          subCategoryListings: updatedListings,
+        };
+      });
+    });
+    setActiveCategory(0);
+  };
+
+  useEffect(() => {
+    if (likeUnlikeBusiness) {
+      toggleIsLiked(likeUnlikeBusiness);
+      dispatch(cleareLikeResponce());
+      console.log("toggleIsLiked")
+    }
+  }, [likeUnlikeBusiness]);
+
+  const toggleIsFavriote = (businessListingId) => {
+    setExploreInformation((prevDashboardInfo) => {
+      return prevDashboardInfo.map((category) => {
+        const updatedListings = category.subCategoryListings.map((listing) => {
+          if (listing.subCategoryListingId === businessListingId) {
+            return {
+              ...listing,
+              isFavorite: !listing.isFavorite,
+            };
+          }
+          return listing;
+        });
+        return {
+          ...category,
+          subCategoryListings: updatedListings,
+        };
+      });
+    });
+    setActiveCategory(0);
+  };
+
+  useEffect(() => {
+    if (favoriteListing ) {
+      toggleIsFavriote(favoriteListing);
+      dispatch(cleareFavResponce());
+    }
+  }, [favoriteListing]);
   return (
     <Container  className="backgroundBody">
       <Row>

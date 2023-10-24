@@ -14,6 +14,8 @@ import {
   getdashboardApi,
   CleareblockUnBlockSuccess,
   categoryRoute,
+  cleareLikeResponce,
+  cleareFavResponce,
 } from "../../store/Actions/Actions";
 
 const Home = () => {
@@ -192,7 +194,74 @@ const Home = () => {
   const handleShortPress = (e) => {
     // e.preventDefault();
   };
+  const likeUnlikeBusiness = useSelector(
+    (state) => state.actionReducer.likeUnlikeBusiness
+  );
+  const favoriteListing = useSelector(
+    (state) => state.actionReducer.favoriteListing
+  );
+  // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF LIKE
+  const toggleIsLiked = (businessListingId) => {
+    setDashboardInformation((prevDashboardInfo) => {
+      const updatedData = prevDashboardInfo.map((category) => {
+        const updatedListings = category.dashBoardListings.map((listing) => {
+          if (listing.businessListingId === businessListingId) {
+            // Toggle isLiked value
+            return {
+              ...listing,
+              isLiked: !listing.isLiked,
+            };
+          }
+          return listing;
+        });
+        return {
+          ...category,
+          dashBoardListings: updatedListings,
+        };
+      });
+      return updatedData;
+    });
+  };
+  // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF LIKE
+  useEffect(() => {
+    if (likeUnlikeBusiness != null) {
+      console.log("toggleIsLiked")
+      toggleIsLiked(likeUnlikeBusiness);
+      dispatch(cleareLikeResponce());
+    }
+  }, [likeUnlikeBusiness]);
+  // UPDATE REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
+  const toggleIsFavriote = (businessListingId) => {
+    setDashboardInformation((prevDashboardInfo) => {
+      const updatedData = prevDashboardInfo.map((category) => {
+        const updatedListings = category.dashBoardListings.map((listing) => {
+          if (listing.businessListingId === businessListingId) {
+            // Toggle isFavorite value
+            return {
+              ...listing,
+              isFavorite: !listing.isFavorite,
+            };
+          }
+          return listing;
+        });
 
+        return {
+          ...category,
+          dashBoardListings: updatedListings,
+        };
+      });
+
+      return updatedData;
+    });
+  };
+  // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
+  useEffect(() => {
+    if (favoriteListing) {
+      console.log("toggleIsLiked favoriteListing")
+      toggleIsFavriote(favoriteListing);
+      dispatch(cleareFavResponce());
+    }
+  }, [favoriteListing]);
   useEffect(() => {
     if (loadingAuto) {
       setLoadingAuto(false);
@@ -265,7 +334,6 @@ const Home = () => {
           </Fragment>
         );
       })}
-
       {LoadingCheck ? (
         <Loader />
       ) : Loading ? (

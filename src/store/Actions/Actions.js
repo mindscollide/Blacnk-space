@@ -960,7 +960,7 @@ const likeUnlikeInit = () => {
 
 // Like un like business Success
 const likeUnlikeSuccess = (response, message) => {
-  console.log(response, "checkedcheckedchecked likeUnlikeSuccess");
+  console.log("toggleIsLiked");
   return {
     type: actions.LIKE_UNLIKE_BUSINESS_SUCCESS,
     response: response,
@@ -1006,9 +1006,7 @@ const likeUnlikeApi = (newLike, dataIndex) => {
               response.data.responseResult.responseMessage.toLowerCase() ===
               "BlancSpace_AUTH_AuthManager_LikeUnLikeBusinessListings_01".toLowerCase()
             ) {
-              await dispatch(
-                likeUnlikeSuccess(dataIndex, "Updated successfully")
-              );
+              dispatch(likeUnlikeSuccess(dataIndex, "Updated successfully"));
             } else if (
               response.data.responseResult.responseMessage
                 .toLowerCase()
@@ -1279,5 +1277,5 @@ export {
   categoryRoute,
   cleareSearchSuccess,
   cleareAllCategoriesSuccess,
-  cleareSubCategoryParentSuccess
+  cleareSubCategoryParentSuccess,
 };

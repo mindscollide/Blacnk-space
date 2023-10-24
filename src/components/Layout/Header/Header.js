@@ -75,11 +75,11 @@ const Header = React.memo(() => {
   useEffect(() => {
     // Update location data initially and then every 10 seconds
     myFunction();
-    // const intervalId = setInterval(myFunction, 10000);
+    const intervalId = setInterval(myFunction, 10000);
 
-    // return () => {
-    //   clearInterval(intervalId); // Cleanup the interval
-    // };
+    return () => {
+      clearInterval(intervalId); // Cleanup the interval
+    };
   }, []);
 
   const navigateCategories = () => {
