@@ -17,7 +17,7 @@ import "swiper/css";
 import "./ExploreSwiperLong.css";
 import { getRndomeNumber } from "../../../common/Function/utils";
 
-const ExploreSwiperLong = ({ exploreListingData, setExploreInformation }) => {
+const ExploreSwiperLong = ({ exploreListingData }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const locationLatitude = useSelector(
@@ -26,13 +26,6 @@ const ExploreSwiperLong = ({ exploreListingData, setExploreInformation }) => {
   const locationLongitude = useSelector(
     (state) => state.actionReducer.locationLongitude
   );
-  const favoriteListing = useSelector(
-    (state) => state.actionReducer.favoriteListing
-  );
-  const likeUnlikeBusiness = useSelector(
-    (state) => state.actionReducer.likeUnlikeBusiness
-  );
-
   const ExploreLongBoxRef = useRef(null);
 
   const [longData, setLongData] = useState([]);
@@ -70,34 +63,6 @@ const ExploreSwiperLong = ({ exploreListingData, setExploreInformation }) => {
     dispatch(updateFavoriteApi(newLike, likeItem));
   };
 
-  const toggleIsFavriote = (businessListingId) => {
-    setExploreInformation((prevDashboardInfo) => {
-      return prevDashboardInfo.map((category) => {
-        const updatedListings = category.subCategoryListings.map((listing) => {
-          if (listing.subCategoryListingId === businessListingId) {
-            return {
-              ...listing,
-              isFavorite: !listing.isFavorite,
-            };
-          }
-          return listing;
-        });
-        return {
-          ...category,
-          subCategoryListings: updatedListings,
-        };
-      });
-    });
-    setActiveCategory(0);
-  };
-
-  useEffect(() => {
-    if (favoriteListing != null) {
-      toggleIsFavriote(favoriteListing);
-      dispatch(cleareFavResponce());
-    }
-  }, [favoriteListing]);
-
   const toggleLike = (checked, LikeData, dataIndex) => {
     let likeItem = LikeData.subCategoryListingId;
     let filterData = [...longData];
@@ -115,34 +80,6 @@ const ExploreSwiperLong = ({ exploreListingData, setExploreInformation }) => {
     };
     dispatch(likeUnlikeApi(newLike, likeItem));
   };
-
-  const toggleIsLiked = (businessListingId) => {
-    setExploreInformation((prevDashboardInfo) => {
-      return prevDashboardInfo.map((category) => {
-        const updatedListings = category.subCategoryListings.map((listing) => {
-          if (listing.subCategoryListingId === businessListingId) {
-            return {
-              ...listing,
-              isLiked: !listing.isLiked,
-            };
-          }
-          return listing;
-        });
-        return {
-          ...category,
-          subCategoryListings: updatedListings,
-        };
-      });
-    });
-    setActiveCategory(0);
-  };
-
-  useEffect(() => {
-    if (likeUnlikeBusiness != null) {
-      toggleIsLiked(likeUnlikeBusiness);
-      dispatch(cleareLikeResponce());
-    }
-  }, [likeUnlikeBusiness]);
 
   const onExploreCat = async (exploreData) => {
     if (exploreData && exploreData.subCategoryListingId) {
@@ -264,13 +201,7 @@ const ExploreSwiperLong = ({ exploreListingData, setExploreInformation }) => {
                       <>
                         <div
                           ref={ExploreLongBoxRef}
-                          className={
-                            longData.length > index + 1 || longData.length < 2
-                              ? "Explore-longpress-box"
-                              : longData.length === 2 && index + 1 === 2
-                              ? "Explore-longpress-box-middle"
-                              : "Explore-longpress-box-last"
-                          }
+                          className={"Explore-longpress-box"}
                         >
                           <div className="options-main-div">
                             <span className="icn-display-block">
