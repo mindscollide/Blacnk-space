@@ -278,158 +278,171 @@ const SwiperLongpress = ({
                     .charAt(0)
                     .toUpperCase();
                   return (
-                    <SwiperSlide key={getRndomeNumber()}>
-                      <LongPress
-                        onLongPress={(e) =>
-                          handleLongPress(e, newData.businessListingId)
-                        }
-                        onPress={(e) => handleShortPress(e, newData)}
-                        duration={500}
+                    <>
+                      {/* <div className="swiper-main-position"> */}
+                      <SwiperSlide
+                        key={getRndomeNumber()}
                       >
-                        <Button
-                          id={`swiper-section ${newData.businessListingId}`}
-                          className={`Swipper-slide-box ${
-                            activeCategory === newData.businessListingId
-                              ? "active"
-                              : ""
-                          }`}
-                          text={
-                            newData.businessListingIcon !== "" ? (
-                              <img
-                                src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
-                                alt="Icon"
-                                className="Swipper-slide-box-image"
-                              />
-                            ) : (
-                              <span className="tile-empty-letter">
-                                {firstLetter}
-                              </span>
-                            )
+                        <LongPress
+                          onLongPress={(e) =>
+                            handleLongPress(e, newData.businessListingId)
                           }
-                        ></Button>
-                      </LongPress>
+                          onPress={(e) => handleShortPress(e, newData)}
+                          duration={500}
+                        >
+                          <Button
+                            id={`swiper-section ${newData.businessListingId}`}
+                            className={`Swipper-slide-box ${
+                              activeCategory === newData.businessListingId
+                                ? "active"
+                                : ""
+                            }`}
+                            text={
+                              newData.businessListingIcon !== "" ? (
+                                <img
+                                  src={`data:image/jpeg;base64,${newData.businessListingIcon}`}
+                                  alt="Icon"
+                                  className="Swipper-slide-box-image"
+                                />
+                              ) : (
+                                <span className="tile-empty-letter">
+                                  {firstLetter}
+                                </span>
+                              )
+                            }
+                          ></Button>
+                        </LongPress>
 
-                      {activeCategory === newData.businessListingId ? (
-                        <>
-                          <div
-                            ref={swiperLongPressBoxRef}
-                            className="swiper-longpress-box"
-                          >
-                            <div className="options-main-div">
-                              <span className="icn-display-block">
-                                {newData.isLiked ? (
-                                  <>
-                                    <span
-                                      onClick={() =>
-                                        toggleLike(false, newData, index)
-                                      }
-                                    >
-                                      <HandThumbsUpFill className="icon-class" />
-                                      <span className="main-options">
-                                        UnLike
+                        {activeCategory === newData.businessListingId ? (
+                          <>
+                            <div
+                              ref={swiperLongPressBoxRef}
+                              className={
+                                dashboardInformation[listingDataIndex]
+                                  .dashBoardListings.length >
+                                index + 1
+                                  ? "swiper-longpress-box"
+                                  : "swiper-longpress-box-last"
+                              }
+                            >
+                              <div className="options-main-div">
+                                <span className="icn-display-block">
+                                  {newData.isLiked ? (
+                                    <>
+                                      <span
+                                        onClick={() =>
+                                          toggleLike(false, newData, index)
+                                        }
+                                      >
+                                        <HandThumbsUpFill className="icon-class" />
+                                        <span className="main-options">
+                                          UnLike
+                                        </span>
                                       </span>
-                                    </span>
-                                  </>
-                                ) : (
-                                  <>
-                                    <span
-                                      onClick={() =>
-                                        toggleLike(true, newData, index)
-                                      }
-                                    >
-                                      <i className="icon-like icon-class"></i>
-                                      <span className="main-options">Like</span>
-                                    </span>
-                                  </>
-                                )}
-                              </span>
-                              <span className="icn-display-block">
-                                {newData.businessContactNumber ? (
-                                  <>
-                                    <i className="icon-call icon-class"></i>
-                                    <span className="main-options">Call</span>
-                                  </>
-                                ) : (
-                                  <>
-                                    <i className="icon-call Icon-disabled-Call"></i>
-                                    <span className="disable-main-options">
+                                    </>
+                                  ) : (
+                                    <>
+                                      <span
+                                        onClick={() =>
+                                          toggleLike(true, newData, index)
+                                        }
+                                      >
+                                        <i className="icon-like icon-class"></i>
+                                        <span className="main-options">
+                                          Like
+                                        </span>
+                                      </span>
+                                    </>
+                                  )}
+                                </span>
+                                <span className="icn-display-block">
+                                  {newData.businessContactNumber ? (
+                                    <>
+                                      <i className="icon-call icon-class"></i>
+                                      <span className="main-options">Call</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <i className="icon-call Icon-disabled-Call"></i>
+                                      <span className="disable-main-options">
+                                        {" "}
+                                        Call
+                                      </span>
+                                    </>
+                                  )}
+                                </span>
+                                <span className="icn-display-block">
+                                  {newData.businessLocation ? (
+                                    <>
+                                      <a
+                                        href={newData.businessLocation}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="underLine_Text"
+                                      >
+                                        <i className="icon-location icon-class"></i>
+                                      </a>
+                                      <span className="main-options">
+                                        Direction
+                                      </span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <i className="icon-location Icon-disabled-Direction"></i>
+                                      <span className="disable-main-options">
+                                        Direction
+                                      </span>
+                                    </>
+                                  )}
+                                </span>
+                                <span className="icn-display-block">
+                                  <i className="icon-share icon-class"></i>
+                                  <span className="main-options">Share</span>
+                                </span>
+                                <span className="icn-display-block-share">
+                                  {newData.isFavorite ? (
+                                    <>
+                                      <span
+                                        onClick={(checked) =>
+                                          toggleIcon(false, newData, index)
+                                        }
+                                      >
+                                        <StarFill className="icon-class" />
+                                        <span className="main-options">
+                                          UnFavorite
+                                        </span>
+                                      </span>
+                                    </>
+                                  ) : (
+                                    <>
                                       {" "}
-                                      Call
-                                    </span>
-                                  </>
-                                )}
-                              </span>
-                              <span className="icn-display-block">
-                                {newData.businessLocation ? (
-                                  <>
-                                    <a
-                                      href={newData.businessLocation}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="underLine_Text"
-                                    >
-                                      <i className="icon-location icon-class"></i>
-                                    </a>
-                                    <span className="main-options">
-                                      Direction
-                                    </span>
-                                  </>
-                                ) : (
-                                  <>
-                                    <i className="icon-location Icon-disabled-Direction"></i>
-                                    <span className="disable-main-options">
-                                      Direction
-                                    </span>
-                                  </>
-                                )}
-                              </span>
-                              <span className="icn-display-block">
-                                <i className="icon-share icon-class"></i>
-                                <span className="main-options">Share</span>
-                              </span>
-                              <span className="icn-display-block-share">
-                                {newData.isFavorite ? (
-                                  <>
-                                    <span
-                                      onClick={(checked) =>
-                                        toggleIcon(false, newData, index)
-                                      }
-                                    >
-                                      <StarFill className="icon-class" />
-                                      <span className="main-options">
-                                        UnFavorite
+                                      <span
+                                        onClick={(checked) =>
+                                          toggleIcon(true, newData, index)
+                                        }
+                                      >
+                                        <i className="icon-star icon-Favorite"></i>
+                                        <span className="main-options">
+                                          Favorite
+                                        </span>
                                       </span>
-                                    </span>
-                                  </>
-                                ) : (
-                                  <>
-                                    {" "}
-                                    <span
-                                      onClick={(checked) =>
-                                        toggleIcon(true, newData, index)
-                                      }
-                                    >
-                                      <i className="icon-star icon-Favorite"></i>
-                                      <span className="main-options">
-                                        Favorite
-                                      </span>
-                                    </span>
-                                  </>
-                                )}
-                              </span>
+                                    </>
+                                  )}
+                                </span>
+                              </div>
                             </div>
-                          </div>
-                        </>
-                      ) : null}
-
-                      <p
-                        className={`para-color`}
-                        title={newData.businessListingName}
-                        data-fulltext={newData.businessListingName}
-                      >
-                        {truncateText(newData.businessListingName, 15)}
-                      </p>
-                    </SwiperSlide>
+                          </>
+                        ) : null}
+                        <p
+                          className={`para-color`}
+                          title={newData.businessListingName}
+                          data-fulltext={newData.businessListingName}
+                        >
+                          {truncateText(newData.businessListingName, 15)}
+                        </p>
+                      </SwiperSlide>
+                      {/* </div> */}
+                    </>
                   );
                 }
               )}
