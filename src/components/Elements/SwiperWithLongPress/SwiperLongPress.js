@@ -14,10 +14,7 @@ import "./SwiperLongPress.css";
 import { getRndomeNumber } from "../../../common/Function/utils";
 import LongPress from "../LonPress/LongPress";
 
-const SwiperLongpress = ({
-  listingDataIndex,
-  dashboardInformation,
-}) => {
+const SwiperLongpress = ({ listingDataIndex, dashboardInformation }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const locationLatitude = useSelector(
@@ -55,9 +52,9 @@ const SwiperLongpress = ({
   };
 
   //for Favorite icon toggle onclick
-  const toggleIcon = (checked, LikeData, favIndex) => {
-      console.log("Favorite favoriteListing")
-      let likeItem = LikeData.businessListingId;
+  const toggleFav = (checked, LikeData, favIndex) => {
+    console.log("Favorite favoriteListing");
+    let likeItem = LikeData.businessListingId;
     let filterData = [
       ...dashboardInformation[listingDataIndex].dashBoardListings,
     ];
@@ -65,8 +62,8 @@ const SwiperLongpress = ({
     const businessListingOtherIds = filterData.map(
       (item) => item.businessListingId
     );
-      console.log("Favorite favoriteListing")
-      let newLike = {
+    console.log("Favorite favoriteListing");
+    let newLike = {
       AddRemoveFavoriteBusinessEnum: checked === true ? 1 : 2,
       UserID: "PLU_1",
       Latitude: locationLatitude,
@@ -74,10 +71,9 @@ const SwiperLongpress = ({
       BusinessListingId: likeItem,
       OtherAvailableListings: businessListingOtherIds,
     };
-      console.log("Favorite favoriteListing",newLike)
-      dispatch(updateFavoriteApi(newLike, likeItem));
+    console.log("Favorite favoriteListing", newLike);
+    dispatch(updateFavoriteApi(newLike, likeItem));
   };
-
 
   const toggleLike = (checked, LikeData, dataIndex) => {
     let likeItem = LikeData.businessListingId;
@@ -323,32 +319,27 @@ const SwiperLongpress = ({
                               </span>
                               <span className="icn-display-block-share">
                                 {newData.isFavorite ? (
-                                  <>
-                                    <span
-                                      onClick={(checked) =>
-                                        toggleIcon(false, newData, index)
-                                      }
-                                    >
-                                      <StarFill className="icon-class" />
-                                      <span className="main-options">
-                                        UnFavorite
-                                      </span>
+                                  <span
+                                    onClick={() =>
+                                      toggleFav(false, newData, index)
+                                    }
+                                  >
+                                    <StarFill className="icon-class" />
+                                    <span className="main-options">
+                                      UnFavorite
                                     </span>
-                                  </>
+                                  </span>
                                 ) : (
-                                  <>
-                                    {" "}
-                                    <span
-                                      onClick={(checked) =>
-                                        toggleIcon(true, newData, index)
-                                      }
-                                    >
-                                      <i className="icon-star icon-Favorite"></i>
-                                      <span className="main-options">
-                                        Favorite
-                                      </span>
+                                  <span
+                                    onClick={() =>
+                                      toggleFav(true, newData, index)
+                                    }
+                                  >
+                                    <i className="icon-star icon-Favorite"></i>
+                                    <span className="main-options">
+                                      Favorite
                                     </span>
-                                  </>
+                                  </span>
                                 )}
                               </span>
                             </div>

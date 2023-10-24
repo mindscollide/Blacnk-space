@@ -262,6 +262,7 @@ const Home = () => {
       dispatch(cleareFavResponce());
     }
   }, [favoriteListing]);
+  
   useEffect(() => {
     if (loadingAuto) {
       setLoadingAuto(false);

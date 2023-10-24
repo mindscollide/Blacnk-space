@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getRndomeNumber } from "../../common/Function/utils";
 
 const Favourite = () => {
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const Loading = useSelector((state) => state.actionReducer.Loading);
   const favoriteListings = useSelector(
@@ -35,6 +34,7 @@ const Favourite = () => {
       errorStatus: false,
     },
   });
+  const [activeCategory, setActiveCategory] = useState(null);
 
   // this is how I set data in Favourite Api by using explore state
   useEffect(() => {
@@ -75,6 +75,7 @@ const Favourite = () => {
     });
 
     setFavoriteInformation(updatedData);
+    setActiveCategory(null)
   };
 
   // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF LIKE
@@ -104,6 +105,7 @@ const Favourite = () => {
 
       return updatedData;
     });
+    setActiveCategory(null)
   };
 
   // UPDATE CALL REAL TIME DATA IF API IS GOING TO SUCESS OF FAVORITE
@@ -120,7 +122,7 @@ const Favourite = () => {
         <Col>
           {favoriteInformation.map((favoriteUserListing, index) => {
             return (
-              <Fragment key={getRndomeNumber()}>
+              <Fragment key={index}>
                 {/* Food Section */}
                 <Row className="mt-4">
                   <Col
@@ -146,8 +148,8 @@ const Favourite = () => {
                           favoriteListingData={
                             favoriteUserListing.favoriteByUserListings
                           }
-                          setFavoriteInformation={setFavoriteInformation}
-                          favoriteInformation={favoriteInformation}
+                          setActiveCategory={setActiveCategory}
+                          activeCategory={activeCategory}
                         />
                       )}
                   </Col>

@@ -17,7 +17,7 @@ import "swiper/css";
 import "./ExploreSwiperLong.css";
 import { getRndomeNumber } from "../../../common/Function/utils";
 
-const ExploreSwiperLong = ({ exploreListingData }) => {
+const ExploreSwiperLong = ({ exploreListingData,activeInneryCategory, setActiveInneryCategory }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const locationLatitude = useSelector(
@@ -29,7 +29,6 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
   const ExploreLongBoxRef = useRef(null);
 
   const [longData, setLongData] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(0);
   const [clicks, setClicks] = useState(0);
   const [dataCheck, setDataCheck] = useState([]);
   useEffect(() => {
@@ -98,7 +97,7 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
 
   const handleLongPress = (e, value) => {
     e.preventDefault();
-    setActiveCategory(value);
+    setActiveInneryCategory(value);
   };
 
   const handleShortPress = (e, data) => {
@@ -131,7 +130,7 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
         ExploreLongBoxRef.current &&
         !ExploreLongBoxRef.current.contains(event.target)
       ) {
-        setActiveCategory(0);
+        setActiveInneryCategory(0);
       }
     };
     document.addEventListener("click", handleOutsideClick);
@@ -178,7 +177,7 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
                       <Button
                         id={`swiper-section ${newData.subCategoryListingId}`}
                         className={`Swipper-slide-box ${
-                          activeCategory === newData.subCategoryListingId
+                          activeInneryCategory === newData.subCategoryListingId
                             ? "active"
                             : ""
                         }`}
@@ -197,7 +196,7 @@ const ExploreSwiperLong = ({ exploreListingData }) => {
                         }
                       />
                     </LongPress>
-                    {activeCategory === newData.subCategoryListingId ? (
+                    {activeInneryCategory === newData.subCategoryListingId ? (
                       <>
                         <div
                           ref={ExploreLongBoxRef}

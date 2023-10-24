@@ -35,11 +35,10 @@ const ExploreCategory = () => {
   const likeUnlikeBusiness = useSelector(
     (state) => state.actionReducer.likeUnlikeBusiness
   );
-  
+
   const favoriteListing = useSelector(
     (state) => state.actionReducer.favoriteListing
   );
-
 
   let categoryID = localStorage.getItem("categoryID");
 
@@ -47,6 +46,7 @@ const ExploreCategory = () => {
 
   //state for active longPress event
   const [activeCategory, setActiveCategory] = useState(null);
+  const [activeInneryCategory, setActiveInneryCategory] = useState(null);
 
   // state for explore Category status
   const [exploreInformation, setExploreInformation] = useState([]);
@@ -99,6 +99,7 @@ const ExploreCategory = () => {
     e.preventDefault();
     setActiveCategory(value);
   };
+
   const handleShortPress = (e) => {
     // Handle short press here
     e.preventDefault();
@@ -124,7 +125,7 @@ const ExploreCategory = () => {
 
   useEffect(() => {
     const handleOutsideClick = () => {
-      if (activeCategory !== null) {
+      if (activeCategory) {
         setActiveCategory(null);
       }
     };
@@ -152,14 +153,14 @@ const ExploreCategory = () => {
         };
       });
     });
-    setActiveCategory(0);
+    setActiveInneryCategory(null);
   };
 
   useEffect(() => {
     if (likeUnlikeBusiness) {
       toggleIsLiked(likeUnlikeBusiness);
       dispatch(cleareLikeResponce());
-      console.log("toggleIsLiked")
+      console.log("toggleIsLiked");
     }
   }, [likeUnlikeBusiness]);
 
@@ -181,17 +182,18 @@ const ExploreCategory = () => {
         };
       });
     });
-    setActiveCategory(0);
+    setActiveInneryCategory(0);
   };
 
   useEffect(() => {
-    if (favoriteListing ) {
+    if (favoriteListing) {
       toggleIsFavriote(favoriteListing);
       dispatch(cleareFavResponce());
     }
   }, [favoriteListing]);
+
   return (
-    <Container  className="backgroundBody">
+    <Container className="backgroundBody">
       <Row>
         <Col>
           {exploreInformation !== null &&
@@ -242,8 +244,8 @@ const ExploreCategory = () => {
                             exploreListingData={
                               exploreListing.subCategoryListings
                             }
-                            setExploreInformation={setExploreInformation}
-                            exploreInformation={exploreInformation}
+                            activeInneryCategory={activeInneryCategory}
+                            setActiveInneryCategory={setActiveInneryCategory}
                           />
                         )}
                       </Col>
