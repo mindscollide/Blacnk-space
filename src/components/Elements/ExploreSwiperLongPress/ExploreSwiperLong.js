@@ -264,7 +264,13 @@ const ExploreSwiperLong = ({ exploreListingData, setExploreInformation }) => {
                       <>
                         <div
                           ref={ExploreLongBoxRef}
-                          className="Explore-longpress-box"
+                          className={
+                            longData.length > index + 1 || longData.length < 2
+                              ? "Explore-longpress-box"
+                              : longData.length === 2 && index + 1 === 2
+                              ? "Explore-longpress-box-middle"
+                              : "Explore-longpress-box-last"
+                          }
                         >
                           <div className="options-main-div">
                             <span className="icn-display-block">

@@ -46,6 +46,33 @@
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
+.Explore-longpress-box-middle {
+  position: absolute !important;
+  top: 0 !important;
+  background-color: #d00510;
+  border: 2.5px solid #ffffff;
+  border-radius: 8px;
+  z-index: 10 !important;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.Explore-longpress-box-last {
+  position: absolute !important;
+  top: 0px !important;
+  background-color: #d00510;
+  border: 2.5px solid #ffffff;
+  border-radius: 8px;
+  z-index: 10 !important;
+  padding: 0;
+  margin: 0;
+  right: 0 !important;
+  display: flex;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
 .explore-tile-empty-letter {
   display: flex;
   pointer-events: none !important;
@@ -58,6 +85,7 @@
   bottom: 0 !important;
   width: 100%;
   height: 100%;
+  z-index: 0 !important;
 }
 
 .options-main-div {
@@ -151,6 +179,34 @@
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
   }
 
+  .Explore-longpress-box-middle {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0px !important;
+    background-color: #d00510;
+    border: 2.5px solid #ffffff;
+    border-radius: 8px;
+    z-index: 10 !important;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .Explore-longpress-box-last {
+    position: absolute !important;
+    top: 0px !important;
+    background-color: #d00510;
+    border: 2.5px solid #ffffff;
+    border-radius: 8px;
+    z-index: 10 !important;
+    padding: 0;
+    margin: 0;
+    right: 0 !important;
+    display: flex;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+  }
+
   .Swipper-slide-box {
     width: 70px !important;
     height: 70px !important;
@@ -174,6 +230,8 @@
     bottom: 0 !important;
     width: 100%;
     height: 100%;
+    z-index: 0 !important;
+
   }
 }
 
@@ -190,5 +248,7 @@
     bottom: 0 !important;
     width: 100%;
     height: 100%;
+    z-index: 0 !important;
+
   }
 }
