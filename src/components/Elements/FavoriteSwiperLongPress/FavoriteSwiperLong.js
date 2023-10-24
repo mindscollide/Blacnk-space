@@ -14,7 +14,7 @@ import "swiper/css";
 import "./FavoriteSwiperLong.css";
 import { getRndomeNumber } from "../../../common/Function/utils";
 
-const FavoriteSwiperLong = ({ favoriteListingData }) => {
+const FavoriteSwiperLong = ({ favoriteListingData ,activeCategory, setActiveCategory}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const locationLatitude = useSelector(
@@ -25,9 +25,7 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
   );
 
   const [longData, setLongData] = useState([]);
-
-  const [activeCategory, setActiveCategory] = useState(0);
-
+  
   const [clickCount, setClickCount] = useState(0);
 
   const FavoriteLongBoxRef = useRef(null);
@@ -42,77 +40,6 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
     }
     return text;
   };
-
-  // state for update Favorite
-  const [updateFavorite, setUpdateFavorite] = useState({
-    AddRemoveFavoriteBusinessEnum: {
-      value: 1,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    UserID: {
-      value: "PLU_1",
-      errorMessage: "",
-      errorStatus: false,
-    },
-    Latitude: {
-      value: locationLatitude,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    Longitude: {
-      value: locationLongitude,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    BusinessListingId: {
-      value: "BUL_0x3eb33eb25e826edb:0xf8830cefa06c2a7d",
-      errorMessage: "",
-      errorStatus: false,
-    },
-    OtherAvailableListings: {
-      value: ["BUL_0x3eb33f7b8bf5d8d3:0x828884303c4824cf"],
-      errorMessage: "",
-      errorStatus: false,
-    },
-  });
-
-  // state for like and dislike
-  const [likeState, setLikeState] = useState({
-    LikeUnLikeBusinessListingsEnum: {
-      value: 2,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    UserID: {
-      value: "PLU_1",
-      errorMessage: "",
-      errorStatus: false,
-    },
-    Latitude: {
-      value: locationLatitude,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    Longitude: {
-      value: locationLongitude,
-      errorMessage: "",
-      errorStatus: false,
-    },
-    BusinessListingId: {
-      value: "BUL_0x3eb33f349b314d3f:0xefb5da061f2d49b",
-      errorMessage: "",
-      errorStatus: false,
-    },
-    OtherAvailableListings: {
-      value: [
-        "BUL_0x3eb33eb15fc7bfcf:0x4f43996895406161",
-        "BUL_0x3eb3396be8e67cbb:0xc949e827008496bc1",
-      ],
-      errorMessage: "",
-      errorStatus: false,
-    },
-  });
 
   const detailBusinessFav = async (favoriteData) => {
     console.log("click is triggered");
@@ -132,7 +59,7 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
   };
 
   //for Favorite icon toggle onclick
-  const toggleIcon = (checked, LikeData, favIndex) => {
+  const toggleFav = (checked, LikeData, favIndex) => {
     let likeItem = LikeData.businessListingId;
     let filterData = [...longData];
     filterData.splice(favIndex, 1);
@@ -141,7 +68,7 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
     );
     let newLike = {
       AddRemoveFavoriteBusinessEnum: checked === true ? 1 : 2,
-      UserID: likeState.UserID.value,
+      UserID: "PLU_1",
       Latitude: locationLatitude,
       Longitude: locationLongitude,
       BusinessListingId: likeItem,
@@ -150,6 +77,7 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
     dispatch(updateFavoriteApi(newLike, likeItem));
   };
 
+  //for like icon toggle onclick
   const toggleLike = (checked, LikeData, dataIndex) => {
     let likeItem = LikeData.businessListingId;
     let filterData = [...longData];
@@ -160,7 +88,7 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
     );
     let newLike = {
       LikeUnLikeBusinessListingsEnum: checked === true ? 1 : 2,
-      UserID: likeState.UserID.value,
+      UserID: "PLU_1",
       Latitude: locationLatitude,
       Longitude: locationLongitude,
       BusinessListingId: likeItem,
@@ -288,7 +216,7 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
                   .charAt(0)
                   .toUpperCase();
                 return (
-                  <SwiperSlide key={getRndomeNumber()}>
+                  <SwiperSlide key={newData.businessListingId}>
                     <LongPress
                       onLongPress={(e) =>
                         handleLongPress(e, newData.businessListingId)
@@ -389,7 +317,7 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
                                 <>
                                   <span
                                     onClick={(checked) =>
-                                      toggleIcon(false, newData, index)
+                                      toggleFav(false, newData, index)
                                     }
                                   >
                                     <StarFill className="icon-class" />
@@ -403,7 +331,7 @@ const FavoriteSwiperLong = ({ favoriteListingData }) => {
                                   {" "}
                                   <span
                                     onClick={(checked) =>
-                                      toggleIcon(true, newData, index)
+                                      toggleFav(true, newData, index)
                                     }
                                   >
                                     <i className="icon-star icon-Favorite"></i>

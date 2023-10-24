@@ -8,7 +8,9 @@ function LongPress({ onLongPress, onPress, duration = 500, children }) {
   const handleMouseDown = (e) => {
     mouseDownTime = new Date().getTime();
     timeout = setTimeout(() => {
-      onLongPress(e);
+      if (new Date().getTime() - mouseDownTime >= duration) {
+        onLongPress(e);
+      }
     }, duration);
   };
 
@@ -26,12 +28,12 @@ function LongPress({ onLongPress, onPress, duration = 500, children }) {
 
   useEffect(() => {
     const element = elementRef.current;
-    element.addEventListener("mousedown", handleMouseDown);
-    element.addEventListener("mouseup", handleMouseUp);
-    element.addEventListener("mousemove", handleMouseMove);
-    element.addEventListener("touchstart", handleMouseDown);
-    element.addEventListener("touchend", handleMouseUp);
-    element.addEventListener("touchmove", handleMouseMove);
+    element.addEventListener("mousedown", handleMouseDown, { passive: true });
+    element.addEventListener("mouseup", handleMouseUp, { passive: true });
+    element.addEventListener("mousemove", handleMouseMove, { passive: true });
+    element.addEventListener("touchstart", handleMouseDown, { passive: true });
+    element.addEventListener("touchend", handleMouseUp, { passive: true });
+    element.addEventListener("touchmove", handleMouseMove, { passive: true });
 
     return () => {
       element.removeEventListener("mousedown", handleMouseDown);
@@ -43,11 +45,7 @@ function LongPress({ onLongPress, onPress, duration = 500, children }) {
     };
   }, [onLongPress, onPress, duration]);
 
-  return (
-    <div ref={elementRef}>
-      {children}
-    </div>
-  );
+  return <div ref={elementRef}>{children}</div>;
 }
 
 export default LongPress;
