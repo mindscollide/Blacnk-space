@@ -226,7 +226,7 @@ const Categories = () => {
                           <div className="message-item-category">
                             {categoriesListing.isBlocked
                               ? "Category Blocked"
-                              : "Category UnBlocked"}
+                              : "Category Unblocked"}
                           </div>
                         )}
                       </Col>
