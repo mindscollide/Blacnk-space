@@ -1,34 +1,26 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Button } from "./../../../components/Elements";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
-import { StarFill, HandThumbsUpFill } from "react-bootstrap-icons";
 import LongPress from "../LonPress/LongPress";
-import {
-  updateFavoriteApi,
-  likeUnlikeApi,
-} from "../../../store/Actions/Actions";
-import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import "./FavoriteSwiperLong.css";
-import { getRndomeNumber } from "../../../common/Function/utils";
 
-const FavoriteSwiperLong = ({ favoriteListingData ,activeCategory, setActiveCategory}) => {
+const FavoriteSwiperLong = ({
+  favoriteListingData,
+  activeCategory,
+  setActiveCategory,
+  parentIndex,
+  setChildIndex,
+  setChildIconIndex,
+  setMenuPosition,
+}) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const locationLatitude = useSelector(
-    (state) => state.actionReducer.locationLatitude
-  );
-  const locationLongitude = useSelector(
-    (state) => state.actionReducer.locationLongitude
-  );
 
   const [longData, setLongData] = useState([]);
-  
-  const [clickCount, setClickCount] = useState(0);
 
-  const FavoriteLongBoxRef = useRef(null);
+  const [clickCount, setClickCount] = useState(0);
 
   const [clicks, setClicks] = useState(0);
 
@@ -42,7 +34,6 @@ const FavoriteSwiperLong = ({ favoriteListingData ,activeCategory, setActiveCate
   };
 
   const detailBusinessFav = async (favoriteData) => {
-    console.log("click is triggered");
     setClickCount(clickCount + 1);
     if (favoriteData && favoriteData.businessListingId) {
       let newBusinessIdData = {
@@ -58,50 +49,32 @@ const FavoriteSwiperLong = ({ favoriteListingData ,activeCategory, setActiveCate
     }
   };
 
-  //for Favorite icon toggle onclick
-  const toggleFav = (checked, LikeData, favIndex) => {
-    let likeItem = LikeData.businessListingId;
-    let filterData = [...longData];
-    filterData.splice(favIndex, 1);
-    const businessListingOtherIds = filterData.map(
-      (item) => item.businessListingId
-    );
-    let newLike = {
-      AddRemoveFavoriteBusinessEnum: checked === true ? 1 : 2,
-      UserID: "PLU_1",
-      Latitude: locationLatitude,
-      Longitude: locationLongitude,
-      BusinessListingId: likeItem,
-      OtherAvailableListings: businessListingOtherIds,
-    };
-    dispatch(updateFavoriteApi(newLike, likeItem));
-  };
-
-  //for like icon toggle onclick
-  const toggleLike = (checked, LikeData, dataIndex) => {
-    let likeItem = LikeData.businessListingId;
-    let filterData = [...longData];
-
-    filterData.splice(dataIndex, 1);
-    const businessListingOtherIds = filterData.map(
-      (item) => item.businessListingId
-    );
-    let newLike = {
-      LikeUnLikeBusinessListingsEnum: checked === true ? 1 : 2,
-      UserID: "PLU_1",
-      Latitude: locationLatitude,
-      Longitude: locationLongitude,
-      BusinessListingId: likeItem,
-      OtherAvailableListings: businessListingOtherIds,
-    };
-
-    dispatch(likeUnlikeApi(newLike, likeItem));
-  };
-
-  const handleLongPress = (e, value) => {
+  const handleLongPress = (e, value, index) => {
     // Handle long press here
     e.preventDefault();
+    const menuWidth = 290;
+    const menuHeight = 48;
+    const rect = e.target.getBoundingClientRect();
+    const xPos = rect.left + window.scrollX + rect.width / 2;
+    const yPos = rect.top + window.scrollY + rect.height;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    let x = xPos;
+    let y = yPos;
+    // Check if the menu will go beyond the viewport boundaries and adjust its position
+    if (x + menuWidth > viewportWidth) {
+      x = (viewportWidth - menuWidth) / 2;
+    } else {
+    }
+
+    if (y + menuHeight > viewportHeight) {
+      y = yPos - menuHeight;
+    }
+
+    setMenuPosition({ x, y });
     setActiveCategory(value);
+    setChildIndex(parentIndex);
+    setChildIconIndex(index);
   };
 
   const handleShortPress = (e, data) => {
@@ -139,20 +112,6 @@ const FavoriteSwiperLong = ({ favoriteListingData ,activeCategory, setActiveCate
   }, [favoriteListingData]);
 
   // Add a click event listener to the document to handle clicks outside of swiper-longpress-box
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (
-        FavoriteLongBoxRef.current &&
-        !FavoriteLongBoxRef.current.contains(event.target)
-      ) {
-        setActiveCategory(0);
-      }
-    };
-    document.addEventListener("click", handleOutsideClick);
-    return () => {
-      document.removeEventListener("click", handleOutsideClick);
-    };
-  }, []);
 
   return (
     <Container className="backgroundBody">
@@ -219,7 +178,7 @@ const FavoriteSwiperLong = ({ favoriteListingData ,activeCategory, setActiveCate
                   <SwiperSlide key={newData.businessListingId}>
                     <LongPress
                       onLongPress={(e) =>
-                        handleLongPress(e, newData.businessListingId)
+                        handleLongPress(e, newData.businessListingId, index)
                       }
                       onPress={(e) => handleShortPress(e, newData)}
                       duration={500}
@@ -246,107 +205,6 @@ const FavoriteSwiperLong = ({ favoriteListingData ,activeCategory, setActiveCate
                         }
                       ></Button>
                     </LongPress>
-                    {activeCategory === newData.businessListingId ? (
-                      <>
-                        <div
-                          ref={FavoriteLongBoxRef}
-                          className={"longpress-box"}
-                        >
-                          <div className="options-main-div">
-                            <span className="icn-display-block">
-                              {newData.isLiked ? (
-                                <>
-                                  <span
-                                    onClick={(checked) =>
-                                      toggleLike(false, newData, index)
-                                    }
-                                  >
-                                    <HandThumbsUpFill className="icon-class" />
-                                    <span className="main-options">UnLike</span>
-                                  </span>
-                                </>
-                              ) : (
-                                <>
-                                  <span
-                                    onClick={(checked) =>
-                                      toggleLike(true, newData, index)
-                                    }
-                                  >
-                                    <i className="icon-like icon-class"></i>
-                                    <span className="main-options">Like</span>
-                                  </span>
-                                </>
-                              )}
-                            </span>
-                            <span className="icn-display-block">
-                              {newData.businessContactNumber ? (
-                                <>
-                                  <i className="icon-call icon-class"></i>
-                                  <span className="main-options">Call</span>
-                                </>
-                              ) : (
-                                <>
-                                  <i className="icon-call icon-class"></i>
-                                  <span className="main-options">Call</span>
-                                </>
-                              )}
-                            </span>
-                            <span className="icn-display-block">
-                              {newData.businessLocation ? (
-                                <>
-                                  <i className="icon-location icon-class"></i>
-                                  <span className="main-options">
-                                    Direction
-                                  </span>
-                                </>
-                              ) : (
-                                <>
-                                  <i className="icon-location icon-class"></i>
-                                  <span className="main-options">
-                                    Direction
-                                  </span>
-                                </>
-                              )}
-                            </span>
-                            <span className="icn-display-block">
-                              <i className="icon-share icon-class"></i>
-                              <span className="main-options">Share</span>
-                            </span>
-                            <span className="icn-display-block-share">
-                              {newData.isFavorite ? (
-                                <>
-                                  <span
-                                    onClick={(checked) =>
-                                      toggleFav(false, newData, index)
-                                    }
-                                  >
-                                    <StarFill className="icon-class" />
-                                    <span className="main-options">
-                                      UnFavorite
-                                    </span>
-                                  </span>
-                                </>
-                              ) : (
-                                <>
-                                  {" "}
-                                  <span
-                                    onClick={(checked) =>
-                                      toggleFav(true, newData, index)
-                                    }
-                                  >
-                                    <i className="icon-star icon-Favorite"></i>
-                                    <span className="main-options">
-                                      Favorite
-                                    </span>
-                                  </span>
-                                </>
-                              )}
-                            </span>
-                          </div>
-                        </div>
-                      </>
-                    ) : null}
-
                     <p className="Fav-para-color">
                       {truncateFavText(newData.businessListingName, 15)}
                     </p>
