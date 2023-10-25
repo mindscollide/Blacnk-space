@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useRef } from "react";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 import {
   ExploreSwiperLong,
@@ -10,15 +10,18 @@ import {
   cleareFavResponce,
   cleareLikeResponce,
   exploreCategory,
+  likeUnlikeApi,
+  updateFavoriteApi,
 } from "../../store/Actions/Actions";
 import "swiper/css";
 import "./ExploreCategory.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getRndomeNumber } from "../../common/Function/utils";
 import LongPress from "../../components/Elements/LonPress/LongPress";
+import { HandThumbsUpFill, StarFill } from "react-bootstrap-icons";
 
 const ExploreCategory = () => {
   const dispatch = useDispatch();
+  const ExploreLongBoxRef = useRef(null);
   const locationLatitude = useSelector(
     (state) => state.actionReducer.locationLatitude
   );
@@ -50,7 +53,9 @@ const ExploreCategory = () => {
 
   // state for explore Category status
   const [exploreInformation, setExploreInformation] = useState([]);
-
+  const [childIndex, setChildIndex] = useState(null);
+  const [childIconIndex, setChildIconIndex] = useState(null);
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
   useEffect(() => {
     if (
       locationLatitude !== null &&
@@ -182,7 +187,7 @@ const ExploreCategory = () => {
         };
       });
     });
-    setActiveInneryCategory(0);
+    setActiveInneryCategory(null);
   };
 
   useEffect(() => {
@@ -192,6 +197,71 @@ const ExploreCategory = () => {
     }
   }, [favoriteListing]);
 
+  const toggleIcon = (checked, LikeData, favIndex) => {
+    if (childIndex != null) {
+      let likeItem = LikeData.subCategoryListingId;
+      let filterData = [...exploreInformation[childIndex].subCategoryListings];
+      filterData.splice(favIndex, 1);
+      const businessListingOtherIds = filterData.map(
+        (item) => item.subCategoryListingId
+      );
+      let newLike = {
+        AddRemoveFavoriteBusinessEnum: checked === true ? 1 : 2,
+        UserID: "PLU_1",
+        Latitude: locationLatitude,
+        Longitude: locationLongitude,
+        BusinessListingId: likeItem,
+        OtherAvailableListings: businessListingOtherIds,
+      };
+      dispatch(updateFavoriteApi(newLike, likeItem));
+      setMenuPosition({ x: 0, y: 0 });
+      setActiveInneryCategory(null);
+      setChildIconIndex(null);
+      setChildIndex(null);
+    }
+  };
+
+  const toggleLike = (checked, LikeData, dataIndex) => {
+    if (childIndex != null) {
+      let likeItem = LikeData.subCategoryListingId;
+      let filterData = [...exploreInformation[childIndex].subCategoryListings];
+      filterData.splice(dataIndex, 1);
+      const businessListingOtherIds = filterData.map(
+        (item) => item.subCategoryListingId
+      );
+      let newLike = {
+        LikeUnLikeBusinessListingsEnum: checked === true ? 1 : 2,
+        UserID: "PLU_1",
+        Latitude: locationLatitude,
+        Longitude: locationLongitude,
+        BusinessListingId: likeItem,
+        OtherAvailableListings: businessListingOtherIds,
+      };
+      dispatch(likeUnlikeApi(newLike, likeItem));
+      setMenuPosition({ x: 0, y: 0 });
+      setActiveInneryCategory(null);
+      setChildIconIndex(null);
+      setChildIndex(null);
+    }
+  };
+  // Add a click event listener to the document to handle clicks outside of swiper-longpress-box
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        ExploreLongBoxRef.current &&
+        !ExploreLongBoxRef.current.contains(event.target)
+      ) {
+        setMenuPosition({ x: 0, y: 0 });
+        setActiveInneryCategory(null);
+        setChildIconIndex(null);
+        setChildIndex(null);
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
   return (
     <Container className="backgroundBody">
       <Row>
@@ -240,13 +310,171 @@ const ExploreCategory = () => {
                     <Row>
                       <Col lg={12} md={12} sm={12}>
                         {exploreListing.subCategoryListings.length > 0 && (
-                          <ExploreSwiperLong
-                            exploreListingData={
-                              exploreListing.subCategoryListings
-                            }
-                            activeInneryCategory={activeInneryCategory}
-                            setActiveInneryCategory={setActiveInneryCategory}
-                          />
+                          <>
+                            {activeInneryCategory && (
+                              <div
+                                ref={ExploreLongBoxRef}
+                                className={"Explore-longpress-box"}
+                                style={{
+                                  position: "relative", // Use fixed positioning
+                                  top: `${menuPosition.y}px`, // Set the top position
+                                  left: `${menuPosition.x}px`, // Set the left position
+                                  zIndex: 33,
+                                  display: "block",
+                                }}
+                              >
+                                <div className="options-main-div">
+                                  <span className="icn-display-block">
+                                    {exploreInformation[childIndex]
+                                      .subCategoryListings[childIconIndex]
+                                      .isLiked ? (
+                                      <span
+                                        onClick={() =>
+                                          toggleLike(
+                                            false,
+                                            exploreInformation[childIndex]
+                                              .subCategoryListings[
+                                              childIconIndex
+                                            ],
+                                            childIconIndex
+                                          )
+                                        }
+                                      >
+                                        <HandThumbsUpFill className="icon-class" />
+                                        <span className="main-options">
+                                          UnLike
+                                        </span>
+                                      </span>
+                                    ) : (
+                                      <span
+                                        onClick={() =>
+                                          toggleLike(
+                                            true,
+                                            exploreInformation[childIndex]
+                                              .subCategoryListings[
+                                              childIconIndex
+                                            ],
+                                            childIconIndex
+                                          )
+                                        }
+                                      >
+                                        <i className="icon-like icon-class"></i>
+                                        <span className="main-options">
+                                          Like
+                                        </span>
+                                      </span>
+                                    )}
+                                  </span>
+                                  <span className="icn-display-block">
+                                    {exploreInformation[childIndex]
+                                      .subCategoryListings[childIconIndex]
+                                      .subCategoryContactNumber ? (
+                                      <>
+                                        <i className="icon-call icon-class"></i>
+                                        <span className="main-options">
+                                          Call
+                                        </span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <i className="icon-call IconExplore-disabled-Call"></i>
+                                        <span className="disable-Exploremain-options">
+                                          Call
+                                        </span>
+                                      </>
+                                    )}
+                                  </span>
+                                  <span className="icn-display-block">
+                                    {exploreInformation[childIndex]
+                                      .subCategoryListings[childIconIndex]
+                                      .subCategoryLocation ? (
+                                      <>
+                                        <a
+                                          href={
+                                            exploreInformation[childIndex]
+                                              .subCategoryListings[
+                                              childIconIndex
+                                            ].subCategoryLocation
+                                          }
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="underLine_Text"
+                                        >
+                                          <i className="icon-location icon-class"></i>
+                                        </a>
+                                        <span className="main-options">
+                                          Direction
+                                        </span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <i className="icon-location IconExplore-disabled-Direction"></i>
+                                        <span className="disable-Exploremain-options">
+                                          Direction
+                                        </span>
+                                      </>
+                                    )}
+                                  </span>
+                                  <span className="icn-display-block">
+                                    <i className="icon-share icon-class"></i>
+                                    <span className="main-options">Share</span>
+                                  </span>
+                                  <span className="icn-display-block-share">
+                                    {exploreInformation[childIndex]
+                                      .subCategoryListings[childIconIndex]
+                                      .isFavorite ? (
+                                      <span
+                                        onClick={() =>
+                                          toggleIcon(
+                                            false,
+                                            exploreInformation[childIndex]
+                                              .subCategoryListings[
+                                              childIconIndex
+                                            ],
+                                            childIconIndex
+                                          )
+                                        }
+                                      >
+                                        <StarFill className="icon-class" />
+                                        <span className="main-options">
+                                          UnFavorite
+                                        </span>
+                                      </span>
+                                    ) : (
+                                      <span
+                                        onClick={() =>
+                                          toggleIcon(
+                                            true,
+                                            exploreInformation[childIndex]
+                                              .subCategoryListings[
+                                              childIconIndex
+                                            ],
+                                            childIconIndex
+                                          )
+                                        }
+                                      >
+                                        <i className="icon-star icon-Favorite"></i>
+                                        <span className="main-options">
+                                          Favorite
+                                        </span>
+                                      </span>
+                                    )}
+                                  </span>
+                                </div>
+                              </div>
+                            )}
+                            <ExploreSwiperLong
+                              exploreListingData={
+                                exploreListing.subCategoryListings
+                              }
+                              parentIndex={index}
+                              activeInneryCategory={activeInneryCategory}
+                              setActiveInneryCategory={setActiveInneryCategory}
+                              setMenuPosition={setMenuPosition}
+                              setChildIconIndex={setChildIconIndex}
+                              setChildIndex={setChildIndex}
+                            />
+                          </>
                         )}
                       </Col>
                     </Row>

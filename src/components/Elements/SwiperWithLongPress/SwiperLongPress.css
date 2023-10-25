@@ -56,9 +56,11 @@
 
 .swiper-longpress-box {
   position: absolute !important;
-  top: 0px !important;
+  /* top: 0px !important; */
   background-color: #d00510;
   border: 2.5px solid #ffffff;
+  height: 48px !important;
+  margin-bottom: 1px !important;
   border-radius: 8px;
   z-index: 10 !important;
   padding: 0px;
@@ -77,7 +79,8 @@
   z-index: 10 !important;
   padding: 0px;
   margin: 0px;
-  left: 50%; /* Center horizontally */
+  left: 50%;
+  /* Center horizontally */
   transform: translateX(-50%);
   display: flex;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
