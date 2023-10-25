@@ -15,6 +15,9 @@ const StarRating = ({ rating }) => {
     showHalfStar = true;
   }
 
+  // Limit the total number of stars to a maximum of 5
+  fullStars = Math.min(fullStars, 5);
+
   // Create an array of stars to render
   const stars = [];
   for (let i = 0; i < fullStars; i++) {
@@ -24,7 +27,7 @@ const StarRating = ({ rating }) => {
       </span>
     );
   }
-  if (showHalfStar) {
+  if (showHalfStar && fullStars < 5) {
     stars.push(
       <span key="half" className="star-icon half">
         ☆
