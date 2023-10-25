@@ -1,4 +1,10 @@
-import React, { Fragment, useEffect, useState, useRef, useLayoutEffect } from "react";
+import React, {
+  Fragment,
+  useEffect,
+  useState,
+  useRef,
+  useLayoutEffect,
+} from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Button } from "./../../../components/Elements";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -100,51 +106,51 @@ const SwiperLongpress = ({ listingDataIndex, dashboardInformation }) => {
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
   const [right, setRight] = useState(false);
   const handleLongPress = (e, value) => {
-    e.preventDefault();
-    
+    // e.preventDefault();
+
     const menuElement = swiperLongPressBoxRef.current;
     console.log("viewportWidth", menuElement);
-    if(menuElement){ 
-    
-    const menuStyles = getComputedStyle(menuElement);
-    console.log("viewportWidth", menuStyles);
-    // const menuWidth = parseInt(menuStyles.clientWitdth);
-    // const menuHeight = parseInt(menuStyles.offsetHeight);
-    const menuWidth = 290;
-    const menuHeight = 45;
-    console.log("viewportWidth", menuWidth);
-    console.log("viewportWidth", menuHeight);
+    if (menuElement) {
+      const menuStyles = getComputedStyle(menuElement);
+      console.log("viewportWidth", menuStyles);
+      // const menuWidth = parseInt(menuStyles.clientWitdth);
+      // const menuHeight = parseInt(menuStyles.offsetHeight);
+      const menuWidth = 290;
+      const menuHeight = 45;
+      console.log("viewportWidth", menuWidth);
+      console.log("viewportWidth", menuHeight);
 
-    const rect = e.target.getBoundingClientRect();
-    console.log("viewportWidth", rect);
-    const xPos = rect.left + window.scrollX + rect.width / 2;
-    const yPos = rect.top + window.scrollY + rect.height;
+      const rect = e.target.getBoundingClientRect();
+      console.log("viewportWidth", rect);
+      const xPos = rect.left + window.scrollX + rect.width / 2;
+      const yPos = rect.top + window.scrollY + rect.height;
 
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    console.log("viewportWidth", viewportWidth);
-    let x = xPos;
-    let y = yPos;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      console.log("viewportWidth", viewportWidth);
+      let x = xPos;
+      let y = yPos;
 
-    // Check if the menu will go beyond the viewport boundaries and adjust its position
-    if (x + menuWidth > viewportWidth) {
-      setRight(true);
-      x = xPos - menuWidth;
-    } else {
-      setRight(false);
+      // Check if the menu will go beyond the viewport boundaries and adjust its position
+      if (x + menuWidth > viewportWidth) {
+        setRight(true);
+        x = xPos - menuWidth;
+      } else {
+        setRight(false);
+      }
+
+      if (y + menuHeight > viewportHeight) {
+        y = yPos - menuHeight;
+      }
+
+      setMenuPosition({ x, y });
+      setActiveCategory(value);
     }
-
-    if (y + menuHeight > viewportHeight) {
-      y = yPos - menuHeight;
-    }
-
-    setMenuPosition({ x, y });
-    setActiveCategory(value);}
   };
- 
+
   const handleShortPress = (e, data) => {
     // Handle short press here
-    e.preventDefault();
+    // e.preventDefault();
     if (clicks === 1) {
       if (dataCheck === data) {
         // Perform the action you want to happen on the double-click here
@@ -373,8 +379,8 @@ const SwiperLongpress = ({ listingDataIndex, dashboardInformation }) => {
                                     toggleFav(false, newData, index)
                                   }
                                 >
-                                  {/* <StarFill className="icon-class" /> */}
-                                  <i className="icon-star icon-Favorite"></i>
+                                  <StarFill className="icon-class" />
+                                  {/* <i className="icon-star icon-Favorite"></i> */}
                                   <span className="main-options">
                                     UnFavorite
                                   </span>
